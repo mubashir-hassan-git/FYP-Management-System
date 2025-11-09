@@ -1,69 +1,94 @@
+**Final Year Project (FYP) Management System**
+
+**Department of Computer Science — Namal University, Mianwali**
+
+**Team Members:**
+
+Name               Roll Number       Email                                                   
+ ---------------------------------------------------------------------------------------- 
+Mubashir Hassan    NUM-BSCS-2024-38  [bscs24f38@namal.edu.pk](bscs24f38@namal.edu.pk) 
+Shumaila Sarfaraz  NUM-BSCS-2024-74  [bscs24f74@namal.edu.pk](bscs24f74@namal.edu.pk) 
+Sadia              NUM-BSCS-2024-68  [bscs24f68@namal.edu.pk](bscs24f68@namal.edu.pk) 
+
+**Supervisor:** Miss Asiya Batool (Lecturer, Namal University, Mianwali)
+
+A web-based platform designed to automate and streamline the complete lifecycle of Final Year Projects (FYP) — from proposal submission to final evaluation.
+
+## Overview
+
+The FYP Management System addresses the inefficiencies of manual FYP management at Namal University. Currently, project proposals, group formations, and supervisor assignments are managed through Excel sheets and manual communication, which is time-consuming and error-prone.
+
+This system provides a centralized, automated platform where students, supervisors, coordinators, and administrators can efficiently manage FYPs.
+
+## Key Features
+
+Proposal submission and approval workflow
+Student group management
+Supervisor and co-supervisor assignment
+Progress tracking and feedback
+Role-based access control
+Centralized project repository
+Evaluation and reporting management
+
+## Problem Statement
+
+Managing FYPs manually at Namal University has become increasingly difficult with the growing number of students and projects each year. Manual coordination through Excel and paper-based systems leads to:
+
+Data duplication and inconsistency
+Delayed approvals and progress monitoring
+Increased workload for coordinators and supervisors
+
+The FYP Management System automates these processes to ensure efficiency, transparency, and consistency.
+
+## Objectives
+
+Automate the complete FYP lifecycle from proposal submission to evaluation
+Provide role-based user access for students, supervisors, and administrators
+Maintain a centralized record of all FYPs
+Ensure scalability to handle large numbers of users
+
+## System Architecture
+
+The system follows a three-tier architecture:
+
+1. Frontend (React.js)
+2. Backend (Node.js with Express.js)
+3. Database (MySQL)
+
+## Tech Stack
+
+ Category         Technology                     
+ -------------------------------------------------
+ Frontend         HTML, CSS, JavaScript, React.js 
+ Backend          Node.js (Express.js Framework)  
+ Database         MySQL                           
+ Version Control  Git & GitHub                    
+ IDE              Visual Studio Code              
+ Testing          Mocha, Chai                     
+ Deployment       Docker / XAMPP                  
+ Design Tools     Figma                           
+
+## Development Phases
+
+ Phase                             Duration    Description                                      
+ -------------------------------------------------------------------------------------------------- 
+ Requirement Gathering & Planning  Month 1–2   Collect and analyze requirements, define scope   
+ Design & Prototyping              Month 3–4   Create UML diagrams, ER diagrams, and UI mockups 
+ Implementation                    Month 5–7   Develop backend APIs and frontend components     
+ Integration & Testing             Month 8–9   Integrate modules and perform system testing     
+ Deployment & Feedback             Month 10–11 Deploy system and collect user feedback          
+ Maintenance & Documentation       Month 12    Final documentation and improvements             
+
+## Software Development Methodology
+
+The project uses Agile Scrum methodology, allowing iterative development through sprints. Continuous feedback from stakeholders ensures flexibility, reduces risks, and maintains high quality throughout the project lifecycle.
 
 
-Overview
+## Minutes of Meetings
 
-The Final Year Project (FYP) Management System is a web-based application designed to automate the complete lifecycle of final year projects at Namal University This system addresses the inefficiencies and challenges of the current manual process, which relies heavily on Excel sheets and manual coordination.
+[Google Sheets – Project Meetings Record](https://docs.google.com/spreadsheets/d/1H5D9X60Gsvk6lgzza5j0unCG4zigcmmti7lNF-49EWk/edit?gid=0#gid=0)
 
-The system streamlines all phases of FYP management, including:
+## License
 
-1) Proposal submission
-2) Supervisor and co-supervisor assignment
-3) Student group formation
-4) Progress tracking and feedback
-5) Final evaluation
-6) centralizing and automating these processes, the system reduces duplication, ensures consistency, and improves efficiency for all stakeholders.
-
-
-
-Problem Statement
-
-Managing FYPs manually at Namal University has become increasingly complex due to the growing number of students and projects each year. Manual processes for forming groups, assigning supervisors, reviewing proposals, and monitoring progress are time-consuming, prone to errors, and stressful for coordinators, faculty, and students.
-
-There is no centralized system to ensure proper tracking, role-based access, and accurate record-keeping, leading to inefficiencies and delays in project development.
-
-
-
-Objectives
-
-The main objectives of the FYP Management System are:
-
-1) Automate the entire FYP management process from group formation to final evaluation.
-2) Provide role-based access for students, supervisors, coordinators, and administrators.
-3) Maintain a centralized record of all past and present FYPs.
-4) Ensure scalability to handle a large number of users.
-
-Software Development Methodology
-
-The project uses the **Agile Scrum Methodology** for development.
-
-1) Work is divided into small, manageable sprints.
-2) Continuous feedback from stakeholders ensures functional modules are designed and improved iteratively.
-3) Agile allows flexibility for requirement changes without delaying progress.
-4) Focuses on reducing risk, improving quality, and maintaining stakeholder satisfaction throughout the project lifecycle.
-
-
-
-Features
-
-1) Proposal submission and approval workflow
-2) Supervisor and co-supervisor assignment
-3) Student group management
-4) Progress tracking and feedback
-5) Role-based access control
-6) Centralized project repository
-7) Reporting and evaluation management
-
-
-
-Repository
-
-All project code, documentation, and setup instructions are included in this repository:
-
-
-Minute of Meetings:
-https://docs.google.com/spreadsheets/d/1H5D9X60Gsvk6lgzza5j0unCG4zigcmmti7lNF-49EWk/edit?gid=0#gid=0
-
-
-
-
+This project is developed for academic purposes at Namal University under the observation of Sir Mudassar Raza and Muhammad Usaman and Touseef Ahmed (Currently working on this Project as FYP (2025-26).
 
