@@ -4,11 +4,11 @@
 
 **Team Members:**
 
-Name               Roll Number       Email                                                   
+Name                  Roll Number       Email                                                   
  ---------------------------------------------------------------------------------------- 
-Mubashir Hassan    NUM-BSCS-2024-38  [bscs24f38@namal.edu.pk](bscs24f38@namal.edu.pk) 
-Shumaila Sarfaraz  NUM-BSCS-2024-74  [bscs24f74@namal.edu.pk](bscs24f74@namal.edu.pk) 
-Sadia              NUM-BSCS-2024-68  [bscs24f68@namal.edu.pk](bscs24f68@namal.edu.pk) 
+Mubashir Hassan      NUM-BSCS-2024-38     [bscs24f38@namal.edu.pk](bscs24f38@namal.edu.pk) 
+Shumaila Sarfaraz    NUM-BSCS-2024-74     [bscs24f74@namal.edu.pk](bscs24f74@namal.edu.pk) 
+Sadia                NUM-BSCS-2024-68     [bscs24f68@namal.edu.pk](bscs24f68@namal.edu.pk) 
 
 **Supervisor:** Miss Asiya Batool (Lecturer, Namal University, Mianwali)
 
