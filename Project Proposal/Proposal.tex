@@ -1,1 +1,212 @@
+\documentclass[12pt,a4paper]{report}
+
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}     
+\usepackage{cite}         
+\usepackage{url}  
+\usepackage{float}
+
+\setstretch{1.2}
+
+
+\begin{document}
+
+% TITLE PAGE
+\begin{titlepage}
+    \centering
+    \includegraphics[width=4cm]{Namal.png}\par\vspace{1cm}
+
+    {\LARGE \textbf{Department of Computer Science}}\\[0.3cm]
+    {\Large \textbf{Namal University, Mianwali}}\\[1.5cm]
+
+    {\Huge \textbf{FYP Management System}}\\[0.5cm]
+    {\Large \textbf{Project Proposal}}\\[1cm]  % <-- Added heading here
+    {\large \textbf{Subject Title:} Software Engineering}\\[1.5cm]
+
+    \textbf{Team Members:}\\[0.3cm]
+    \begin{center}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{Roll Number} & \textbf{Email} \\ \hline
+    Mubashir Hassan & NUM-BSCS-2024-38 & bscs24f38@namal.edu.pk \\ \hline
+    Shumaila Sarfaraz & NUM-BSCS-2024-74 & bscs24f74@namal.edu.pk \\ \hline
+    Sadia & NUM-BSCS-2024-68 & bscs24f68@namal.edu.pk \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \vspace{1.5cm}
+    \textbf{Submission Date:} November 9, 2025\\[2cm]
+
+    \vfill
+    \textbf{Submitted to:}\\
+    Miss Asiya Batool\\
+    Lecturer, Department of Computer Science
+
+\end{titlepage}
+
+
+% TABLE OF CONTENTS
+\tableofcontents
+\newpage
+
+% INTRODUCTION
+\section*{1. Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+Final Year Project (FYP) is an important stage of undergraduate student in any University.where students apply their theoretical and practical knowledge in real world problems. In our university managing FYP  is not very easy.Student have submit their ideas manually and wait for approvals and  all other steps are not automated.Currently, FYP Management method at Namal University is manual and depend on the Excel sheets or manual tools for storing FYP details, monitoring progress from grouping to project evaluation. Manual base work approach to data repetition,limited access and inefficiency.
+   To handle these difficulties, developing an FYP Management System that specially design for our university. The system aims to the automate the all process  of FYP phases. From proposal submission, supervisor assignment to final submission all these step  done in smooth manner and one time adjustment method.
+
+% PROBLEM STATEMENT 
+\section*{2. Problem Statement}
+\addcontentsline{toc}{section}{Problem Statement}
+Namal University handles all Final Year Project related tasks using manual or simple Excel based methods. Management team such as coordinators, placement cell and faculty members faces issues as increase in students strength as well as increase projects each year. Phases such that creating groups of students,assigning supervisors and co supervisors, checking proposals, monitoring progress and these things consume time and become stressful for all stakeholders. There is an absence of centralized and automated system which cause duplication, inconsistency and inefficiency and leads to disturbance in FYP development phases.
+%OBJECTIVES 
+\section*{3. Objectives}
+\addcontentsline{toc}{section}{Objectives}
+The objectives of systems are :
+\begin{itemize}
+    \item Automate the FYP management process from forming student groups to last   evaluation.
+    \item Provide role base access to each user.
+    \item Maintain proper records of all past and present FYPs.
+    \item System will handles large number users and scalable.
+\end{itemize}
+
+% STAKEHOLDERS
+\section*{4. Stakeholders Identification}
+\addcontentsline{toc}{section}{Stakeholder Identification}
+
+\begin{table}[H] 
+\centering
+\caption{Stakeholders and responsibilities}
+\begin{tabular}{|p{3cm}|p{10cm}|}
+\hline
+\textbf{Stakeholder} & \textbf{Responsibilities} \\ \hline
+
+Students & Submit project proposals and increase their progress to get proper feedback from their supervisors. \\ \hline
+
+Supervisors/Co-Supervisors & Review the work done by students, approve their proposals, guide students, and provide the feedback about project. \\ \hline
+
+HODs & observe the all projects then approve final submissions and control overall quality of projects \\ \hline
+
+Industrial Mentors & Provide guidance from an industry  and ensure projects are practical with real-world demands. \\ \hline
+
+Placement Cell & it is the main that get project from industries and refine projects according to university courses. \\ \hline
+
+Super Admin & Manage all system users, permissions, and maintain the  system. \\ \hline
+
+Department Faculty & Assist in evaluation and provide feedback during project progress. \\ \hline
+
+External Evaluators &  They are from other organizational that Conduct evaluations during final presentations. \\ \hline
+
+Clients & Provide project requirements and behind the idea of system \\ \hline
+
+Finance Office & Manage any project-related financial matters and records. \\ \hline
+
+Coordinators & organize the schedule of evaluation and handles deadlines. \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+
+%SOFTWARE DEVELOPMENT METHODOLOGY 
+\section*{5. Software Development Methodology}
+\addcontentsline{toc}{section}{Software Development Methodology}
+ \textbf{Agile Scrum Methodology} is selected for the development of the \textbf{FYP Management System}. This methodology provides an easy management, team friendly and workload is divided into small step by step sprints that easy to manage task. It is suitable for this project because any moment the client wants to change or add new requirements and system has stakeholders provide feedback that may convert into any improvement or change during the phase of development. This project has not fixed requirements and Its each sprint design under the continuous feedback of client about sprint where functional module is designed and develop and it reduce the risk and provide a good quality.Divert from the goal or sprint does not find the progress.It can settle in next sprint, not wait for long time. \\
+
+
+\textbf{Development Schedule (1-Year Duration):}
+
+
+
+
+\begin{enumerate}
+\begin{table}[h!]
+\centering
+\caption{Development Schedule of FYP Management System}
+\label{tab:devschedule}
+\begin{tabular}{|c|c|p{8cm}|}
+\hline
+\textbf{Month(s)} & \textbf{Phase} & \textbf{Description} \\
+\hline
+1–2 & Requirement Gathering and Planning& Gather and analyze system requirements and set the requirement into order and design plan. \\
+\hline
+3–5 & Prototype and System Design & Design ER diagrams, UML diagrams, database schema and plan system design. \\
+\hline
+6–8 & Implementation & Develop core modules student section, supervisors and those linked with FYP process. \\
+\hline
+9–10 & Testing and Debugging & Perform the testing on whole system and where system fails, debug it. \\
+\hline
+11–12 & Deployment and user feedback & Deploy the system and get feedback from stakeholders for enhancement. \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{enumerate}
+    \begin{figure}[h!]
+    \centering
+    \includegraphics[width=15cm,height=7cm]{ganttchart.png}
+    \caption{Gantt Chart for FYP Management System}
+\end{figure}
+\vspace{0.5cm}
+
+% ====== TOOLS & TECHNOLOGY ======
+\section*{6. Tools and Technology}
+\addcontentsline{toc}{section}{Tools and Technology}
+\begin{itemize}
+    \item \textbf{Frontend Development:} \\
+    HTML, CSS, JavaScript, React.js are used to create user friendly and responsive design.
+    \item \textbf{Backend Development:} \\
+     Node.js is used for server side and design RESTfull APIs.
+    \item \textbf{Database Management:} \\
+    MySQL is used to manage the data such that students, projects and proposals etc
+    \item \textbf{Version Control:} \\
+    Git and GitHub are used to control the versions of software.
+    \item \textbf{Integrated Development Environment:}\\
+    Visual Studio Code tool use for code development.
+    \item \textbf{Deployment and Testing:} \\
+    Docker/ XAMPP/ MOcha are used for deployement and testing
+     \item \textbf{Design Tools:} \\
+     Figma is used to design the intractive design of system.
+\end{itemize}
+
+  
+
+% ====== REFERENCES ======
+\section*{7. References}
+\addcontentsline{toc}{section}{References}
+
+
+[1] OpenAI, "refine preoblem statement,introduction,objective as provided pictures," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/} \\
+
+
+[2] OpenAI, "which software development methodology  best for  FYP Management System and Why.," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/}\\
+
+[3] OpenAI, "suggest real-world tools and technologies  frontend, backend, database, IDE, version control, design tool best and compatiable for fyp managementsystem ," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/}\\
+
+[4] OpenAI, "creating stakeholder table and roles for FYP Management System," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/}\\ 
+
+[5] OpenAI, "generate LaTeX Requirement Provider Agreement template follow given pdf," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/}.\\
+
+[6] OpenAI, "check the introduction and is this intro follows standard and professional level," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/}\\
+
+[7] OpenAI, " check the above content and find grammatically mistake and show it," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/}\\
+
+[8] OpenAI, "create SE report design title page in LaTeX with team members, project, subject, and department details," OpenAI, 2025. [Online]. Available: \url{https://chat.openai.com/} \\
+
+[9] Mubashir Ali, "FYP Management System Repository," GitHub, 2025. [Online]. Available: \url{https://github.com/mubasharali-dev/fyp-system/blob/main/README.md}\vspace{0.2cm}
+[10] R. Isa, S. Othman, A. S. Ali, N. Azizan, and J. Ferguson, 
+"Prototype Development of Final Year Project Management System to Monitor Student’s Performance," 
+*Journal of Advanced Research in Applied Sciences and Engineering Technology*, 
+vol. X, no. Y, pp. 1–10, 2023. 
+[Online]. Available: https://semarakilmu.com.my/journals/index.php/applied_sciences_eng_tech/article/view/3389/3934
+
+
+
+
+\end{document}
 
