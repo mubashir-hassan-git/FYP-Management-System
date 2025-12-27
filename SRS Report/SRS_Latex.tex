@@ -3,30 +3,49 @@
 
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{setspace}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \usepackage{titlesec}
-
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{float}   
 
 \onehalfspacing
 \setcounter{tocdepth}{4}
 
+
+
+\pagestyle{fancy}
+\fancyhf{}
+
+
+\fancyhead[L]{\textit{Final Year Project Management System}}
+
+\fancyfoot[L]{\textit{Software Requirements Specification (SRS)}}
+\fancyfoot[R]{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\makeatletter
+\renewcommand{\headrule}{%
+  \rule{0.45\headwidth}{0.4pt}}
+\renewcommand{\footrule}{%
+  \rule{0.45\headwidth}{0.4pt}}
+\makeatother
+
+
 \begin{document}
 \begin{titlepage}
     \centering
-
-
     \includegraphics[width=4cm]{Namal.png}\par\vspace{1cm}
 
     {\LARGE \textbf{Department of Computer Science}}\\[0.3cm]
     {\Large \textbf{Namal University, Mianwali}}\\[1.5cm]
 
-  
     {\Huge \textbf{Software Requirements Specification (SRS)}}\\[0.5cm]
 
-  
     {\Large \textbf{Final Year Project Management System}}\\[1.2cm]
-
   
     {\large \textbf{Course Title:} Software Engineering}\\[1.5cm]
 
@@ -137,24 +156,37 @@ This system will provide the following benefits:
 
     \item System maintain the data in centralized records.
  
-    \item System has scalable ability that does not effect the performance
+    \item System has scalable ability that does not effect the performance.
 \end{enumerate}
 
 \subsection{Definitions, Acronyms, and Abbreviations}
-\begin{itemize}
-    \item \textbf{SRS}: Software Requirements Specification
-    \item \textbf{FYP}: Final Year Project
-    \item \textbf{UI}: User Interface
-    \item \textbf{DB}: Database
-    \item \textbf{Admin}: System Administrator
-\end{itemize}
-
+\begin{table}[H]
+\centering
+\caption{Definitions, Acronyms, and Abbreviations}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Abbr / Acronym} & \textbf{Type} & \textbf{Definition / Description} \\ \hline
+FYP & Acronym & Final Year Project \\ \hline
+FYPMS & Acronym & Final Year Project Management System \\ \hline
+API & Acronym & Application Programming Interface \\ \hline
+HTTPS & Acronym & Hypertext Transfer Protocol Secure \\ \hline
+TLS & Acronym & Transport Layer Security \\ \hline
+ID & Abbreviation & Identifier \\ \hline
+Admin & Definition & User has full access of sytem \\ \hline
+Super Admin & Definition & same as admin \\ \hline
+Dashboard & Definition & This is interface that each user has own according to use and permissions \\ \hline
+User Roles & Definition & Access the assigned users to system (Student, Supervisor, Coordinator, etc.) \\ \hline
+\end{tabular}}
+\end{table}
 \subsection{References}
 These are following documents and resources are referenced in this SRS for FYP Management System and provide the guideline and information during the design of this document and system.
 
 \begin{enumerate}
 
     \item IEEE Std 830-1984, IEEE Recommended Practice for Software Requirements Specifications, Date: 1984, Publishing Organization: Institute of Electrical and Electronics Engineers 
+    \item Project Proposal, FYP Management System, Date: 2025, Made by: Mubashir Hassan, Sadia, Shumaila Sarfaraz
+    
 \end{enumerate}
 
 
@@ -339,7 +371,7 @@ it is assumed that add artificial Intelligent in system to improve the assessmen
 % 3. SPECIFIC REQUIREMENTS
 
 \section{Specific Requirements}
-
+    \item \textbf{Note:} Accounts are created by Super Admin and credential are provided to each user by other university process.
 % ==============================================================
 % 3.1 STUDENT MODULE
 % ==============================================================
@@ -932,9 +964,10 @@ i n t r o d u c t i o n
 
 
 
-% ==============================================================
-% 4 COORDINATOR MODULE
-% ==============================================================
+
+
+
+
 
 \subsection{Coordinator Module}
 
@@ -1253,10 +1286,6 @@ Purpose of this function is that system allows the coordinator to manage and set
 
 
 
-% ==============================================================
-% 4.1 SUPER ADMIN MODULE
-% ==============================================================
-
 \subsection{Super Administrator Module}
 \subsubsection{Requirement 1: Full Login System Access }
 
@@ -1502,43 +1531,188 @@ Purpose of this function is that system allows the super admin to handle the use
 
 
 
-
-
-% Non functional Requirements
-
-
+\section{Non-Functional Requirements}
+Non-functional requirements of the Final Year Project Management System (FYPMS) provide  a  attributes that  shows how  system will ensure  scalability,efficiency, security, responsiveness and reliability in academic part. These requirements  support a large number of users  including students, faculty members, coordinators  and administrators in Final Year Project phase.
 
 
 
 
+\subsection{Usability Requirements}
+Usability requirements makes FYPMS easy to understand and use for technical and non-technical users.
+
+
+\subsubsection{User-Friendly Interface}
+The system should provide web-based interface accessible with browsers. All the tasks like submitting proposals, reviewing documents, and assigning evaluators should  reachable in less  steps. Clear labels, navigation and logical workflows should make less user confusion.
+
+\subsubsection{Accessibility}
+The system should have accessibility features like fonts which are able to read, use well and proper color contrast, and good navigation. All system messages  should  present in proper manner and understandable to users with different technical expertise level. 
+
+
+\subsection{Reliability Requirements}
+Reliability is essential to maintain trust in academic records and evaluation processes.
+
+\subsubsection{Availability}
+The FYPMS should maintain an availability of 99 percent out of 100 percent or higher during the academic year. Scheduled maintenance should be planned outside critical academic periods where possible.
+
+
+\subsubsection{Data Integrity}
+All system transactions should be processed reliably to prevent data loss or duplication. Project records, evaluation marks, and the approvals should remain consistent across system sessions. The system shall ensure that incomplete or failed operations do not corrupt stored data.
+
+\subsubsection{Backup and Recovery}
+The system should make backup of data to protect the previous task after failure. In case of system failure, data should be recoverable within an acceptable time frame defined by university policy. Backup data should  protect from illegal users.
+
+
+\subsection{Performance Requirements}
+Performance requirements ensure that the FYPMS delivers smooth and timely system responses during normal and peak academic workloads, such as proposal submission deadlines and evaluation periods.
+
+\subsubsection{Response Time}
+System responsiveness is the main thing that provide system operation time efficiency. Normal response time for  user tasks such as login, viewing project details, or accessing evaluation schedules and should not exceed 2 seconds under normal running conditions and when  time consuming  operations like uploading project documents  should be done in 5 seconds, depending on file and network connectivity. During peak time when user submit  like proposal submission deadlines or final evaluations, system response time should not  degraded by more than 15 percent compared to normal conditions.
+
+
+\subsubsection{Concurrent User Support}
+The FYPMS is mainly designed to support concurrent access by the multiple stakeholders. The system should support at least 2,000 active users simultaneously, including students, supervisors, evaluators, and also coordinators. Concurrent access to  the shared resources such as the main  project documents and evaluation schedules should not cause system crashes or any kind of data inconsistency. Load management mechanisms should ensure stable performance during the high-usage periods.
+
+
+\subsubsection{Data Throughput}
+Efficient handling of the sensitive academic data is essential for smooth system operation. The system should handle all kind of multiple concurrent database transactions related to project submissions, approvals, and evaluations without any noticeable delays. The document uploads, including proposal files and final reports, should support file sizes defined by university policy while maintaining acceptable upload performance. Notification processing (announcements, deadline alerts) should be delivered to users without  any significant delay.
+
+
+\subsubsection{Peak Load Handling}
+System should handle the load of operations when use peak time like submission files during near deadlines. Servers and database has multiple paths to handle the users. This time other users access the their modules activities normally.
+\subsection{Scalability Requirements}
+Security requirements are to protect sensitive academic and personal information either it is about the involved members or about the project.
+\subsubsection{Enhancement of System}
+The FYPMS should support increasing numbers of students, projects, and academic sessions without major redesign. The system architecture shall allow future enhancements, such as integration with other university systems.
+
+
+\subsubsection{Modular Design}
+The system should be designed in such manner that new features can  added in method not effect the functionality. Single modules (student management, evaluation, administration) should work independently to enhance maintainability.
+\subsection{Security Requirements}
+Security requirements protect sensitive academic and personal information.
+
+\subsubsection{Authentication and Authorization}
+Users should authenticate using university-provided credentials. Role-based access control should bound the functions  to user permissions or roles  such that student,supervisor,coordinator,admin. There should get access of data to authorized user.
+
+
+\subsubsection{Data Protection}
+Important data like passwords and evaluation results should store it securely and provide protection. Data movement between users and system shall protected from unauthorized access.
+
+
+\subsubsection{Privacy and Compliance}
+The system should comply with university data protection and privacy policies. Access to student academic data shall be limited to authorized academic personnel only.
 
 
 
 
 
 
-%EXTERNAL INTERFACE REQUIREMENTS
+
 \section{External Interface Requirements}
 
+This section describes all external interface requirements of the Final Year Project (FYP)
+Management System. These requirements explain how the system will interact with
+users, hardware, software, databases, and communication networks. The goal is to ensure
+smooth operation, secure communication, and proper data exchange between the system
+and external entities.
+
+
 \subsection{User Interfaces}
-The system shall provide a web-based graphical user interface.
+
+The FYP Management System will be a web-based application accessed through a standard web browser. Dashboard will given to students,supervisors,coordinators and administrators related to their roles and responsiblities .
+
+
+\subsubsection{Performance Requirements}
+The user interface should load pages within 2–3 seconds under normal internet conditions.
+User actions such as form submission, project registration, and status updates should be
+processed efficiently without noticeable delay.
+
+\subsubsection{Design Constraints}
+
+\paragraph{Standards}
+System interface  follow the web rules and standard such as HTML5, CSS3,
+and JavaScript to ensure compatibility across modern browsers. The layout will be simple
+and easy to understand, following standard usability guidelines.
+
+\paragraph{Hardware Compliance}
+The system will work on standard devices including desktop
+computers, laptops, tablets, and smartphones. No special hardware is required other
+than a device with internet access.
+
+\paragraph{Limitations}
+The interface performance may depend on internet speed and browser
+compatibility. Very old browsers may not fully support all features.
+\subsubsection{Attributes}
+
+\paragraph{Security}
+User authentication will be required to access the system. Passwords will
+be stored in encrypted form. Session management will be used to prevent unauthorized
+access.
+
+\paragraph{Maintainability}
+The interface design will be modular so that changes or updates can
+be made easily without affecting the whole system.
+
+\subsubsection{Other Requirements}
+
+\paragraph{Database}
+The user interface will interact with a centralized database to store and retrieve data such as user accounts, project details, supervisor assignments, and evaluation
+records.
+
+\paragraph{Operations}
+Users will be able to perform operations such as login, project submission,
+supervisor selection, progress updates, and result viewing through the interface.
+Site Adaptation The interface will be responsive, allowing it to adjust automatically
+according to different screen sizes and devices.
+
+\paragraph{Site Adaptation}
+The interface will be responsive, allowing it to adjust automatically
+according to different screen sizes and devices
 
 \subsection{Hardware Interfaces}
-The system shall operate on standard computing hardware.
+
+The FYP Management System does not require any dedicated hardware interfaces. It
+supports  computing devices such that PC, laptops, mobile, Tablets. Input devices like touch screen, keyboard and mouse,will use for interaction and servers help the system application and database.
 
 \subsection{Software Interfaces}
-The system shall interact with web servers and database systems.
+
+The system interact should occur with these software components:
+
+\begin{itemize}
+    \item Interact with web browsers like chrome, firefox etc.
+    \item A backend server which connected and implemented through frameworks of javascript.
+    \item Interact with relational database management system like MySQL.
+    \item Email service software for password recovery.
+\end{itemize}
+APIs will be used for communication between the frontend and backend components
+of the system.
 
 \subsection{Communications Interfaces}
-The system shall use standard network communication protocols.
+The system shall use standard communication protocols for data exchange:
+\begin{itemize}
+    \item Communication between the client and server will use HTTPS.
+    \item TLS encryption will be applied to ensure secure data transmission.
+    \item Email communication will be used for notifications such as account creation, password reset.
+\end{itemize}
 
-% ================== APPENDICES ==================
+
 \appendix
-\section{Appendix A: Supporting Information}
-Additional diagrams, tables, and documents.
 
-% ================== INDEX ==================
-\section{Index}
-Index entries go here.
+\section{Appendix A: Use Case Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{use case diagram.png}
+    \caption{Use Case Diagram}
+    \label{fig:first_image}
+\end{figure}
+
+
+\section{Appendix B: Context Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Untitled.jpg} 
+    \caption{Context Daigram}
+    \label{fig:second_image}
+\end{figure}
+
 
 \end{document}
