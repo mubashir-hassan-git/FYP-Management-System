@@ -42,10 +42,10 @@ The FYP Management System automates these processes to ensure efficiency, transp
 
 ## Objectives
 
-- Automate the complete FYP lifecycle from proposal submission to evaluation
-- Provide role-based user access for students, supervisors, and administrators
-- Maintain a centralized record of all FYPs
-- Ensure scalability to handle large numbers of users
+- Automate the FYP management process from forming student groups to last evaluation.
+- Provide role base access to each user.
+- Maintain proper records of all past and present FYPs.
+- System will handles large number users and scalable.
 
 ## System Architecture
 
