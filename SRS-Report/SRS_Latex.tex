@@ -1,0 +1,1718 @@
+\documentclass[12pt]{article}
+
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{float}   
+
+\onehalfspacing
+\setcounter{tocdepth}{4}
+
+
+
+\pagestyle{fancy}
+\fancyhf{}
+
+
+\fancyhead[L]{\textit{Final Year Project Management System}}
+
+\fancyfoot[L]{\textit{Software Requirements Specification (SRS)}}
+\fancyfoot[R]{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\makeatletter
+\renewcommand{\headrule}{%
+  \rule{0.45\headwidth}{0.4pt}}
+\renewcommand{\footrule}{%
+  \rule{0.45\headwidth}{0.4pt}}
+\makeatother
+
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=4cm]{Namal.png}\par\vspace{1cm}
+
+    {\LARGE \textbf{Department of Computer Science}}\\[0.3cm]
+    {\Large \textbf{Namal University, Mianwali}}\\[1.5cm]
+
+    {\Huge \textbf{Software Requirements Specification (SRS)}}\\[0.5cm]
+
+    {\Large \textbf{Final Year Project Management System}}\\[1.2cm]
+  
+    {\large \textbf{Course Title:} Software Engineering}\\[1.5cm]
+
+   
+    \textbf{Team Members:}\\[0.3cm]
+    \begin{center}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Name} & \textbf{Roll Number} & \textbf{Email} \\ \hline
+    Mubashir Hassan & NUM-BSCS-2024-38 & bscs24f38@namal.edu.pk \\ \hline
+    Shumaila Sarfaraz & NUM-BSCS-2024-74 & bscs24f74@namal.edu.pk \\ \hline
+    Sadia & NUM-BSCS-2024-68 & bscs24f68@namal.edu.pk \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \vspace{1.5cm}
+
+    
+    {\large \textbf{Submission Date:} December 28, 2025}\\[2cm]
+
+    \vfill
+
+    \textbf{Submitted To:}\\
+    Miss Asiya Batool\\
+    Lecturer\\
+    Department of Computer Science
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+\subsubsection{Purpose of the SRS}
+ The purpose of this Software Requirements Specification (SRS) is to provide a complete, clear and unambiguous detail of the requirements for the \textbf{Final Year Project Management System}. This document shows the system’s functional and non functional behavior, operational characteristics, performance requirements and constraints of design.
+The SRS act as path between the stakeholders and the development team by making a common knowledge of system to implementation. It serves as reference from beginning of project to  maintenance.
+
+\subsubsection{Purpose of the System}
+The purpose of the FYP Management System is to make the flow of FYP management activities from manual to automate and centralize activities within the university. This system replace manual and spreadsheet based task to make tasks secure, efficient, minimizes redundancy and scalable software and digital platform.
+This system aims to complete support of FYP tasks including formation of group, project proposal to supervisors, evaluation schedule and final project submission. By automating these tasks, the system increase the transparency, reduce the administrative work and improves coordination among users. 
+
+
+\subsubsection{Audience of SRS}
+This SRS document is used for stakeholders that involved in the Final Year Project processes. Following are include: \\
+\begin{enumerate}
+    \item Students
+    \item Supervisors
+    \item Co-supervisors
+    \item Head of the Departments
+    \item Industrial Mentors
+    \item Placement Cell
+    \item Super Admin
+    \item Department Faculty
+    \item External Evaluators
+    \item Coordinators
+    \item Development team ( Project Manager, developers, Testers )
+\end{enumerate}
+
+
+\subsection{Scope}
+
+The FYP Management System is a digital platform and software application that make the process of the FYP to automate form and handle the entire lifecycle of final year project at Namal University. This system replace the current excel sheet and manual based processes with digital automate system.
+
+\subsubsection{Software Product}
+This software product “ FYP Management System” is developed that provide modules for students, supervisors, co supervisors, faculty, industrial mentors, coordinator, external evaluators, head of departments, super administrator. This system handles student group formation, proposals, schedule of evaluation and final project submission. 
+
+\subsubsection{Product Features}
+\textbf{The system will perform a functionalities:}
+\begin{enumerate}
+    \item Allow the user (students) to submit projects documents and receive comment from users(supervisors,co supervisors and industrial mentors).
+
+    \item Users (Supervisors,co supervisors and industrial mentors) can view documents, give guidance and comments.
+
+
+    \item User (Coordinators) handles project related users issue and manage project schedules, evaluation timelines and deadlines.
+
+    
+    \item User (Super administrator) provides access on role based, manage users and system maintenance.
+
+
+    \item Users (Evaluators) can view project related documents and project , provide the final remarks on system.
+
+
+    
+    \item Maintain the records of  all past and present FYP’s details and provide support increasing numbers of students and projects as scalability.
+
+\end{enumerate}
+
+\textbf{The system will not perform:} \\
+This system can handle non-FYP academic process and  support the student activities outside the FYP process.
+
+
+\subsubsection{Application of the System}
+Final Year Project Management System is web based platform that will used in university environment to manage and control all processes related to the FYPs. This system will use whole year by  users (students, supervisors, co supervisors, coordinators,HODs, super admin) and some users ( external mentors and Faculty for evaluations) will use for limited time. It provides  consistent access to users any time.
+
+\subsubsection{Benefits of the System}
+This system will provide the following benefits:
+
+\begin{enumerate}
+    \item System removes the manual workload, management and reduce human errors.
+
+    \item System provides transparency and efficiency in activities.
+
+    \item System ensures each user can access the data related to their roles.
+
+    \item System maintain the data in centralized records.
+ 
+    \item System has scalable ability that does not effect the performance.
+\end{enumerate}
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+\begin{table}[H]
+\centering
+\caption{Definitions, Acronyms, and Abbreviations}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Abbr / Acronym} & \textbf{Type} & \textbf{Definition / Description} \\ \hline
+FYP & Acronym & Final Year Project \\ \hline
+FYPMS & Acronym & Final Year Project Management System \\ \hline
+API & Acronym & Application Programming Interface \\ \hline
+HTTPS & Acronym & Hypertext Transfer Protocol Secure \\ \hline
+TLS & Acronym & Transport Layer Security \\ \hline
+ID & Abbreviation & Identifier \\ \hline
+Admin & Definition & User has full access of sytem \\ \hline
+Super Admin & Definition & same as admin \\ \hline
+Dashboard & Definition & This is interface that each user has own according to use and permissions \\ \hline
+User Roles & Definition & Access the assigned users to system (Student, Supervisor, Coordinator, etc.) \\ \hline
+\end{tabular}}
+\end{table}
+\subsection{References}
+These are following documents and resources are referenced in this SRS for FYP Management System and provide the guideline and information during the design of this document and system.
+
+\begin{enumerate}
+
+    \item IEEE Std 830-1984, IEEE Recommended Practice for Software Requirements Specifications, Date: 1984, Publishing Organization: Institute of Electrical and Electronics Engineers 
+    \item Project Proposal, FYP Management System, Date: 2025, Made by: Mubashir Hassan, Sadia, Shumaila Sarfaraz
+    
+\end{enumerate}
+
+
+\subsection{Overview}
+
+\subsubsection{Content of the SRS}
+This Software Requirements Specification document provides a detail of  requirements for the FYPMS. It shows the overview of the system, its functionality, assumptions, user characteristics and constraints.
+Further this document shows the functional requirements, non-functional requirements, external interface requirements that are necessary for design, development, testing, deployment and maintenance of the system.
+
+\subsubsection{Organization of the SRS}
+This document is settled and organized according to the standard of IEEE 830, 1984. Document organized as follows:
+
+\begin{enumerate}
+    \item \textbf{Section 1: Introduction} — It provides the Introduction with subsections that describes purpose, scope, definitions, references and overview of document.
+    \item \textbf{Section 2: Overall Description} — It provides the Overall Description with subsections that describes product perspective, product functions, user characteristics , general constraints and assumption of system.
+
+    \item \textbf{Section 3: Specific Requirements} — It provides Specific  Requirements with subsections that describes the functional and non functional requirements in details. 
+
+    \item \textbf{Section 4: External Interface Requirements} —  It provides External Interface Requirements with subsections that describes user, hardware, software and communication interfaces.
+    \item \textbf{Section 5: Appendices and References} — that provides lists of definition, references and additional resources.
+\end{enumerate}
+
+\section{Overall Description}
+
+\subsection{Product Perspective}
+\subsubsection{System Context}
+Final Year Project Management System (FYPMS) is a web based digital platform that developed to manage and automate the FYP activities in university. This is the centralized platform that handle the administrative and academic processes which are related to the FYPs.
+FYPMS is  a platform that has core functions related to the FYPs and not rely on the other academic management system. All data and workflows which are related to projects are handled in system to make consistency, efficiency and transparency among the stakeholders. The system is developed with scalable and flexibility to enhance the system in future.
+
+\subsubsection{Relationship with Other Systems}
+This system is the part of the university project management system that support to FYPs activities, large support to multiple and administrative stakeholders without replacing existing processes of academic and  enhance the quality in digital and automate form. System is independent in this current step.
+\subsubsection{Major System Modules}
+The system consist of following components:
+\begin{itemize}
+    \item \textbf{System Module}:This modules holds all modules such as students, supervisors, co supervisors etc. All users modules made a system module.
+    \item \textbf{Student Module}:This module is used to submit the project related document and review the remarks and guidance from other users.
+    \item \textbf{Supervisor, Co-supervisor, and Industrial Mentor Modules}:
+   This allows to view document of project related and provide remarks on it.
+    \item \textbf{Coordinator Module}:It provides scheduling, resolve issues related to project.
+    \item \textbf{External Evaluator and Faculty Modules}: This module provides limited time access to these to review the FYP documents of selected student groups.
+    \item \textbf{Administration Module}: This module provides role base access, handle users accounts and manage the whole system.
+\end{itemize}
+
+\subsubsection{External Interfaces}
+These are the following principal external interfaces:
+\begin{itemize}
+    \item \textbf{User Interface}:This system is a web based that accessed through the web browser by all authentic users.
+    \item \textbf{Database Interface}: This interface used for storing and getting data of student, project details,remarks and final grading.
+    \item \textbf{Notification Interface}:This interface used for storing and getting data of student, project details,remarks and final grading.
+    \item \textbf{Dashboard Interface}:This interface is different for each user that shows and provides the data and functionality according to roles. 
+\end{itemize}
+\subsubsection{Hardware and Operating Environment}
+Final Year Project Management System is operate on computing devices. End users get access the system by browser using mobile, PC, or laptop with internet access. System will handle through centralized server or through cloud technology.
+
+
+\subsection{Product Functions}
+
+The Final Year Project Management System (FYPMS) handles a data and workflow in centralized, manage the life cycle of FYPs in automate manner at university. The system supports relationship among students, supervisors, mentors and administrative stakeholders that are the part of the FYP system.
+The system performs the following main functions:
+
+\begin{itemize}
+    \item \textbf{User and Role Management}: System provides access on role based and manages users such as student, supervisors, admin and evaluators.
+
+
+    \item \textbf{Project and Group Management}: System manages the FYP related information,handles the process of group formation and tracks the project groups of students.
+
+    \item \textbf{Project Proposal Management}: System helps to handle the initial proposal submission to supervisors and get accept or reject, remarks and revision of project proposal by assigned persons.
+
+
+    \item \textbf{Document Management}: System handles the uploading, storing, updating and accessing documents which are related to FYP.
+
+
+    \item \textbf{Evaluation and Assessment Management}: System handles the evaluations of project to the assigned evaluators,grading and remarks submission by internal and external evaluators.
+
+    \item \textbf{Notification Support}:System shows the notification and announcement of approvals, deadlines and evaluation timelines.
+ 
+\end{itemize}
+
+
+\subsection{User Characteristics}
+
+Users of the system are related to the academic and administrative roles related to the FYP in university.These  users have different in their usability, operational and accessibility in system. These users should have intermediate computing skills and common knowledge of web application use.
+
+\subsubsection{Final Year Students}
+Students are the primary users of this system. They interact with system to perform the specific activities during documents of project submission, view the remarks of supervisors and mentors, get updates and evaluation periods. Student may not have  experience of project management system. Student uses system at time of submissions or wants to view remarks of mentor or supervisors.
+
+
+\subsubsection{Supervisors and Co-supervisors}
+Supervisors and co supervisors are academic persons that have long academic background and experience in supervision of project. Period of the usage to review the submissions, provide remarks and monitor progress of students.
+
+\subsubsection{Coordinators and Heads of Department}
+Coordinators and Heads of Department are experienced academic and administrative users. These are moderate to advance in their expertise and have well knowledge of academic workflow. They interact with system view projects and ensure the quality according guidelines of university. Coordinator can interact to  provide the scheduling and resolve issues related to the FYP of other users.
+
+\subsubsection{Industrial Mentors}
+Industrial mentors are industrial professional who are involved in industrial linked projects. Their idea with system of academics may be limited but they have enough technical knowledge to use web tools. They are only interact with system is occasionally and main focus on reviewing projects and give remarks according to industry who it can be make better or what need this project.
+
+\subsection{Internal and External Evaluators}
+Department faculty and External evaluators are active in assessment phase but these faculties also act as supervisors or co supervisors. They have technical skills and great experience in evaluation of projects.
+
+\subsubsection{Placement Cell Department}
+Placement cell is the core point which get contact with industries and get projects from them. In this system, they view and get record to monitor which students group with industrial projects and which mentors are linked with these groups. Their use of system is less than other users.
+
+
+\subsubsection{Super Administrator}
+ Super admin is a main that handles all the system. These are technical advance in skills and great knowledge of system workflow. They  responsible for manage, handle,update and maintenance of system. 
+
+
+
+
+\subsection{General Constraints}
+
+There is the development and operational constraints of Final Year Project Management System that are several constraints in these such that organizational and technical. Due to these constraints, limit the possible range of design and implementation of the system.
+
+\subsubsection{Regulatory and Academic Policies}
+The system must work and run under the polices of university and also follow the institutional guidelines to student assessment, supervision and how system data is managed,accessed and secured.
+
+\subsubsection{Hardware and Infrastructure Limitations}
+FYPMS is a web based system that each user must require the computing resources available in university or where they use. System contains the server where data stores or retrieve where it performance and accessibility depend network, capacity of server  and devices used by end users.
+
+\subsubsection{Interfaces with Other Systems}
+There is no interaction of this system with other systems in current phase. In future, integrate it with other systems of university to increase capability, security and accuracy such as authentication of users through university provided mail or detail of user except external evaluator and industrial mentor.
+
+\subsubsection{Parallel Operations}
+During initial implementation of this system, it work with old system or method to check the system accuracy and work in correct way.
+
+\subsubsection{Programming and Platform Constraints}
+System is a web based application that access through with web browser. It uses HTML,CSS and JavaScript with their frameworks such Node.js, react.js, angular.js. Currently, there is no use of java, python or C++ etc and there is no enforcing specific programming language or framework.
+
+
+\subsubsection{Network Communication}
+System relies on standard web communication and must require reliable network over network.
+
+\subsubsection{Audit Functions }
+System must have audit functions to monitor the user activities and make the transparency of system. In this system, administrative should access to make detailed audit of user behavior and activity. Through this, solve the problems or issues of system misuse.
+
+\subsubsection{Control Functions}
+FYPMS has a control function to maintain the system operations. There is role based access to users to control the unauthorized personnel and perform the sensitive action by authorized personnel.
+
+
+
+\subsubsection{Criticality of the Application}
+FYPMS is not a life critical which will use in university for FYP management. If system goes into failures, unavailability or data movement inconsistency can consequence delay in FYP related tasks. These type of disruption may impact the student’s progress, faculty and administration  workload and this effect the all department timelines. 
+
+\subsubsection{Safety and Security}
+System should handles sensitive data of users. System should protect the data privacy, access control and follow the standard security and safety measures. System applies the data encryption like (SSL/TLS) and uses the 2 factor authentication.
+
+
+\subsection{Assumptions and Dependencies}
+This section tells us the assumption and dependencies that effect the requirements in software requirement s specification for FYP Management system. These factors cause the effect if any change occur in these assumptions or dependencies may need to update to the requirements.
+
+\subsubsection{User and Device Assumptions}
+It assumes that each users has computing device such as mobile,tablet, laptop or desktop with internet access.
+
+
+\subsubsection{Network and Connectivity Assumptions}
+It is assumed that end users have stable internet connectivity and during fluctuate of internet may cause system not perform in smooth manners .
+
+\subsubsection{Hosting and Infrastructure Dependencies}
+It is assumed that system will hosted on reliable hosts to get availability, speed, scalability and reliability of services.
+
+
+\subsubsection{Access Assumption }
+It is assumed that user will get access the system through the web browsers such as Chrome etc. if user used the older version may effect the user experience.
+
+
+\subsubsection{Security and Data Protection Dependencies }
+System follows the international rules of data protection to ensure their features according to the privacy laws.
+
+\subsubsection{API and External Service Dependencies}
+System uses API serves then it follows the international laws of data and it’s security, availability and performance are important to smooth running, if the change or disruption in API cause the effect in functionality.
+
+\subsubsection{Future Enhancements and Scalability Assumptions}
+it is assumed that add artificial Intelligent in system to improve the assessment and flow of system and increase the capability of system to apply in different university in future.
+
+
+
+
+
+
+
+
+% 3. SPECIFIC REQUIREMENTS
+
+\section{Specific Requirements}
+    \item \textbf{Note:} Accounts are created by Super Admin and credential are provided to each user by other university process.
+% ==============================================================
+% 3.1 STUDENT MODULE
+% ==============================================================
+\subsection{Student of Final Year Module}
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+
+% ==============================================================
+% 3.2 SUPERVISOR MODULE
+% ==============================================================
+
+\subsection{Supervisor Module}
+
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+% ==============================================================
+% 3.3 CO-SUPERVISOR MODULE
+% ==============================================================
+\subsection{Co supervisor Module}
+\subsubsection{Requirement 1}
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+% ==============================================================
+% 3.4 HEAD OF DEPARTMENT MODULE
+% ==============================================================
+
+\subsection{Head of Departments Module}
+
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+% ==============================================================
+% 3.5 INDUSTRIAL MENTOR MODULE
+% ==============================================================
+\subsection{Industrial Mentor Module}
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+% ==============================================================
+% 3.6 PLACEMENT CELL DEPARTMENT MODULE
+% ==============================================================
+
+\subsection{Placement Cell Department Module}
+
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+% ==============================================================
+% 3.7 DEPARTMENT FACULTY MODULE
+% ==============================================================
+
+\subsection{Department Faculty Module}
+
+
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+% ==============================================================
+% 3.8 EXTERNAL EVALUATOR MODULE
+% ==============================================================
+
+\subsection{External Evaluator Module}
+\subsubsection{Requirement 1}
+
+\paragraph{Introduction}
+i n t r o d u c t i o n
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{input 1:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{input 2:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{input n:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} 
+
+    \item \textbf{Sequence of Operations:} 
+
+   \item \textbf{Abnormal Situations:} 
+
+   \item \textbf{Parameters Affected:} 
+
+
+   \item \textbf{Degrade Operation:} 
+
+    \item \textbf{Methods used:} .
+
+    \item \textbf{Output Validity Check:} 
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item output 1
+    \item output n
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} 
+    \item \textbf{Dynamic Requirement:} 
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} 
+    \item \textbf{Hardware Limitation:} 
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} 
+    \item \textbf{Security:} 
+    \item \textbf{Maintainability:} 
+    \item \textbf{Transfer ability / conversion:} 
+
+\end{enumerate}
+
+
+
+% follow same for n number of requirements
+
+
+
+
+
+
+
+
+\subsection{Coordinator Module}
+
+
+\subsubsection{Requirement 1: Reset or Change Password}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the coordinator to reset or change the password of their accounts. This functionality provides account security and password recovery. User need to change the password or wants to reset the password in case of forgotten credentials. This function ensures the coordinators can change or modify the credentials.
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Email}: Enter email which is used for account and quantity of request is one at a single time.
+     \item \textbf{New password:}:Get a dashboard of password change or reset through email ID for limited time. Enter new password.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System should verify the coordinator ID and account status. It matches the new password with confirmation password and strength of password.
+
+    \item \textbf{Sequence of Operations:} Coordinator makes a request of password change or reset. System verifies the identity of coordinator. System generate a link of password change or reset and send through the email. After changing password, use hashing method to encrypt the password and store it in database with coordinator ID  and provide the notification of password update.
+
+   \item \textbf{Abnormal Situations:} When user enter mismatch email or new password mismatch with confirmation password then system should make error message. Request user to strength when it not follow the password policy. After 15 minute, password change or reset dashboard shows the access deny.
+
+   \item \textbf{Parameters Affected:} Coordinator credential and password change timestamp effected in the database of system.
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay.
+
+    \item \textbf{Methods used:} System used the cryptography password hashing, third Service party API used to send link to mail using secure encryption.
+
+    \item \textbf{Output Validity Check:} System must confirm the updated password is stored in database securely.
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays the password changed.
+    \item Display the failure messages like not matches, password rest link expire.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support the change or reset of password for registered coordinator.
+    \item \textbf{Dynamic Requirement:} 99 percent request of password change or reset shall do in 3 seconds.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} Password handling should follow the international predefined laws.
+    \item \textbf{Hardware Limitation:}  Procedure of password reset or change occur in working and existing server.
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:}  Function shall available 95 percent of time during working time except the maintenance time.
+     \item \textbf{Security:} Password shall be encrypted in hashing and password change or reset link for limited time and single use.
+      \item \textbf{Maintainability:} There should be password management logic or change in password setting not cause to redesign the system.
+       \item \textbf{Transfer ability / conversion:} In future, system may be integrated with external authentication system which university is using.
+\end{enumerate}
+
+
+
+\subsubsection{Requirement 2: Manage FYP Timelines of Milestones}
+
+\paragraph{Introduction}
+Purpose of this function is that system makes the coordinator to manage the timeline of FYP milestones. This contains the creating, updating, scheduling and making the deadlines of project milestones. 
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Milestone Title:} make the title of milestone of projects.
+    \item \textbf{Milestone Description:} add the detail of milestone of project.
+    \item \textbf{Document Upload:} if need  document to upload then upload.
+    \item \textbf{Start and end date:} make the date of start to end like presentation of proposal date.
+
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System checks the dates of milestone lies in the session time line and also ensure the start and end date of mile stone. 
+
+    \item \textbf{Sequence of Operations:} Coordinator accessed through its dashboard. Coordinator has ability to enter or update the milestone details. System checks all input and save milestone in database.
+
+   \item \textbf{Abnormal Situations:} System checks invalid date range and duplicate of milestone. System will validation error.
+
+   \item \textbf{Parameters Affected:} This functionality affects the milestone records and submission availability.
+
+   \item \textbf{Degrade Operation:} System has low network access, maintenance of system or database and notification service may make delay.
+
+    \item \textbf{Methods used:} System uses the relational base database to make easy data access
+
+    \item \textbf{Output Validity Check:} System must confirm the visibility to accessed users.
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays milestone to users dashboard like student, supervisors.
+    \item Display the error messages in term of invalid data or duplicate milestone.
+
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support all departments.
+    \item \textbf{Dynamic Requirement:} 95 percent creation or modification of milestone operates in 5 second.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} Milestone shall according to university timeline.
+
+    \item \textbf{Hardware Limitation:} Procedure of milestone do in running web server and database.
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} The milestone shall available 99 percent of time except maintenance.
+     \item \textbf{Security:} Coordinator can allowed to handle milestone not others.
+
+\end{enumerate}
+
+
+\subsubsection{Requirement 3: Assign evaluators and evaluation schedules}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the Coordinator to assign the internal and external evaluator to FYP groups and evaluation schedules. This function makes the process evaluation schedule and evaluator according to the university assessment policies.
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Project Group ID:} Coordinator get the groups IDs to assign the evaluators.
+
+    \item \textbf{Evaluators IDs (Faculty and External):} Assign the evaluators to projects.
+    
+    \item \textbf{Evaluation Type:} Select the type of evaluation such proposal presentation or final defense.
+    
+    \item \textbf{Evaluation date:} Define a schedule evaluation.
+
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System should check the evaluator availability. Check the date not conflict with academic holidays.
+
+    \item \textbf{Sequence of Operations:} Coordinator has ability to selects project groups and evaluators. Set the evaluation time and type. Saves these in database and publishes the data to student and evaluators with notifications.
+
+   \item \textbf{Abnormal Situations:} System displays the schedule conflict and shows the error when the invalid selection.
+
+   \item \textbf{Parameters Affected:} Affected the assessment records, evaluation status.
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay.
+
+    \item \textbf{Methods used:} It provides the role base access and uses relational database.
+
+    \item \textbf{Output Validity Check:} System must confirm the evaluators views the assigned projects and correctly appears on dashboards.
+
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays the schedule of evaluation on student and evaluators.
+    \item 	Display the error messages.
+  \item Sends notification on users who has authorized to see.
+
+
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support the evaluation schedule and evaluator for each department.
+    \item \textbf{Dynamic Requirement:} Evaluator assignment and schedule updates in 5 second in system and display to authorized users.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} Milestone shall according to university timeline.
+
+    \item \textbf{Hardware Limitation:} Procedure of assigning do in running web server and database.
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} Function shall available during working sessions with low downtime.
+     \item \textbf{Security:} Authorized user can set schedule and and assign evaluators.
+      \item \textbf{Maintainability:} System shall maintain and configured without downtime of system.
+       \item \textbf{Transfer ability / conversion:} In future, system may be integrated with examination and scheduling system.
+
+\end{enumerate}
+
+
+\subsubsection{Requirement 4: Assign supervisors and co-supervisors}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the coordinator to assign the superviors and co supervisors to FYP groups. This function shows the each group get well guidance of project with according to department.
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Project Group ID:} Get IDs of each group of project to assign the supervisor and co supervisors.
+
+    \item \textbf{Supervisor and Co supervisors IDs:} Coordinator assign the supervisor and co supervisors.
+    
+    \item \textbf{Department:} Select the department to differentiate among the department of supervisors and co supervisors.
+    
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System check the groups and supervisors and co supervisors have  same department.
+
+    \item \textbf{Sequence of Operations:} Coordinator select the project group and supervisors and co supervisors. Check the both have same department and system saves the data in database. System sends notification to concern users.
+
+   \item \textbf{Abnormal Situations:}System shows the error when different department group or supervisors are selected or invalid selection.
+
+   \item \textbf{Parameters Affected:} It affects the project supervision records and project status.
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay.
+
+    \item \textbf{Methods used:} It provides the role base access and uses relational database.
+
+    \item \textbf{Output Validity Check:} Supervisor can access assigned project data and correctly data appear on dashboard of supervisors.
+
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays both details of student and supervisors on dashboard of each other.
+    \item Display the error messages.
+    \item Both get notification of assignment of project group and supervisor and co supervisor.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall show supervisor assignment to each FYP group. 
+    \item \textbf{Dynamic Requirement:} System shall handle the operation of assignment  and updates in 5 second.
+
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} Assignment of supervisors shall according to university policies.
+   \item \textbf{Hardware Limitation:} Procedure of assigning supervisor or co supervisors in working and existing web infrastructure.  
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} Function shall available  during working time except the maintenance time.
+     \item \textbf{Security:} Authorized user can assign the supervisor and co supervisors. 
+
+       \item \textbf{Transfer ability / conversion:} In future, system may be integrated with external system which university is using.
+
+\end{enumerate}
+
+
+\subsubsection{Requirement 5: Handle Issues of All Users related to FYP}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the coordinator to manage and settle the FYP related issue raised by users that are in FYP process. Issues like projects conflict, deadlines problems, scheduling issues etc.
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Status of issues:} Check the status of issue related to the FYP.
+     \item \textbf{Add in issues:} Coordinator add the issue in issue dashboard for solution.
+     \item \textbf{Issue resolved or not status:} shows this status to only issue created by user.
+      \item \textbf{Remarks:} Provides remarks on solving issue.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} Coordinator checks the related issue FYP and enter valid user ID user who created issue.
+
+    \item \textbf{Sequence of Operations:} User must submit the issue that display on coordinator screen and check the issue related to FYP then if related to FYP issue that can be added in issue section. Coordinator change the status when issue resolved and provide remarks.
+
+   \item \textbf{Abnormal Situations:} When issue is not related to the FYP or invalid details of issue make notification invalid detail.
+
+   \item \textbf{Parameters Affected:} It  affect the issue statuses in database.
+
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay.
+
+    \item \textbf{Methods used:} System uses the role based access and rule based FYP workflow validation.
+
+    \item \textbf{Output Validity Check:} System must confirm the data movement in database correctly and show on dashboard.
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays the issues status updates.
+    \item Display the error messages.
+    \item Remarks on issue of coordinators.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support the managing FYP related issues for all users related to projects.
+    \item \textbf{Dynamic Requirement:} 99 percent of issue updates shall process in 5 second.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} Issue managing shall be according to FYP. 
+    \item \textbf{Hardware Limitation:} Function shall operate in web based infrastructure 
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} Function shall available 99 percent of time  except the maintenance time.
+    \item \textbf{Security:} System shall handle by  coordinator issue related to FYP.
+    \item \textbf{Maintainability:} Issues shall maintain issue categories and workflow.
+    \item \textbf{Transfer ability / conversion:}  In future, system may be integrated with namhal to make the system accuracy.
+\end{enumerate}
+
+
+
+\subsection{Super Administrator Module}
+\subsubsection{Requirement 1: Full Login System Access }
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the super admin to get complete access over all modules, data and administrative access control. This function makes the centralized control, maintenance, update and governance of system. This full access makes to see the activities of user, handle and ensure the system operation with university regulation.
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Admin ID:} Enter email which is used for account and quantity of request is one at a single time.
+     \item \textbf{Admin Credential:} Get a dashboard of password change or reset through email ID for limited time. Enter new password.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System should check the authorize and authenticate  of super admin and validate the credential to provide overall access of system.
+
+    \item \textbf{Sequence of Operations:} Super admin login the system. It checks the privileges and provide the access admin module to super admin. 
+
+   \item \textbf{Abnormal Situations:} When user attempt to login authorized to deny access and invalid administration credential to display errors. When system fails to preserve the system state and notify the admin.
+
+   \item \textbf{Parameters Affected:} Affected the roles and access of system.
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay and if system in critical mean main services down it should provide read only access.
+
+    \item \textbf{Methods used:} System used the role based access control and secure authentication.
+
+    \item \textbf{Output Validity Check:} System must confirm the changes  over system accurately.
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays the system access confirmation and 
+    \item Display errors when its access denial or invalidation.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support the one super admin session at time.
+
+    \item \textbf{Dynamic Requirement:} System proceed the admin operations in 5 seconds.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} All super admins are traceable when login system.
+   \item \textbf{Hardware Limitation:} Procedure in web based infrastructure.  
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} Function shall available at operational hours.
+    \item \textbf{Security:} Admin access protected by strong factors authentication.
+    \item \textbf{Maintainability:} System shall modify able when not in downtime where possible.
+    \item \textbf{Transfer ability / conversion:}  Admin module shall support integration university software admin system.
+\end{enumerate}
+
+
+
+
+\subsubsection{Requirement 2: Reset or Change Password}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the super admin to reset or change the password of its account. This functionality provides account security and password recovery. User need to change the password or wants to reset the password in case of forgotten credentials. This function ensures the super admin can change or modify the credentials.
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Email}: Enter email which is used for account and quantity of request is one at a single time.
+     \item \textbf{New password:}:Get a dashboard of password change or reset through email ID for limited time. Enter new password.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System should verify the admin ID and account status. It matches the new password with confirmation password and strength of password.
+
+    \item \textbf{Sequence of Operations:} Super admin makes a request of password change or reset. System verifies the identity of super admin. System generate a link of password change or reset and send through the email. After changing password, use hashing method to encrypt the password and store it in database with super admin ID  and provide the notification of password update.
+
+   \item \textbf{Abnormal Situations:}  When user enter mismatch email or new password mismatch with confirmation password then system should make error message. Request user to strength when it not follow the password policy. After 15 minute, password change or reset dashboard shows the access deny.
+
+   \item \textbf{Parameters Affected:} Admin  credential and password change timestamp effected in the database of system.
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay.
+
+    \item \textbf{Methods used:} System used the cryptography password hashing, third Service party API used to send link to mail using secure encryption.
+
+    \item \textbf{Output Validity Check:} System must confirm the updated password is stored in database securely.
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays the password changed.
+    \item Display the failure messages like not matches, password rest link expire.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support the change or reset of password for admin.
+    \item \textbf{Dynamic Requirement:} 99 percent request of password change or reset shall do in 3 seconds.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} Password handling should follow the international predefined laws.
+    \item \textbf{Hardware Limitation:}  Procedure of password reset or change occur in working and existing server.
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:}  Function shall available 95 percent of time during working time except the maintenance time.
+     \item \textbf{Security:} Password shall be encrypted in hashing and password change or reset link for limited time and single use.
+      \item \textbf{Maintainability:} There should be password management logic or change in password setting not cause to redesign the system.
+       \item \textbf{Transfer ability / conversion:} In future, system may be integrated with external authentication system which university is using.
+\end{enumerate}
+
+
+
+
+
+\subsubsection{Requirement 3: Manage All user Roles and Permission}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the super admin to manage all users role and permissions in the system. This Functionality can provide access data relevant users like initial proposer shows to supervisor no to others users and this ensure the proper access control and security of system.
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Module selection:} Add a functionality to provide the access according to role.
+     \item \textbf{Permissions:} Add permissions to user what do.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System should verify admin authorization and check the status of user. Make the roles and permissions are valid.
+
+    \item \textbf{Sequence of Operations:} Super admin access the role and permission management module. Select the target user and assigned, modify or revoked the roles and permissions to user.
+
+   \item \textbf{Abnormal Situations:} When user enter invalid role to show the rejection error and user.
+
+   \item \textbf{Parameters Affected:} User access rights, system authorization table and role base permission mapping.
+
+
+   \item \textbf{Degrade Operation:} If system permission fails then system remain in previous configuration.
+
+    \item \textbf{Methods used:} System uses the Role base access and permission hierarchy in it.
+    \item \textbf{Output Validity Check:} Provide the confirmation role or permission assign or update.
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays successful role assign or update.
+    \item System provides the update of permissions.
+    \item Display the error or failure messages.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} System shall support role management for users.
+    \item \textbf{Dynamic Requirement:} Role and permission tasks shall done in 5 seconds in normal load.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:}Role and permission management shall according to university IT rules.
+   \item \textbf{Hardware Limitation:} Procedure work in standard server and database infrastructure.   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} Function shall available  during operational hours..
+    \item \textbf{Security:} Admin shall have access to manage all roles and permissions.
+    \item \textbf{Transfer ability / conversion:} In future, system may be integrated with system which university is using.
+\end{enumerate}
+
+
+
+\subsubsection{Requirement 4: Create, Update or Delete users}
+
+\paragraph{Introduction}
+Purpose of this function is that system allows the super admin to handle the user accounts in FYPMS. This contains creating new user , update the available user or delete the user account to ensure user records and controlled access.
+
+
+\paragraph{Inputs}
+\begin{enumerate}
+    \item \textbf{Create dashboard:} Enter full detail of user and role. Assigned the default credentials to users.
+    \item \textbf{Update dashboard:}  Admin can access to manage user by updating the users details and credentials.
+    \item \textbf{Delete Dashboard:} Admin has access to delete the users from system.
+\end{enumerate}
+
+\paragraph{Processing}
+\begin{enumerate}
+    \item \textbf{Input Validity Checks:} System should check the super admin privilege and provide th access. System can access profiles data in valid place. 
+
+    \item \textbf{Sequence of Operations:} System checks the admin privileges and select the user management user modules. Admin can select create, update or delete operations. System checks valid inputs and performs the action. System updates the database. 
+
+   \item \textbf{Abnormal Situations:} When user add duplicate user display duplicate message.
+
+   \item \textbf{Parameters Affected:} It  affect the issue statuses in database.Shows the invalid message when invalid data write. 
+
+
+   \item \textbf{Degrade Operation:} System has low network access and maintenance of system or database may make delay.
+
+    \item \textbf{Methods used:} System uses the user account management and data validation rules.
+
+    \item \textbf{Output Validity Check:} System must confirm the account create , update or deletion.
+
+     
+\end{enumerate}
+
+\paragraph{Outputs}
+\begin{enumerate}
+    \item System displays the operation confirmation message and update notification.
+    \item Display the error messages like invalid data and duplicate user.
+\end{enumerate}
+
+\paragraph{Performance Requirements}
+\begin{enumerate}
+    \item \textbf{Static Requirement:} The system shall support user management for all user.
+    \item \textbf{Dynamic Requirement:} User management tasks  done in 5 second in normal conditions.
+\end{enumerate}
+
+\paragraph{Design Constraints}
+\begin{enumerate}
+   \item \textbf{Standard Compliance:} User account management should follow the international predefined laws.
+    \item \textbf{Hardware Limitation:} Procedure shall do in available server and processing capacity.
+
+   
+\end{enumerate}
+
+\paragraph{Attributes}
+\begin{enumerate}
+    \item \textbf{Availability:} Function shall available 95 percent of time during operational time except the maintenance time.
+    \item \textbf{Security:} Admin can only responsible for user management not others.
+    \item \textbf{Maintainability:} There should be configured with system without modify source code.
+    \item \textbf{Transfer ability / conversion:} User management shall transfer for future up gradation.
+
+\end{enumerate}
+
+
+
+
+\section{Non-Functional Requirements}
+Non-functional requirements of the Final Year Project Management System (FYPMS) provide  a  attributes that  shows how  system will ensure  scalability,efficiency, security, responsiveness and reliability in academic part. These requirements  support a large number of users  including students, faculty members, coordinators  and administrators in Final Year Project phase.
+
+
+
+
+\subsection{Usability Requirements}
+Usability requirements makes FYPMS easy to understand and use for technical and non-technical users.
+
+
+\subsubsection{User-Friendly Interface}
+The system should provide web-based interface accessible with browsers. All the tasks like submitting proposals, reviewing documents, and assigning evaluators should  reachable in less  steps. Clear labels, navigation and logical workflows should make less user confusion.
+
+\subsubsection{Accessibility}
+The system should have accessibility features like fonts which are able to read, use well and proper color contrast, and good navigation. All system messages  should  present in proper manner and understandable to users with different technical expertise level. 
+
+
+\subsection{Reliability Requirements}
+Reliability is essential to maintain trust in academic records and evaluation processes.
+
+\subsubsection{Availability}
+The FYPMS should maintain an availability of 99 percent out of 100 percent or higher during the academic year. Scheduled maintenance should be planned outside critical academic periods where possible.
+
+
+\subsubsection{Data Integrity}
+All system transactions should be processed reliably to prevent data loss or duplication. Project records, evaluation marks, and the approvals should remain consistent across system sessions. The system shall ensure that incomplete or failed operations do not corrupt stored data.
+
+\subsubsection{Backup and Recovery}
+The system should make backup of data to protect the previous task after failure. In case of system failure, data should be recoverable within an acceptable time frame defined by university policy. Backup data should  protect from illegal users.
+
+
+\subsection{Performance Requirements}
+Performance requirements ensure that the FYPMS delivers smooth and timely system responses during normal and peak academic workloads, such as proposal submission deadlines and evaluation periods.
+
+\subsubsection{Response Time}
+System responsiveness is the main thing that provide system operation time efficiency. Normal response time for  user tasks such as login, viewing project details, or accessing evaluation schedules and should not exceed 2 seconds under normal running conditions and when  time consuming  operations like uploading project documents  should be done in 5 seconds, depending on file and network connectivity. During peak time when user submit  like proposal submission deadlines or final evaluations, system response time should not  degraded by more than 15 percent compared to normal conditions.
+
+
+\subsubsection{Concurrent User Support}
+The FYPMS is mainly designed to support concurrent access by the multiple stakeholders. The system should support at least 2,000 active users simultaneously, including students, supervisors, evaluators, and also coordinators. Concurrent access to  the shared resources such as the main  project documents and evaluation schedules should not cause system crashes or any kind of data inconsistency. Load management mechanisms should ensure stable performance during the high-usage periods.
+
+
+\subsubsection{Data Throughput}
+Efficient handling of the sensitive academic data is essential for smooth system operation. The system should handle all kind of multiple concurrent database transactions related to project submissions, approvals, and evaluations without any noticeable delays. The document uploads, including proposal files and final reports, should support file sizes defined by university policy while maintaining acceptable upload performance. Notification processing (announcements, deadline alerts) should be delivered to users without  any significant delay.
+
+
+\subsubsection{Peak Load Handling}
+System should handle the load of operations when use peak time like submission files during near deadlines. Servers and database has multiple paths to handle the users. This time other users access the their modules activities normally.
+\subsection{Scalability Requirements}
+Security requirements are to protect sensitive academic and personal information either it is about the involved members or about the project.
+\subsubsection{Enhancement of System}
+The FYPMS should support increasing numbers of students, projects, and academic sessions without major redesign. The system architecture shall allow future enhancements, such as integration with other university systems.
+
+
+\subsubsection{Modular Design}
+The system should be designed in such manner that new features can  added in method not effect the functionality. Single modules (student management, evaluation, administration) should work independently to enhance maintainability.
+\subsection{Security Requirements}
+Security requirements protect sensitive academic and personal information.
+
+\subsubsection{Authentication and Authorization}
+Users should authenticate using university-provided credentials. Role-based access control should bound the functions  to user permissions or roles  such that student,supervisor,coordinator,admin. There should get access of data to authorized user.
+
+
+\subsubsection{Data Protection}
+Important data like passwords and evaluation results should store it securely and provide protection. Data movement between users and system shall protected from unauthorized access.
+
+
+\subsubsection{Privacy and Compliance}
+The system should comply with university data protection and privacy policies. Access to student academic data shall be limited to authorized academic personnel only.
+
+
+
+
+
+
+
+\section{External Interface Requirements}
+
+This section describes all external interface requirements of the Final Year Project (FYP)
+Management System. These requirements explain how the system will interact with
+users, hardware, software, databases, and communication networks. The goal is to ensure
+smooth operation, secure communication, and proper data exchange between the system
+and external entities.
+
+
+\subsection{User Interfaces}
+
+The FYP Management System will be a web-based application accessed through a standard web browser. Dashboard will given to students,supervisors,coordinators and administrators related to their roles and responsiblities .
+
+
+\subsubsection{Performance Requirements}
+The user interface should load pages within 2–3 seconds under normal internet conditions.
+User actions such as form submission, project registration, and status updates should be
+processed efficiently without noticeable delay.
+
+\subsubsection{Design Constraints}
+
+\paragraph{Standards}
+System interface  follow the web rules and standard such as HTML5, CSS3,
+and JavaScript to ensure compatibility across modern browsers. The layout will be simple
+and easy to understand, following standard usability guidelines.
+
+\paragraph{Hardware Compliance}
+The system will work on standard devices including desktop
+computers, laptops, tablets, and smartphones. No special hardware is required other
+than a device with internet access.
+
+\paragraph{Limitations}
+The interface performance may depend on internet speed and browser
+compatibility. Very old browsers may not fully support all features.
+\subsubsection{Attributes}
+
+\paragraph{Security}
+User authentication will be required to access the system. Passwords will
+be stored in encrypted form. Session management will be used to prevent unauthorized
+access.
+
+\paragraph{Maintainability}
+The interface design will be modular so that changes or updates can
+be made easily without affecting the whole system.
+
+\subsubsection{Other Requirements}
+
+\paragraph{Database}
+The user interface will interact with a centralized database to store and retrieve data such as user accounts, project details, supervisor assignments, and evaluation
+records.
+
+\paragraph{Operations}
+Users will be able to perform operations such as login, project submission,
+supervisor selection, progress updates, and result viewing through the interface.
+Site Adaptation The interface will be responsive, allowing it to adjust automatically
+according to different screen sizes and devices.
+
+\paragraph{Site Adaptation}
+The interface will be responsive, allowing it to adjust automatically
+according to different screen sizes and devices
+
+\subsection{Hardware Interfaces}
+
+The FYP Management System does not require any dedicated hardware interfaces. It
+supports  computing devices such that PC, laptops, mobile, Tablets. Input devices like touch screen, keyboard and mouse,will use for interaction and servers help the system application and database.
+
+\subsection{Software Interfaces}
+
+The system interact should occur with these software components:
+
+\begin{itemize}
+    \item Interact with web browsers like chrome, firefox etc.
+    \item A backend server which connected and implemented through frameworks of javascript.
+    \item Interact with relational database management system like MySQL.
+    \item Email service software for password recovery.
+\end{itemize}
+APIs will be used for communication between the frontend and backend components
+of the system.
+
+\subsection{Communications Interfaces}
+The system shall use standard communication protocols for data exchange:
+\begin{itemize}
+    \item Communication between the client and server will use HTTPS.
+    \item TLS encryption will be applied to ensure secure data transmission.
+    \item Email communication will be used for notifications such as account creation, password reset.
+\end{itemize}
+
+
+\appendix
+
+\section{Appendix A: Use Case Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{use case diagram.png}
+    \caption{Use Case Diagram}
+    \label{fig:first_image}
+\end{figure}
+
+
+\section{Appendix B: Context Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Untitled.jpg} 
+    \caption{Context Daigram}
+    \label{fig:second_image}
+\end{figure}
+
+
+\end{document}
