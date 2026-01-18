@@ -1,1 +1,207 @@
+\documentclass{article}
+\usepackage{longtable}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+\begin{longtable}{|p{1.3cm}|p{3.5cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Description} & \textbf{Design Artifact} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Description} & \textbf{Design Artifact} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+\multicolumn{4}{|l|}{\textbf{Common Requirements for All Users}} \\
+\hline
+
+REQ-001 & User Login & Allow users to log in using university credentials with role-based authentication & Use Case Diagram: Login; Activity Diagram 1 (Login workflow); DFD Level 0; Component Diagram (Level 1): Authentication \\
+\hline
+
+REQ-002 & Password Reset/Change & Enable password reset or change with email verification & Activity Diagram 1; Component Diagram (Level 1): Authentication module \\
+\hline
+
+REQ-003 & View and Update Profile & Allow viewing and updating personal profile information & Use Case Diagram; Component Diagram (Level 1): User Account Management \\
+\hline
+
+REQ-004 & System Notifications & Provide role-based notifications and announcements & Use Case Diagram; DFD Level 0; Component Diagram (Level 1): Notifications; All Activity Diagrams \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Student Module Requirements}} \\
+\hline
+
+REQ-005 & Browse Available Projects & Students browse and search FYP project ideas by title, domain, or supervisor & Use Case Diagram; Component Diagram (Level 1): Project Repository \\
+\hline
+
+REQ-006 & Project Proposal Submission & Students submit project proposals or new ideas through structured workflow & Use Case Diagram; Activity Diagram 1 (Complete proposal workflow); DFD Level 0; DFD Level 1 (Project Management) \\
+\hline
+
+REQ-007 & Check Proposal Status & Students check approval status of submitted proposals & Activity Diagram 1; DFD Level 1 (Project Management) \\
+\hline
+
+REQ-008 & Upload Project Documents & Students upload project documents (SRS, design docs, reports) & Use Case Diagram; DFD Level 1 (Project Management - Document Mgmt); Component Diagram (Level 1) \\
+\hline
+
+REQ-009 & Replace Documents & Students replace documents within deadlines with version control & DFD Level 1 (Project Management - Document Mgmt); Component Diagram (Level 1) \\
+\hline
+
+REQ-010 & View Milestone Deadlines & Students view all project milestone deadlines & Use Case Diagram; DFD Level 1 (Project Management - Milestones); Component Diagram (Level 1) \\
+\hline
+
+REQ-011 & View Supervisor Comments & Students view feedback from supervisors and co-supervisors & Use Case Diagram; DFD Level 1 (Project Management - Feedback); Component Diagram (Level 1) \\
+\hline
+
+REQ-012 & View Evaluation Marks & Students view evaluation marks for different phases & Use Case Diagram; DFD Level 1 (Evaluation Management); Component Diagram: Evaluation Repository \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Supervisor Module Requirements}} \\
+\hline
+
+REQ-013 & View Assigned Projects & Supervisors view assigned project groups with details & Use Case Diagram; DFD Level 0; DFD Level 1 (Project Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-014 & Review Project Documents & Supervisors review, approve, reject, or request revisions & Use Case Diagram; Activity Diagram 1; DFD Level 1 (Project Management) \\
+\hline
+
+REQ-015 & Provide Comments & Supervisors provide detailed feedback on submissions & Use Case Diagram; Activity Diagram 1; DFD Level 1 (Feedback); Component Diagram (Level 1) \\
+\hline
+
+REQ-016 & Access Student Submissions & Supervisors access and download student submissions & Use Case Diagram; DFD Level 1 (Project Management); Component Diagram: Document Repository \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Co-Supervisor Module Requirements}} \\
+\hline
+
+REQ-017 & View Assigned Projects (Co-Sup) & Co-supervisors view assigned projects and student groups & Use Case Diagram; DFD Level 1 (Project Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-018 & Access Submissions (Co-Sup) & Co-supervisors access student submissions & Use Case Diagram; DFD Level 1 (Project Management) \\
+\hline
+
+REQ-019 & Provide Feedback (Co-Sup) & Co-supervisors provide feedback and suggestions & Use Case Diagram; DFD Level 1 (Feedback); Component Diagram (Level 1) \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Head of Department Module Requirements}} \\
+\hline
+
+REQ-020 & View All Department Projects & HOD views all FYP projects in department & Use Case Diagram; DFD Level 0; DFD Level 1 (Project Management); Component Diagram: HOD module \\
+\hline
+
+REQ-021 & Approve Supervisor Assignments & HOD approves supervisor and co-supervisor assignments & Use Case Diagram; DFD Level 1 (Project Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-022 & Approve/Reject Projects & HOD approves or rejects proposed FYP projects & Use Case Diagram; Activity Diagram 1; DFD Level 1 (Project Management) \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Evaluator Module Requirements}} \\
+\hline
+
+REQ-023 & View Assigned Projects (Eval) & Evaluators view projects assigned for evaluation & Use Case Diagram; DFD Level 1 (Evaluation Management); Component Diagram: Evaluation Repository \\
+\hline
+
+REQ-024 & Access Project Documents (Eval) & Evaluators access all project-related documents & Use Case Diagram; DFD Level 1 (Evaluation Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-025 & View Evaluation Schedules & Evaluators view evaluation deadlines and schedules & Use Case Diagram; DFD Level 1 (Evaluation Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-026 & Submit Evaluation Marks & Evaluators submit marks and remarks for projects & Use Case Diagram; DFD Level 1 (Evaluation Management); Component Diagram: Evaluation Repository \\
+\hline
+
+REQ-027 & View Evaluation Criteria & Evaluators view evaluation criteria and instructions & Use Case Diagram; DFD Level 1 (Evaluation Management) \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Coordinator Module Requirements}} \\
+\hline
+
+REQ-028 & Manage Student Groups & Coordinator creates and manages student groups with project details & Use Case Diagram; DFD Level 0; DFD Level 1 (Project Management); Component Diagram: Coordinator module \\
+\hline
+
+REQ-029 & Manage Milestones & Coordinator creates, updates, and schedules FYP milestones & Use Case Diagram; DFD Level 1 (Project Management - Milestones); Component Diagram (Level 1) \\
+\hline
+
+REQ-030 & Assign Evaluators & Coordinator assigns evaluators and creates evaluation schedules & Use Case Diagram; DFD Level 1 (Evaluation Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-031 & Assign Supervisors & Coordinator assigns supervisors and co-supervisors to groups & Use Case Diagram; DFD Level 0; DFD Level 1 (Project Management); Component Diagram (Level 1) \\
+\hline
+
+REQ-032 & Handle User Issues & Coordinator manages and resolves FYP-related issues & Use Case Diagram; DFD Level 1 (Issue Management); Component Diagram: Issue Management \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Super Administrator Module Requirements}} \\
+\hline
+
+REQ-033 & Full System Access & Super Admin has complete access to all modules and data & Use Case Diagram; DFD Level 0; Component Diagram (Level 1 - Overview): Super Admin \\
+\hline
+
+REQ-034 & Manage User Roles & Super Admin manages all user roles and permissions & Use Case Diagram; DFD Level 1 (Overview): Role \& Permission Management; Component Diagram: Authorization \\
+\hline
+
+REQ-035 & User Account Management & Super Admin creates, updates, or deletes user accounts & Use Case Diagram; DFD Level 1 (Overview): User Account Management; Component Diagram: User DB \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{Non-Functional Requirements}} \\
+\hline
+
+REQ-036 & User-Friendly Interface & Web-based interface accessible via standard browsers & Component Diagram: Presentation Layer; Use Case Diagram \\
+\hline
+
+REQ-037 & System Availability & System maintains 99\% availability during academic year & Component Diagram: Complete architecture; DFD Level 0 \\
+\hline
+
+REQ-038 & Data Integrity & Reliable transaction processing to prevent data loss & All DFD diagrams (database processes); Component Diagram: Database Layer \\
+\hline
+
+REQ-039 & Response Time & Operations complete within 2-5 seconds & All Activity Diagrams; Component Diagram: Optimized architecture \\
+\hline
+
+REQ-040 & Concurrent User Support & System supports at least 2,000 concurrent users & Component Diagram: Scalable architecture; DFD Level 0 \\
+\hline
+
+REQ-041 & Role-Based Access Control & System implements RBAC for all functions & DFD Level 1 (Overview): Authorization; Component Diagram: Role \& Permission Mgmt \\
+\hline
+
+REQ-042 & Data Encryption & Sensitive data encrypted using SSL/TLS protocols & Component Diagram: Security layer; All DFDs (secure data flows) \\
+\hline
+
+REQ-043 & Audit Logging & System maintains detailed audit logs & DFD Level 1 (Overview): Audit DB; Component Diagram: Audit logging \\
+\hline
+
+REQ-044 & Backup and Recovery & Regular data backups with recovery mechanisms & Component Diagram: Database Layer \\
+\hline
+
+REQ-045 & Scalability & System supports increasing users and projects & Component Diagram: Modular architecture; DFD Level 0 \\
+\hline
+
+REQ-046 & Modular Design & System designed with independent modules & Component Diagram: All modules; DFD Level 1 (Separate modules) \\
+\hline
+
+\multicolumn{4}{|l|}{\textbf{System Architecture Requirements}} \\
+\hline
+
+REQ-047 & Multi-Layer Architecture & System implements 5-layer architecture & Component Diagram (Level 1 \& Level 2): Complete layered architecture \\
+\hline
+
+REQ-048 & Database Management & System uses MySQL relational database & Component Diagram: Database Layer; All DFD Level 1 (Data stores) \\
+\hline
+
+REQ-049 & Notification Service & Centralized notification service for alerts & Component Diagram (Level 1): Notification Service; DFD Level 1: Notifications \\
+\hline
+
+REQ-050 & Document Management Service & Centralized document storage and retrieval & Component Diagram (Level 1): Document Management; DFD Level 1: Document processes \\
+\hline
+
+\caption{Complete Requirements-Design Traceability Matrix}
+\label{tab:traceability-matrix}
+\end{longtable}
+
+\end{document}
 
