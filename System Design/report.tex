@@ -1,1 +1,462 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{changepage} % Added for adjustwidth
 
+\geometry{a4paper, margin=1in}
+
+% Title formatting
+\title{Final Year Project Management System (FYPMS) \\ System Design Document}
+\author{Mubashir Hassan, Shumailla Sarfaraz, Sadia \\ Department of Computer Science \\ Namal University, Mianwali}
+\date{\today}
+
+% Custom colors
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{red},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+This System Design Document gives a detailed blueprint for development of the Final Year Project Management System. It reduces the gap and works as a bridge between specified requirements in SRS and real world implementation. This document is comprehensive in system architecture, component design, interface specifications, and data models required to build the FYPMS.
+
+This document gives the full system design for the Final Year Project Management System. It provides functional and non-functional requirements from the verified Software Requirements Specification in comprehensive architectural and behavioral design specifications. The system aims to automate and centralize the entire lifecycle of Final Year Projects at Namal University, replacing manual processes with a secure, scalable, and efficient digital platform.
+
+\subsection{Intended Audience}
+\begin{itemize}
+    \item \textbf{Development Team:} To know and understand the system architecture and component interactions design.
+    \item \textbf{Project Stakeholders:} Students, supervisors, coordinators, and administrators to verify the completeness and understand functionality of the system.
+    \item \textbf{Quality Assurance Team:} To make test cases that are designed based on design specifications.
+    \item \textbf{Future Maintainers:} To understand the system structure and modular design.
+\end{itemize}
+
+\subsection{Project Overview}
+FYPMS is a web-based application designed to automate and centralize the entire lifecycle of Final Year Projects at Namal University. The system replaces manual and spreadsheet-based processes with a secure, scalable and efficient digital platform that supports:
+
+\begin{itemize}
+    \item Student Project Proposal Submission and Management
+    \item Supervisor and Co-Supervisor Assignment and Feedback
+    \item Project Document Management
+    \item Evaluation Scheduling and Marks Submission
+    \item Role-Based Dashboards for all stakeholders
+    \item Notification and Announcement System
+    \item Centralized Tracking
+\end{itemize}
+
+\subsection{Design Approach}
+The system design follows these key principles:
+
+\begin{itemize}
+    \item \textbf{Requirements-Driven:} Every design element traces back to SRS requirements
+    \item \textbf{Modular Architecture:} Independent modules with clear interfaces
+    \item \textbf{User-Centered Design:} Interfaces prioritize ease of use
+    \item \textbf{Scalability and Maintainability:} Support for future enhancements
+    \item \textbf{Security and Compliance:} Follow university policies and data protection standards
+\end{itemize}
+
+\section{Design Assumptions and Constraints}
+
+\subsection{Design Assumptions}
+Based on the SRS, the following assumptions help the system design:
+
+\begin{enumerate}
+    \item \textbf{User Device Assumption:} All users will access the system via web browsers on computing devices (PCs, laptops, tablets, or smartphones) with internet connectivity
+    \item \textbf{Network Assumption:} Stable internet connectivity is available though performance may degrade during fluctuations
+    \item \textbf{Browser Compatibility:} Modern web browsers (Chrome, Firefox, Edge) will be used to access the system
+    \item \textbf{User Technical Proficiency:} Users have intermediate computing skills and basic web application knowledge
+    \item \textbf{Hosting Infrastructure:} The system will be hosted on reliable servers with scalability concepts
+\end{enumerate}
+
+\subsection{Design Constraints}
+\subsubsection{Technical Constraints}
+\begin{itemize}
+    \item \textbf{Platform:} Web-based application accessible via standard web browsers
+    \item \textbf{Technology Stack:} HTML, CSS, JavaScript with modern frameworks (React.js/Angular.js), Node.js backend, MySQL database.
+    \item \textbf{Security:} Implementation of SSL/TLS encryption, role-based access control, and data encryption
+    \item \textbf{Compatibility:} Must work across different devices and screen sizes
+\end{itemize}
+
+\subsubsection{Regulatory Constraints}
+\begin{itemize}
+    \item \textbf{University Policies:} Must follow Namal University academic and administrative policies.
+    \item \textbf{Data Protection:} Must follow data privacy regulations and university data protection policies.
+    \item \textbf{Academic Standards:} Must align with FYP evaluation and assessment guidelines.
+\end{itemize}
+
+\subsubsection{Operational Constraints}
+\begin{itemize}
+    \item \textbf{Availability:} 99\% availability during academic sessions
+    \item \textbf{Performance:} Response time under 5 seconds for most operations
+    \item \textbf{Concurrent Users:} Support for at least 2,000 simultaneous users
+\end{itemize}
+
+\section{Key Design Decisions}
+
+\subsection{Architecture Style}
+The system will follow a \textbf{3-Tier Architecture}:
+\begin{enumerate}
+    \item \textbf{Presentation Layer:} Web-based user interface accessible via browsers
+    \item \textbf{Application Layer:} Business logic and workflow management
+    \item \textbf{Data Layer:} Database management and storage
+\end{enumerate}
+
+\subsection{Technology Stack Decisions}
+\begin{table}[H]
+\centering
+\caption{Technology Stack}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Component} & \textbf{Technology Selection} \\
+\hline
+Frontend & React.js with Material-UI components \\
+\hline
+Backend & Node.js with Express.js framework \\
+\hline
+Database & MySQL with Sequelize  \\
+\hline
+Authentication & JWT (JSON Web Tokens) with role-based access \\
+\hline
+File Storage & AWS S3 or equivalent for document storage \\
+\hline
+Notification Service & Email integration with Nodemailer \\
+\hline
+Deployment & Docker containers on cloud platform \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Database Design Strategy}
+\begin{itemize}
+    \item \textbf{Normalization:} Database normalized to 3NF to minimize redundancy
+    \item \textbf{Relationships:} Clear foreign key relationships between entities
+    \item \textbf{Indexing:} Strategic indexing on frequently queried fields
+    \item \textbf{Backup Strategy:} Regular automated backups with recovery procedures
+\end{itemize}
+
+\subsection{Security Design Decisions}
+\begin{enumerate}
+    \item \textbf{Authentication:} Multi-factor authentication for administrative users
+    \item \textbf{Authorization:} Role-based access control (RBAC) with granular permissions
+    \item \textbf{Data Encryption:} Encryption of sensitive data at rest and in transit
+    \item \textbf{Audit Trail:} Comprehensive logging of all critical operations
+\end{enumerate}
+
+\section{System Design Diagrams}
+
+\subsection{Use Case Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.6\textheight,keepaspectratio]{usecase.png}
+    \caption{Use Case Diagram}
+    \label{fig:first_image}
+\end{figure}
+
+\subsection{Class Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{class.png}
+\caption{System Class Diagram}
+\label{fig:class}
+\end{figure}
+
+\subsection{Sequence Diagrams}
+
+\subsubsection{Student Project Submission Sequence}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{students1.png}
+\caption{Student Project Submission Sequence Diagram}
+\label{fig:seq1}
+\end{figure}
+
+\subsubsection{Supervisor Review and approval Sequence}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Supervisors1.png}
+\caption{Supervisor Document Review Sequence Diagram}
+\label{fig:seq2}
+\end{figure}
+
+\subsubsection{Coordinator supervisor assignment Sequence}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{coordinator1.png}
+\caption{Coordinator Supervisor Assignment Sequence}
+\label{fig:seq3}
+\end{figure}
+
+\subsubsection{Evaluation Marking Process}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{evaluation.png}
+\caption{Evaluation Marking Process}
+\label{fig:seq4}
+\end{figure}
+
+\subsubsection{User login and Authentication}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{login.png}
+\caption{User Login and Authentication}
+\label{fig:seq5}
+\end{figure}
+
+\subsubsection{Milestone deadline Management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{milestone.png}
+\caption{Milestone Deadline Management}
+\label{fig:seq6}
+\end{figure}
+
+\subsubsection{Issue Resolution Workflow}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{issue.png}
+\caption{Issue Resolution Workflow}
+\label{fig:seq7}
+\end{figure}
+
+\subsection{Data Flow Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{level0.jpg}
+\caption{Level 0 Data Flow Diagram}
+\label{fig:er}
+\end{figure}
+
+\subsection{Data Flow Diagram Level 1}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{level1.jpg}
+\caption{Level 1 Data Flow Diagram}
+\label{fig:er1}
+\end{figure}
+
+\subsection{DFD level 2 Authentication}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{auth.jpg}
+\caption{Level 2 Authentication DFD}
+\label{fig:level2auth}
+\end{figure}
+
+\subsection{DFD level 2 Project Management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{projectman.jpg}
+\caption{Level 2 Project Management DFD}
+\label{fig:level2project}
+\end{figure}
+
+\subsection{DFD level 2 Role and Permission Management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{rolee.jpg}
+\caption{Level 2 Role Management DFD}
+\label{fig:level2role}
+\end{figure}
+
+\subsection{DFD level 2 Issue management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{issuee.jpg}
+\caption{Level 2 Issue Management DFD}
+\label{fig:level2issue}
+\end{figure}
+
+\subsection{DFD level 2 Evaluation Management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{evall.jpg}
+\caption{Level 2 Evaluation Management DFD}
+\label{fig:level2eval}
+\end{figure}
+
+\subsection{Component Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{component.png}
+\caption{System Component Diagram}
+\label{fig:component}
+\end{figure}
+
+\subsection{Activity Diagram : Student Project Proposal}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{strupro.png}
+\caption{Student Project Proposal Activity Diagram}
+\label{fig:activity01}
+\end{figure}
+
+\subsection{Activity Diagram: Document Submission}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{docsub.png}
+\caption{Document Submission Activity Diagram}
+\label{fig:activity02}
+\end{figure}
+
+\subsection{Activity Diagram: Supervisor Assignment}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{superass.png}
+\caption{Supervisor Assignment Activity Diagram}
+\label{fig:activity03}
+\end{figure}
+
+\subsection{Activity Diagram: Evaluation Schedule and marking}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Activity Diagram 4. Evaluation Schedule and Marking Workflow.pdf.png}
+\caption{Evaluation Schedule and Marking Activity Diagram}
+\label{fig:activity04}
+\end{figure}
+
+\subsection{Activity Diagram: Milestone Deadline Management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Activity Diagram 5.Milestone Deadline Management (Coordinator).pdf.png}
+\caption{Milestone Deadline Management Activity Diagram}
+\label{fig:activity05}
+\end{figure}
+
+\subsection{Activity Diagram: User login and Authentication}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Activity Diagram 6. User Login and Authentication Workflow.pdf.png}
+\caption{User Login and Authentication Activity Diagram}
+\label{fig:activity06}
+\end{figure}
+
+\subsection{Activity Diagram: Issue Management}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{Activity Diagram 7.Issue Resolution Workflow.pdf.png}
+\caption{Issue Management Activity Diagram}
+\label{fig:activity07}
+\end{figure}
+
+\section{Requirements–Design Traceability Matrix}
+
+
+
+\section{Prototype and Implementation Links}
+\subsection{Figma Prototype}
+\begin{itemize}
+    \item \textbf{Interactive Prototype:} \url{https://www.figma.com/proto/1QReuwjg4HxK0Fkg7NNT9h/FYP-MANAGEMENT-SYSTEM?node-id=76-3&t=a4kUQAXJBP92Joym-1}
+    \item \textbf{Design Components:} Includes all screens for:
+    \begin{itemize}
+        \item Student Dashboard
+        \item Supervisor Interface
+        \item Coordinator Panel
+        \item Admin Control Panel
+        \item Evaluator Interface
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+\section{Conclusion}
+
+\subsection{Design Summary}
+The system design presented in this document provides a comprehensive blueprint for developing the Final Year Project Management System. The modular architecture, clear separation of concerns, and emphasis on security and scalability ensure that the system will meet both current and future requirements.
+
+\subsection{Key Achievements}
+\begin{itemize}
+    \item Complete mapping of SRS requirements to design components
+    \item Scalable architecture supporting future enhancements
+    \item Comprehensive security design protecting sensitive academic data
+    \item User-centered interface design for diverse user groups
+    \item Detailed technical specifications for implementation
+\end{itemize}
+
+\subsection{Next Steps}
+\begin{enumerate}
+    \item \textbf{Implementation Phase:} Begin development based on this design document
+    \item \textbf{Code Review:} Regular code reviews to ensure adherence to design
+    \item \textbf{Testing:} Comprehensive testing including unit, integration, and user acceptance testing
+    \item \textbf{Deployment:} Gradual rollout with proper monitoring
+    \item \textbf{Training:} User training sessions for all stakeholder groups
+\end{enumerate}
+
+\subsection{Risk Mitigation}
+\begin{table}[H]
+\centering
+\caption{Design Risk Mitigation Strategies}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Risk} & \textbf{Impact} & \textbf{Mitigation Strategy} \\
+\hline
+Performance under load & High & Load balancing, caching, database optimization \\
+\hline
+Security breaches & High & Regular security audits, penetration testing \\
+\hline
+Data loss & High & Automated backups, disaster recovery plan \\
+\hline
+User adoption & Medium & Comprehensive training, intuitive UI \\
+\hline
+Integration issues & Medium & API-first design, thorough testing \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Appendices}
+
+\subsection{Appendix A: Glossary}
+\begin{itemize}
+    \item \textbf{FYP:} Final Year Project
+    \item \textbf{FYPMS:} Final Year Project Management System
+    \item \textbf{SRS:} Software Requirements Specification
+    \item \textbf{RBAC:} Role-Based Access Control
+    \item \textbf{JWT:} JSON Web Token
+    \item \textbf{ORM:} Object-Relational Mapping
+\end{itemize}
+
+\subsection{Appendix B: References}
+\begin{enumerate}
+    \item IEEE Std 830-1984, IEEE Recommended Practice for Software Requirements Specifications
+    \item FYPMS Software Requirements Specification (SRS) - January 17, 2026
+\end{enumerate}
+
+
+
+\end{document}
