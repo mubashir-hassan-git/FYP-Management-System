@@ -87,6 +87,10 @@ The project uses Agile Scrum methodology, allowing iterative development through
 
 [Google Sheets – Project Meetings Record](https://docs.google.com/spreadsheets/d/1H5D9X60Gsvk6lgzza5j0unCG4zigcmmti7lNF-49EWk/edit?gid=0#gid=0)
 
+## Figma Link
+
+Link:https://www.figma.com/proto/1QReuwjg4HxK0Fkg7NNT9h/FYP-MANAGEMENT-SYSTEM?node-id=0-1&t=9cIzicm2hbmbKdQe-1
+
 ## License
 
 This project is developed for academic purposes at Namal University under the observation of Sir Mudassar Raza, Muhammad Usaman, and Touseef Ahmed (Currently working on this Project as FYP (2025-26)).
