@@ -64,10 +64,8 @@
     \vspace{1.5cm}
 
     
-    {\large \textbf{Submission Date:} December 28, 2025}\\[2cm]
-
+    {\large \textbf{Submission Date:} January 17,2026}\\[2cm]
     \vfill
-
     \textbf{Submitted To:}\\
     Miss Asiya Batool\\
     Lecturer\\
@@ -97,12 +95,8 @@ This SRS document is used for stakeholders that involved in the Final Year Proje
     \item Students
     \item Supervisors
     \item Co-supervisors
-    \item Head of the Departments
-    \item Industrial Mentors
-    \item Placement Cell
     \item Super Admin
-    \item Department Faculty
-    \item External Evaluators
+    \item External and internal Evaluators
     \item Coordinators
     \item Development team ( Project Manager, developers, Testers )
 \end{enumerate}
@@ -277,18 +271,12 @@ Students are the primary users of this system. They interact with system to perf
 \subsubsection{Supervisors and Co-supervisors}
 Supervisors and co supervisors are academic persons that have long academic background and experience in supervision of project. Period of the usage to review the submissions, provide remarks and monitor progress of students.
 
-\subsubsection{Coordinators and Heads of Department}
-Coordinators and Heads of Department are experienced academic and administrative users. These are moderate to advance in their expertise and have well knowledge of academic workflow. They interact with system view projects and ensure the quality according guidelines of university. Coordinator can interact to  provide the scheduling and resolve issues related to the FYP of other users.
+\subsubsection{Coordinators}
+Coordinators are experienced academic and administrative users. These are moderate to advance in their expertise and have well knowledge of academic workflow. They interact with system view projects and ensure the quality according guidelines of university. Coordinator can interact to  provide the scheduling and resolve issues related to the FYP of other users.
 
-\subsubsection{Industrial Mentors}
-Industrial mentors are industrial professional who are involved in industrial linked projects. Their idea with system of academics may be limited but they have enough technical knowledge to use web tools. They are only interact with system is occasionally and main focus on reviewing projects and give remarks according to industry who it can be make better or what need this project.
 
 \subsection{Internal and External Evaluators}
 Department faculty and External evaluators are active in assessment phase but these faculties also act as supervisors or co supervisors. They have technical skills and great experience in evaluation of projects.
-
-\subsubsection{Placement Cell Department}
-Placement cell is the core point which get contact with industries and get projects from them. In this system, they view and get record to monitor which students group with industrial projects and which mentors are linked with these groups. Their use of system is less than other users.
-
 
 \subsubsection{Super Administrator}
  Super admin is a main that handles all the system. These are technical advance in skills and great knowledge of system workflow. They  responsible for manage, handle,update and maintenance of system. 
@@ -360,8 +348,6 @@ System uses API serves then it follows the international laws of data and it’s
 
 \subsubsection{Future Enhancements and Scalability Assumptions}
 it is assumed that add artificial Intelligent in system to improve the assessment and flow of system and increase the capability of system to apply in different university in future.
-
-
 
 
 
@@ -564,105 +550,7 @@ The purpose of this function is to allow users to receive important notification
 \end{description}
 
 \subsection{Student Module}
-\subsubsection{Requirement 1: Form a New Project Group or Join an Existing Group}
-
-\paragraph{Introduction}
-The purpose of this function is to allow students to form a new Final Year Project group or join an existing group. This ensures that students can organize themselves according to university rules for project group formation.
-
-\paragraph{Input}
-\begin{itemize}
-\item Group Title (for creating new group)
-\item Group ID (for joining existing group)
-\item Group Member Details
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] System checks whether group size is within allowed limits and student is not already assigned to another group.
-\item[Sequence of Operations] Student selects create or join option → system validates rules → group is created or student is added.
-\item[Abnormal Situations] Group size exceeded or duplicate group membership.
-\item[Parameters Affected] Group records and student-project association.
-\item[Degrade Operation] System may slow during peak registration periods.
-\item[Methods Used] Rule-based validation and database transactions.
-\item[Output Validity Check] Group details must appear correctly on student dashboard.
-\end{description}
-
-\paragraph{Outputs}
-\begin{itemize}
-\item Group creation confirmation
-\item Successful group joining message
-\item Error messages for invalid actions
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] System shall support project group formation for all students.
-\item[Dynamic Requirement] Group creation or joining shall process within 5 seconds.
-\end{description}
-
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Group formation must follow FYP policies.
-\item[Hardware Limitation] Function shall operate on existing web servers.
-\end{description}
-
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Group formation shall be available during FYP registration phase.
-\item[Security] Only authorized students can create or join groups.
-\item[Maintainability] Group rules can be updated easily.
-\end{description}
-
-\subsubsection{Requirement 2: Send,Accept or Reject Group Invitations}
-
-\paragraph{Introduction}
-The purpose of this function is to allow students to manage group invitations during the formation of Final Year Project groups. This functionality enables students to send invitations to other students and also respond to invitations received from others. The system ensures that group formation follows university rules, where a project group can have a maximum of two members only.
-
-\paragraph{Input}
-\begin{itemize}
-\item Student Registration Number
-\item Invitation Action (Send / Accept / Reject)
-\item Group ID
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] System verifies that the student is not already part of another group and checks that the group size does not exceed the allowed limit.
-\item[Sequence of Operations] Student sends invitation → system validates eligibility → invitation is delivered to invited student. Invited student accepts or rejects → system updates group membership accordingly.
-\item[Abnormal Situations] System shows an error if group size limit is exceeded or student is already assigned.
-\item[Parameters Affected] Group membership records and invitation status.
-\item[Degrade Operation] Network issues or server maintenance may delay the invitation process.
-\item[Methods Used] Rule-based access control and relational database.
-\item[Output Validity Check] System confirms updated group status on student dashboards.
-\end{description}
-
-\paragraph{Outputs}
-\begin{itemize}
-\item Invitation sent confirmation
-\item Invitation accepted or rejected notification
-\item Error messages for invalid actions
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] System shall support invitation management for all students.
-\item[Dynamic Requirement] Invitation actions shall be processed within 5 seconds.
-\end{description}
-
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Group formation shall follow university FYP policies.
-\item[Hardware Limitation] Function shall operate on existing web servers.
-\end{description}
-
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Invitation feature shall be available during group formation phase.
-\item[Security] Only authorized students can manage invitations.
-\item[Maintainability] Group size rules can be updated easily.
-\end{description}
-
-\subsubsection{Requirement 3:Browse and Search Available Projects}
+\subsubsection{Requirement 1:Browse and Search Available Projects}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to browse and search available Final Year Project ideas provided by supervisors. This helps students explore different project options and select a project that matches their interests and skills.
@@ -711,154 +599,75 @@ The purpose of this function is to allow students to browse and search available
 \item[Maintainability] Project filters and categories can be updated.
 \end{description}
 
-\subsection{Requirement 4: View past Project Description}
+
+
+\subsubsection{Requirement 2: Project Proposal Submission and Management}
 
 \paragraph{Introduction}
-The purpose of this function is to allow students to view detailed descriptions of Final Year Projects. This helps students understand project objectives, scope, tools, and expected outcomes before selecting or proposing a project.
+The purpose of this function is to allow students to propose, submit, and revise Final Year Project proposals through a structured workflow. This feature enables students to either propose original project ideas when suitable projects are unavailable, or submit proposals for assigned projects. The system supports innovation while ensuring proper supervision, documentation, and revision control throughout the approval process.
 
 \paragraph{Input}
 \begin{itemize}
-\item Project ID
-\end{itemize}
+  \item Project Proposal Document
+  \item Notes 
+  \end{itemize}
 
 \paragraph{Processing}
 \begin{description}
-\item[Input Validity Checks] System verifies that the project exists.
-\item[Sequence of Operations] Student selects project → system retrieves project details → displays information.
-\item[Abnormal Situations] Project details unavailable or removed.
-\item[Parameters Affected] Project access records.
-\item[Degrade Operation] Delay due to database or server load.
-\item[Methods Used] Relational database retrieval.
-\item[Output Validity Check] System confirms accuracy of displayed data.
-\end{description}
+\item[Input Validity Checks] System validates all proposal details for completeness, checks file format and size compliance with university guidelines, verifies student authorization and group assignment, and prevents duplicate submissions.
 
-\paragraph{Outputs}
-\begin{itemize}
-\item Complete project description
-\item Supervisor information
-\item Project availability status
-\end{itemize}
+\item[Sequence of Operations] Student submits proposal/new idea → system validates all inputs → proposal is forwarded to assigned supervisor → system records submission with timestamp → confirmation is sent to student → supervisor reviews proposal → system tracks revision history.
 
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] System shall allow students to view project details.
-\item[Dynamic Requirement] Project details shall load within 3 seconds.
-\end{description}
+\item[Abnormal Situations] Invalid file format, missed deadlines, unauthorized submission attempts, duplicate proposals, incomplete submissions, or network failures during upload.
 
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Project descriptions shall follow documentation standards.
-\item[Hardware Limitation] Runs on existing web infrastructure.
-\end{description}
+\item[Parameters Affected] Proposal records, submission timestamps, revision history, supervisor notifications, and approval status.
 
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Project details shall be accessible during academic sessions.
-\item[Security] Only authorized users can view project information.
-\item[Maintainability] Project details can be updated easily.
-\end{description}
+\item[Degrade Operation] System queues submissions during network failures or high load, with delayed notifications while maintaining data integrity.
 
-\subsubsection{Requirement 5: Propose New Project Ideas to Supervisors}
+\item[Methods Used] Workflow-based approval system, file upload mechanism, relational database with version control, and role-based access validation.
 
-\paragraph{Introduction}
-The purpose of this function is to allow students to propose new Final Year Project ideas to supervisors when suitable projects are not available. This feature supports innovation and allows students to work on unique ideas under proper supervision.
-
-\paragraph{Input}
-\begin{itemize}
-\item Project Title
-\item Project Description
-\item Project Objectives
-\item Technology Stack
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] System checks completeness and validity of proposal details.
-\item[Sequence of Operations] Student submits proposal → system forwards proposal to supervisor → supervisor reviews proposal.
-\item[Abnormal Situations] Duplicate proposal or incomplete submission.
-\item[Parameters Affected] Proposal records and supervisor notifications.
-\item[Degrade Operation] Notification delays due to system load.
-\item[Methods Used] Workflow-based approval and relational database.
-\item[Output Validity Check] System confirms successful submission.
+\item[Output Validity Check] System confirms successful submission, validates document storage, and ensures proper notification delivery.
 \end{description}
 
 \paragraph{Outputs}
 \begin{itemize}
 \item Proposal submission confirmation
 \item Supervisor response notification
-\item Error message for invalid proposal
+\item Error messages for invalid/incomplete submissions
 \end{itemize}
 
 \paragraph{Performance Requirements}
 \begin{description}
-\item[Static Requirement] System shall support project proposal submission.
-\item[Dynamic Requirement] Proposal shall be submitted within 5 seconds.
+\item[Static Requirement] System shall support proposal submission and management for all registered students and supervisors.
+
+\item[Dynamic Requirement] 
+  \begin{itemize}
+  \item New idea proposals shall be submitted within 5 seconds
+  \item Document uploads shall be processed and stored within 10 seconds
+  \end{itemize}
 \end{description}
 
 \paragraph{Design Constraints}
 \begin{description}
-\item[Standard Compliance] Proposals shall align with academic policies.
-\item[Hardware Limitation] Uses existing servers and databases.
+\item[Standard Compliance] All proposals must align with academic policies and follow university FYP documentation standards.
+
+\item[Hardware Limitation] Function shall operate within existing server, storage, and database infrastructure.
 \end{description}
 
 \paragraph{Attributes}
 \begin{description}
-\item[Availability] Proposal feature shall be available during project selection phase.
-\item[Security] Only students can submit project proposals.
-\item[Maintainability] Proposal workflow can be updated easily.
+\item[Availability] Proposal features shall be available during official project selection and submission periods.
+
+\item[Security] 
+  \begin{itemize}
+  \item Only authorized students can submit proposals
+  \item Only assigned supervisors and authorized personnel can access proposal documents
+  \end{itemize}
+
+\item[Maintainability] Proposal workflow, submission rules, and document formats can be updated without affecting system stability.
 \end{description}
 
-\subsubsection{Requirement 6: Submit Project Proposals and Revisions to Supervisors}
-
-\paragraph{Introduction}
-The purpose of this function is to allow students to submit their project proposals to the assigned supervisors through the system. This feature also enables students to upload revised versions of the proposal if changes are requested by the supervisor. The system provides a structured and formal way of proposal submission, ensuring transparency and proper documentation throughout the approval process.
-
-\paragraph{Input}
-\begin{itemize}
-\item Student Registration Number
-\item Project Group ID
-\item Project Proposal Document
-\item Revision Notes (if applicable)
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] The system verifies that the student belongs to an approved project group and that the supervisor is officially assigned. It also checks whether the uploaded file format and size comply with university guidelines.
-\item[Sequence of Operations] Student uploads proposal → system validates file and group details → proposal is submitted to supervisor → system records submission → confirmation is sent to the student.
-\item[Abnormal Situations] The system displays an error message if the file format is invalid, submission deadline is missed, or the student is not authorized to submit.
-\item[Parameters Affected] Project proposal records, submission timestamps, and revision history.
-\item[Degrade Operation] In case of network failure or server downtime, the submission may be delayed and queued for processing once the system is restored.
-\item[Methods Used] File upload mechanism, database storage, and access control validation.
-\item[Output Validity Check] The system confirms that the proposal has been successfully submitted and stored.
-\end{description}
-
-\paragraph{Outputs}
-\begin{itemize}
-\item Proposal submission confirmation
-\item Revision submission acknowledgment
-\item Error notifications for failed submissions
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] The system shall support proposal submissions for all registered students.
-\item[Dynamic Requirement] Proposal uploads shall be processed and stored within 10 seconds.
-\end{description}
-
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Proposal submission shall follow university FYP documentation standards.
-\item[Hardware Limitation] Function shall operate within existing storage and server infrastructure.
-\end{description}
-
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Proposal submission shall be available during the official proposal submission period.
-\item[Security] Only authorized students and supervisors can access proposal documents.
-\item[Maintainability] Submission rules and formats can be updated without affecting system stability.
-\end{description}
-
-\subsection{Requirement 7: Check Proposal Approval Status}
+\subsection{Requirement 3: Check Proposal Approval Status}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to check the current approval status of their submitted project proposals. This feature ensures that students are informed about whether their proposal is pending, approved, or requires revision, along with any feedback provided by the supervisor.
@@ -906,7 +715,7 @@ The purpose of this function is to allow students to check the current approval 
 \item[Maintainability] Status categories can be modified if academic policies change.
 \end{description}
 
-\subsubsection{Requirement 8: Upload Project Documents}
+\subsubsection{Requirement 4: Upload Project Documents}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to upload various project-related documents such as SRS, design documents, progress reports, and final project submissions. This ensures centralized storage and easy access for supervisors and evaluators.
@@ -956,7 +765,7 @@ The purpose of this function is to allow students to upload various project-rela
 \item[Maintainability] New document types can be added without major system changes.
 \end{description}
 
-\subsubsection{Requirement 9: Replace Documents Within Submission Deadlines}
+\subsubsection{Requirement 5: Replace Documents Within Submission Deadlines}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to replace previously submitted project documents within the allowed submission deadlines. This feature ensures that students can correct mistakes, update content based on supervisor feedback, or submit improved versions of documents while maintaining proper version control and academic integrity.
@@ -1006,7 +815,7 @@ The purpose of this function is to allow students to replace previously submitte
 \item[Maintainability] Deadline rules can be updated easily without system redesign.
 \end{description}
 
-\subsection{Requirement 10: View Project Milestone Deadlines}
+\subsection{Requirement 6: View Project Milestone Deadlines}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to view all project milestone deadlines defined by the university or project coordinators. This feature helps students manage time effectively by providing clear visibility of important submission dates throughout the Final Year Project lifecycle.
@@ -1054,7 +863,7 @@ The purpose of this function is to allow students to view all project milestone 
 \item[Maintainability] Milestones can be updated without affecting other modules.
 \end{description}
 
-\subsubsection{Requirement 11: View Comments from Supervisors, Co-Supervisors and Industrial Mentors}
+\subsubsection{Requirement 7: View Comments from Supervisors, Co-Supervisors}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to view comments and feedback provided by supervisors, co-supervisors, and industrial mentors on submitted project work. This feature ensures effective communication and helps students improve project quality based on expert guidance.
@@ -1104,7 +913,7 @@ The purpose of this function is to allow students to view comments and feedback 
 \item[Maintainability] Feedback structure can be extended to include additional roles.
 \end{description}
 
-\subsection{Requirement 12: View Evaluation Marks}
+\subsection{Requirement 8: View Evaluation Marks}
 
 \paragraph{Introduction}
 The purpose of this function is to allow students to view their evaluation marks awarded during different stages of the Final Year Project. This functionality ensures transparency in assessment and helps students understand their performance in proposal evaluation, mid-term evaluation, and final defense.
@@ -1153,109 +962,8 @@ The purpose of this function is to allow students to view their evaluation marks
 \item[Maintainability] Evaluation formats can be updated without system disruption.
 \end{description}
 
-\paragraph{Requirement 13: Receive System Notifications and Announcements}
-
-\subsubsection{Introduction}
-The purpose of this function is to allow students to receive important system notifications and announcements related to the Final Year Project. These notifications include milestone deadlines, evaluation schedules, meeting updates, and general announcements from coordinators, supervisors etc.
-
-\textbf{Input}
-\begin{itemize}
-\item Students IDs
-\item Message Content
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] The system verifies the relevance of notifications based on student role and project group.
-\item[Sequence of Operations] System generates notification → notification is stored → displayed on student dashboard and notification panel.
-\item[Abnormal Situations] Delayed notification delivery due to network or server issues.
-\item[Parameters Affected] Notification logs and read status.
-\item[Degrade Operation] Low network access may delay notification delivery.
-\item[Methods Used] Event-based notification system and database storage.
-\item[Output Validity Check] System ensures notification content is correctly delivered to intended students.
-\end{description}
-
-\paragraph{Outputs}
-\begin{itemize}
-\item System notifications
-\item Announcements alerts
-\item Unread notification indicators
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] The system shall support notifications for all students.
-\item[Dynamic Requirement] Notifications shall be delivered within 5 seconds of creation.
-\end{description}
-
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Notifications shall follow university communication guidelines.
-\item[Hardware Limitation] Notification service shall operate on existing infrastructure.
-\end{description}
-
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Notification service shall be available throughout FYP duration.
-\item[Security] Only authorized announcements shall be visible to students.
-\item[Maintainability] Notification categories can be extended easily.
-\end{description}
-
-\subsubsection{Requirement 14: Schedule Meetings with Supervisors, Co-Supervisors, and Industrial Mentors}
-
-\paragraph{Introduction}
-The purpose of this function is to allow students to schedule meetings with supervisors, co-supervisors, and industrial mentors for project discussion and guidance.
-
-\paragraph{Input}
-\begin{itemize}
-\item Student Registration Number
-\item Project Group ID
-\item Meeting Date and Time
-\item Meeting Purpose
-\item Meeting Participants
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] The system checks participant availability and ensures that meeting time does not conflict with existing schedules.
-\item[Sequence of Operations] Student requests meeting → system validates schedule → meeting request is sent → confirmation or rejection is received.
-\item[Abnormal Situations] System shows error if selected time slot is unavailable.
-\item[Parameters Affected] Meeting schedules and availability records.
-\item[Degrade Operation] Scheduling delays may occur during server maintenance.
-\item[Methods Used] Calendar management system and role-based access.
-\item[Output Validity Check] System confirms meeting schedule visibility to all participants.
-\end{description}
-
-\paragraph{Outputs}
-\begin{itemize}
-\item Meeting schedule confirmation
-\item Meeting request notifications
-\item Error messages for conflicts
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] The system shall support meeting scheduling for all student groups.
-\item[Dynamic Requirement] Meeting scheduling shall be processed within 5 seconds.
-\end{description}
-
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Meeting scheduling shall comply with academic working hours.
-\item[Hardware Limitation] Function shall operate on existing scheduling services.
-\end{description}
-
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Meeting scheduling shall be available during active sessions.
-\item[Security] Only authorized users can schedule meetings.
-\item[Maintainability] Scheduling rules can be updated without affecting system flow.
-\end{description}
-
 
 \subsection{Supervisor Module}
-
-
 \subsubsection{Requirement 1: View Assigned Project Groups}
 
 \paragraph{Introduction}
@@ -1406,57 +1114,52 @@ The purpose of this function is to allow supervisors to provide detailed comment
 \item[Maintainability] Feedback mechanisms can be enhanced in future without affecting other system functions.
 \end{description}
 
-\subsubsection{Requirement 4:Schedule Meetings with Students}
+\subsubsection{Requirement 4: Access Student Submissions}
 
 \paragraph{Introduction}
-The purpose of this function is to allow supervisors to schedule meetings with students regarding project progress, clarifications, or guidance. This functionality ensures effective communication between supervisors and student groups and enables proper tracking of meeting schedules within the Final Year Project (FYP) system.
+The purpose of this function is to enable supervisors to access and review project submissions made by their assigned student groups. This ensures that cosupervisors can monitor student progress, verify the quality of work, and provide timely feedback to maintain FYP standards.
 
 \paragraph{Input}
 \begin{itemize}
-\item Supervisor ID
-\item Student Group ID
-\item Proposed meeting date and time
-\item Meeting venue or virtual platform link
-\item Agenda or topic for discussion (optional)
+\item Submission Type (Proposal, Report, Milestone Documents)
 \end{itemize}
 
 \paragraph{Processing}
 \begin{description}
-\item[Input Validity Checks] System validates the supervisor ID and confirms that the students belong to an assigned project group. It also checks for scheduling conflicts and ensures that the meeting falls within university working hours.
-\item[Sequence of Operations] Supervisor navigates to the “Schedule Meeting” section → selects project group → enters meeting details → system validates inputs → schedules the meeting → sends notifications to the student group.
-\item[Abnormal Situations] System displays an error if there is a scheduling conflict, invalid date/time, or if students are unavailable. Network delays may prevent timely notification delivery.
-\item[Parameters Affected] Meeting schedules, notifications, and student dashboards.
-\item[Degrade Operation] Network issues, server maintenance, or database downtime may delay scheduling or notifications.
-\item[Methods Used] Relational database to store meeting information, rule-based scheduling checks, and notification system for alerts.
-\item[Output Validity Check] System confirms scheduled meetings are accurately displayed on supervisor and student dashboards.
+\item[Input Validity Checks] System verifies that the supervisor is authorized for the selected project or group and that the requested submission type exists. File formats and size limitations are validated for proper access.
+\item[Sequence of Operations] Supervisor selects a project or student group → system fetches submissions from the database → files are displayed or downloaded for review.
+\item[Abnormal Situations] System displays errors if submissions are missing, file formats are unsupported, or access is attempted on unassigned projects. Network issues may delay file retrieval.
+\item[Parameters Affected] Student submission logs, access records, and database file references.
+\item[Degrade Operation] Server maintenance or network downtime may delay access to submissions.
+\item[Methods Used] Database retrieval, file management, access control, and validation rules for file integrity.
+\item[Output Validity Check] System ensures that all requested submissions are correctly retrieved and accessible to the co-supervisor.
 \end{description}
 
 \paragraph{Outputs}
 \begin{itemize}
-\item Meeting scheduled confirmation
-\item Notifications sent to students
-\item Error messages for invalid or conflicting meetings
+\item Access to submitted project documents
+\item Error messages for missing or unauthorized files
+\item Downloadable files for offline review
 \end{itemize}
 
 \paragraph{Performance Requirements}
 \begin{description}
-\item[Static Requirement] System shall support scheduling of multiple meetings for all assigned project groups.
-\item[Dynamic Requirement] Meeting scheduling and notifications shall be processed within 5 seconds.
+\item[Static Requirement] The system shall support all supervisors in accessing submissions for their assigned groups.
+\item[Dynamic Requirement] Submissions shall be retrieved within 5 seconds under normal operating conditions.
 \end{description}
 
 \paragraph{Design Constraints}
 \begin{description}
-\item[Standard Compliance] Meetings shall comply with university working hours and FYP guidelines.
-\item[Hardware Limitation] Function shall operate on existing web servers and scheduling database.
+\item[Standard Compliance] Submission access shall follow university FYP guidelines and file handling policies.
+\item[Hardware Limitation] Function shall work on existing web servers and database infrastructure.
 \end{description}
 
 \paragraph{Attributes}
 \begin{description}
-\item[Availability] Scheduling feature shall be available during the project period.
-\item[Security] Only authorized supervisors can schedule meetings for their assigned groups.
-\item[Maintainability] System shall allow updates to meeting scheduling rules or notification formats without affecting other modules.
+\item[Availability] Submission access shall be available during working hours and project periods.
+\item[Security] Only authorized supervisors can access submissions of assigned groups.
+\item[Maintainability] System shall allow updates for new submission types or formats without affecting access.
 \end{description}
-
 
 \subsection{Co-Supervisor Module}
 
@@ -1608,60 +1311,8 @@ The purpose of this function is to allow co-supervisors to provide detailed feed
 \item[Maintainability] Feedback templates and formats can be updated without affecting system operation.
 \end{description}
 
-\subsubsection{Requirement 4: Schedule Meetings with Project Groups}
-
-\paragraph{Introduction}
-The purpose of this function is to allow co-supervisors to schedule meetings with their assigned student project groups. This ensures proper coordination, progress tracking, and guidance throughout the FYP process. The system provides an interface for setting meeting dates, times, and agendas, while sending automatic notifications to all participants.
-
-\paragraph{Input}
-\begin{itemize}
-\item Co-Supervisor ID
-\item Project Group ID
-\item Meeting Date and Time
-\item Meeting Venue or Online Link
-\item Agenda or Purpose of Meeting
-\end{itemize}
-
-\paragraph{Processing}
-\begin{description}
-\item[Input Validity Checks] System verifies that the co-supervisor is authorized for the selected group. The chosen date and time are checked against existing meetings to avoid conflicts. Agenda or meeting description is validated for completeness.
-\item[Sequence of Operations] Co-supervisor selects a project group → system checks eligibility → co-supervisor enters meeting details → system validates input → meeting is saved in the database → notifications are sent to students and other stakeholders.
-\item[Abnormal Situations] System shows an error if the selected date/time conflicts with another meeting, the co-supervisor is unauthorized, or mandatory meeting details are missing. Network delays may postpone notification delivery.
-\item[Parameters Affected] Meeting schedules, student and co-supervisor notifications, and project progress logs.
-\item[Degrade Operation] System maintenance or low network connectivity may temporarily delay meeting scheduling or notifications.
-\item[Methods Used] Relational database for storing meetings, role-based access control, and automated notification service.
-\item[Output Validity Check] System confirms that meeting details are correctly saved and notifications are delivered to authorized users.
-\end{description}
-
-\paragraph{Outputs}
-\begin{itemize}
-\item Confirmation of scheduled meeting
-\item Notification sent to project group members
-\item Error messages in case of conflicts or invalid input
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{description}
-\item[Static Requirement] System shall allow all co-supervisors to schedule meetings for their assigned project groups.
-\item[Dynamic Requirement] Meeting scheduling and notification delivery shall be completed within 5 seconds under normal operation.
-\end{description}
-
-\paragraph{Design Constraints}
-\begin{description}
-\item[Standard Compliance] Meeting scheduling shall follow university FYP coordination policies.
-\item[Hardware Limitation] Function shall operate on the existing web and database servers.
-\end{description}
-
-\paragraph{Attributes}
-\begin{description}
-\item[Availability] Meeting scheduling shall be available during working hours and project periods.
-\item[Security] Only authorized co-supervisors can schedule meetings for their assigned groups.
-\item[Maintainability] Meeting templates and agenda formats can be updated without affecting system operation.
-\end{description}
 
 \subsection{Head of Department Module}
-
-
 \subsubsection{Requirement 1: View All FYP Projects of the Department}
 
 \paragraph{Introduction}
@@ -1811,498 +1462,7 @@ The purpose of this function is to allow the HoD to approve or reject FYP projec
 \item[Maintainability] Approval rules and feedback templates can be updated without system downtime.
 
 
-\subsection{Industrial Mentors Module}
-
-\subsubsection{Requirement 1: View Assigned Student Projects}
-
-\paragraph{Introduction}
-The main purpose of this function is to allow Industrial Mentors to view all the projects that are specifically assigned to them by the placement cell. This functionality helps mentors keep track of their responsibilities, ensures that they know which student groups they are guiding, and facilitates organized project supervision. The system ensures that only authorized mentors can access their assigned projects, maintaining data confidentiality and integrity.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item Mentor Credentials: Login details provided by the placement cell.
-    \item Assigned Project IDs: Unique identifiers of projects allocated to the mentor.
-    \item Student Project Data: Titles, proposals, progress reports, and related documents uploaded by students.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item Input Validity Checks:
-    \begin{enumerate}
-        \item Verify mentor login credentials.
-        \item Ensure that the mentor is assigned to the specific projects.
-        \item Validate the existence and accessibility of project data.
-    \end{enumerate}
-    \item Sequence of Operations:
-    \begin{enumerate}
-        \item Mentor logs into the system using their credentials.
-        \item System displays a dashboard of all projects assigned to the mentor.
-        \item Mentor selects a project to view detailed information and documents.
-        \item System ensures that project details are current and properly formatted.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{itemize}
-    \item If a mentor attempts to view projects not assigned to them, access is denied.
-    \item Missing or corrupted project files trigger notifications for corrective action.
-\end{itemize}
-
-\reqpoint{Methods Used}
-Role-based access control (RBAC) ensures secure access to only authorized project information.
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item Dashboard listing all assigned student projects.
-    \item Access to project details, including uploaded documents and submission timelines.
-    \item System logs showing mentor access for auditing purposes.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item Project lists and details must load within 2–3 seconds for 99\% of requests.
-\end{itemize}
-
-\paragraph{Design Constraints}
-\begin{itemize}
-    \item Must follow university and departmental data access guidelines.
-    \item Should function on existing institutional servers without additional resources.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Availability:} Function is accessible during working hours, excluding scheduled maintenance.
-    \item \textbf{Security:} Only assigned mentors can access their project data.
-    \item \textbf{Maintainability:} Dashboard logic and project display can be updated without system redesign.
-\end{itemize}
-
-\subsubsection{Requirement 2: Review Project Documents}
-
-\paragraph{Introduction}
-The main purpose of this function is to allow Industrial Mentors to review the documents submitted by students for their assigned projects. This functionality ensures that mentors can assess the progress, quality, and completeness of student work, provide constructive feedback, and verify compliance with academic and industrial standards.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item Mentor Credentials: Login details provided by the placement cell.
-    \item Assigned Project IDs: Unique identifiers of projects allocated to the mentor.
-    \item Student Project Documents: Uploaded proposals, progress reports, final reports, and supplementary files.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item Input Validity Checks:
-    \begin{enumerate}
-        \item Verify mentor login credentials and role authorization.
-        \item Confirm that the mentor is assigned to the selected project.
-        \item Validate the file format and completeness of uploaded documents (e.g., PDF, DOCX).
-    \end{enumerate}
-    \item Sequence of Operations:
-    \begin{enumerate}
-        \item Mentor logs into the system.
-        \item Selects a specific project from their assigned list.
-        \item Views and examines uploaded documents for completeness, correctness, and quality.
-        \item Provides feedback comments if necessary.
-        \item System logs the review activity and timestamps it.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{itemize}
-    \item Unauthorized access to unassigned projects triggers an error message.
-    \item Corrupted or unsupported file formats generate a notification.
-    \item Missing project files prompt an alert to the coordinator.
-\end{itemize}
-
-\reqpoint{Methods Used}
-Role-based access control (RBAC) for secure and authorized access; database transactions to log review actions.
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item Reviewed project documents accessible on mentor dashboard.
-    \item Notifications confirming document review logged in the system.
-    \item Audit logs of mentor review activities for accountability.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item Documents should open and display within 3–4 seconds for 99\% of requests.
-\end{itemize}
-
-\paragraph{Design Constraints}
-\begin{itemize}
-    \item Document review must adhere to university and departmental guidelines.
-    \item Functionality must work with existing servers without extra hardware.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Availability:} Accessible during working hours except for scheduled maintenance.
-    \item \textbf{Security:} Only assigned mentors can access and review documents; all actions are logged.
-    \item \textbf{Maintainability:} Document handling logic can be updated without major system redesign.
-\end{itemize}
-
-\subsubsection{Requirement 3: Provide Comments on Projects}
-
-\paragraph{Introduction}
-This function allows Industrial Mentors to provide detailed feedback and comments on student projects. The purpose is to guide students, highlight areas of improvement, and ensure the project aligns with academic and industrial standards.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item Mentor Credentials: Login information provided by the placement cell.
-    \item Assigned Project IDs: Unique identifiers for the projects assigned to the mentor.
-    \item Student Project Documents: Submitted proposals, progress reports, and other relevant files.
-    \item Feedback/Comments: Mentor’s evaluation notes, suggestions, and recommendations.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item Input Validity Checks:
-    \begin{enumerate}
-        \item Verify mentor identity and authorization for the project.
-        \item Ensure feedback/comments follow character limits and formatting rules.
-        \item Check that comments correspond to the correct project ID.
-    \end{enumerate}
-    \item Sequence of Operations:
-    \begin{enumerate}
-        \item Mentor logs into the system.
-        \item Selects a project from the assigned list.
-        \item Views the uploaded documents.
-        \item Adds comments, suggestions, or guidance notes for the project.
-        \item Saves and submits the comments, which are logged with timestamps.
-        \item System sends notifications to students, supervisors, and coordinators regarding the new feedback.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{itemize}
-    \item Attempt to comment on unassigned projects triggers an error.
-    \item System rejects comments exceeding allowed length or incorrect format.
-    \item Network issues may temporarily prevent comment submission.
-\end{itemize}
-
-\reqpoint{Methods Used}
-Role-based access control (RBAC), secure database transactions, automated notifications via email or system alerts, audit logging for accountability.
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item Mentor comments visible to students and supervisors on dashboards.
-    \item Notifications confirming feedback submission.
-    \item Audit logs of mentor feedback actions.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item 99\% of comments should be submitted and reflected in the system within 3 seconds.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Security:} Only assigned mentors can provide feedback; all comments are encrypted and logged.
-    \item \textbf{Availability:} Accessible during working hours except scheduled maintenance.
-    \item \textbf{Maintainability:} Comment submission logic can be updated without system redesign.
-\end{itemize}
-
-\subsubsection{Requirement 4: Schedule Meeting with Project Group}
-
-\paragraph{Introduction}
-This function enables Industrial Mentors to schedule meetings with their assigned student project groups. The purpose is to provide guidance, clarify doubts, review progress, and ensure projects align with academic and industrial standards.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item Mentor Credentials: Login information provided by the placement cell.
-    \item Assigned Project IDs: Unique identifiers for projects assigned to the mentor.
-    \item Proposed Meeting Dates and Times: Suggested schedule for discussion with the project group.
-    \item Student Availability Data: Optional input to verify suitable meeting times.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item Input Validity Checks:
-    \begin{enumerate}
-        \item Verify mentor identity and project assignment.
-        \item Check that proposed meeting time is within working hours and not in the past.
-        \item Validate that the selected students belong to the assigned project group.
-    \end{enumerate}
-    \item Sequence of Operations:
-    \begin{enumerate}
-        \item Mentor logs into the system.
-        \item Selects a project from the assigned list.
-        \item Chooses a suitable date and time for the meeting.
-        \item Confirms student group availability.
-        \item Schedules the meeting and stores it in the system database.
-        \item Sends notifications automatically to students, supervisors, and coordinators.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{itemize}
-    \item Attempt to schedule meetings outside working hours or in the past triggers an error.
-    \item Conflicts with existing schedules result in a warning for rescheduling.
-    \item Network or server issues may delay scheduling notifications.
-\end{itemize}
-
-\reqpoint{Methods Used}
-Role-based access control (RBAC), secure database transactions, automated notification services, audit logging.
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item Scheduled meetings visible to mentors, students, and supervisors.
-    \item Notifications confirming meeting details sent to all participants.
-    \item Audit logs of scheduled meetings for accountability.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item 99\% of meeting schedules and notifications should be processed and reflected in the system within 3 seconds.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Security:} Only assigned mentors can schedule meetings; meeting data is encrypted and logged.
-    \item \textbf{Availability:} Accessible during working hours except for scheduled maintenance.
-    \item \textbf{Maintainability:} Scheduling logic can be updated without redesigning the system.
-\end{itemize}
-
-\subsection{Placement Cell Department Module}
-
-\subsubsection{Requirement 1: View Industry-Based Projects}
-
-\paragraph{Introduction}
-This function allows Placement Cell staff to view all industry-based projects registered in the FYP Management System. It ensures proper monitoring of student engagement with industrial partners, tracks mentor assignments, and facilitates oversight of project progress.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item User Credentials: Login information for authorized Placement Cell staff.
-    \item Project Filters (Optional): Criteria to search or sort projects, such as project status, student group, or assigned mentor.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item \textbf{Input Validity Checks:}
-    \begin{enumerate}
-        \item Verify Placement Cell staff login credentials.
-        \item Ensure staff has access permissions for industry-based projects.
-        \item Validate filter parameters if applied.
-    \end{enumerate}
-    \item \textbf{Sequence of Operations:}
-    \begin{enumerate}
-        \item Staff logs into the system.
-        \item Accesses the list of all industry-based projects.
-        \item Views project details, including student group, assigned mentor, and project progress.
-        \item System retrieves real-time data from the database and displays it on the dashboard.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{enumerate}
-    \item Unauthorized access attempts trigger an error message and are logged.
-    \item Missing project data or mentor assignment records generate a warning notification.
-    \item System failure or network issues temporarily prevent access, with proper error handling.
-\end{enumerate}
-
-\reqpoint{Parameters Affected}
-\begin{itemize}
-    \item Project records accessed by Placement Cell staff.
-    \item Dashboard view logs and audit trails for monitoring access.
-\end{itemize}
-
-\reqpoint{Degrade Operation}
-Heavy server load may slow retrieval of project lists temporarily, but access remains functional.
-
-\reqpoint{Methods Used}
-\begin{enumerate}
-    \item Role-Based Access Control (RBAC) to ensure only authorized staff can view projects.
-    \item Database queries for retrieving up-to-date project data.
-    \item Audit logging to record all access for accountability.
-\end{enumerate}
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item List of industry-based projects displayed on the dashboard.
-    \item Project details including student group, mentor, status, and progress.
-    \item Notifications or warnings in case of missing data or access issues.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item \textbf{Static Requirement:} System shall allow Placement Cell staff to view all industry-based projects securely.
-    \item \textbf{Dynamic Requirement:} 99\% of project list retrieval requests should be processed within 3 seconds under normal load.
-\end{itemize}
-
-\paragraph{Design Constraints}
-\begin{itemize}
-    \item \textbf{Standards Compliance:} Must follow university guidelines for data access and confidentiality.
-    \item \textbf{Hardware Limitation:} Function must operate on existing servers without additional hardware.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Availability:} Available during working hours; occasional maintenance may cause temporary downtime.
-    \item \textbf{Security:} Access restricted to authorized Placement Cell staff; sensitive data is encrypted.
-    \item \textbf{Maintainability:} Project viewing logic can be updated without redesigning the system.
-    \item \textbf{Transferability / Conversion:} Can integrate with university project management systems in the future.
-\end{itemize}
-
-\subsubsection{Requirement 2: View Engaged Industrial Mentor Records}
-
-\paragraph{Introduction}
-This function allows Placement Cell staff to access records of all Industrial Mentors engaged with student projects. It ensures proper monitoring of mentor participation, helps track mentor assignments, and facilitates coordination between students, supervisors, and mentors.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item User Credentials: Login information for authorized Placement Cell staff.
-    \item Mentor Filters (Optional): Search parameters such as mentor name, assigned project, or availability status.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item \textbf{Input Validity Checks:}
-    \begin{enumerate}
-        \item Verify Placement Cell staff login credentials.
-        \item Ensure staff has authorization to view mentor records.
-        \item Validate filter or search criteria if applied.
-    \end{enumerate}
-    \item \textbf{Sequence of Operations:}
-    \begin{enumerate}
-        \item Staff logs into the system.
-        \item Accesses the section for Industrial Mentor records.
-        \item Views the list of engaged mentors along with project assignments and contact details.
-        \item System retrieves real-time mentor information from the database and displays it accurately.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{enumerate}
-    \item Unauthorized access triggers an error message and is logged for security.
-    \item Missing or incomplete mentor assignment data generates a warning notification.
-    \item Network interruptions temporarily prevent access, with proper error messages.
-\end{enumerate}
-
-\reqpoint{Parameters Affected}
-\begin{itemize}
-    \item Mentor assignment records and project engagement logs accessed by staff.
-    \item Audit logs tracking access and retrieval activity.
-\end{itemize}
-
-\reqpoint{Degrade Operation}
-High server load may slow retrieval of mentor records but access remains functional.
-
-\reqpoint{Methods Used}
-\begin{enumerate}
-    \item Role-Based Access Control (RBAC) ensures only authorized Placement Cell staff can view mentor data.
-    \item Database queries for retrieving accurate mentor assignment records.
-    \item Audit logging to track access and maintain accountability.
-\end{enumerate}
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item Complete list of Industrial Mentors engaged in student projects.
-    \item Details of mentor assignments, contact information, and project involvement.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item \textbf{Static Requirement:} The system shall allow Placement Cell staff to view engaged Industrial Mentor records securely.
-    \item \textbf{Dynamic Requirement:} 99\% of mentor record retrieval requests should be completed within 3 seconds under normal load.
-\end{itemize}
-
-\paragraph{Design Constraints}
-\begin{itemize}
-    \item \textbf{Standards Compliance:} Must follow university guidelines for mentor data confidentiality and reporting.
-    \item \textbf{Hardware Limitation:} Function must operate efficiently on existing servers without additional hardware.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Availability:} Available during working hours, with minimal downtime for maintenance.
-    \item \textbf{Security:} Access restricted to authorized staff; mentor records are encrypted.
-    \item \textbf{Maintainability:} Mentor viewing functionality can be updated without system redesign.
-    \item \textbf{Transferability / Conversion:} Can integrate with university project management systems in the future.
-\end{itemize}
-
-\subsection{Requirement 3: Track Groups Who Work on Industrial Projects}
-\paragraph{Introduction}
-This function allows Placement Cell staff to monitor and track student groups involved in industry-linked projects. It ensures that student progress is aligned with project milestones, facilitates coordination with Industrial Mentors, and provides oversight for timely completion of projects.
-
-\paragraph{Inputs}
-\begin{itemize}
-    \item User Credentials: Login details for authorized Placement Cell staff.
-    \item Project Identifiers: Unique IDs of industry-linked projects to filter student groups.
-    \item Tracking Filters (Optional): Parameters such as student group name, project stage, or mentor assigned.
-\end{itemize}
-
-\paragraph{Processing}
-\begin{itemize}
-    \item \textbf{Input Validity Checks:}
-    \begin{enumerate}
-        \item Verify staff login credentials and authorization.
-        \item Ensure selected project IDs exist and are linked to industry-based projects.
-        \item Validate any applied filters or search parameters.
-    \end{enumerate}
-    \item \textbf{Sequence of Operations:}
-    \begin{enumerate}
-        \item Staff logs into the system.
-        \item Navigates to the student project tracking section.
-        \item Selects the projects or groups to track.
-        \item Views real-time progress, submissions, and milestone completion status.
-        \item System updates tracking logs and timestamps automatically.
-    \end{enumerate}
-\end{itemize}
-
-\reqpoint{Abnormal Situations}
-\begin{enumerate}
-    \item Unauthorized access attempts trigger an error and are logged.
-    \item Missing project or group data generates a warning notification.
-    \item Network interruptions may delay tracking information but system provides proper error messages.
-\end{enumerate}
-
-\reqpoint{Parameters Affected}
-\begin{itemize}
-    \item Student group progress records and milestone logs.
-    \item Mentor assignment and tracking data.
-    \item Audit logs for tracking activity.
-\end{itemize}
-
-\reqpoint{Degrade Operation}
-System may experience slower response under high load but remains accessible for tracking purposes.
-
-\reqpoint{Methods Used}
-\begin{enumerate}
-    \item Role-Based Access Control (RBAC) ensures only authorized Placement Cell staff can access student group data.
-    \item Database transactions to retrieve and update project tracking data reliably.
-    \item Audit logging to maintain accountability and trace all tracking activities.
-\end{enumerate}
-
-\paragraph{Outputs}
-\begin{itemize}
-    \item Complete list of student groups working on industry-linked projects.
-    \item Current project status, milestones achieved, and mentor assignments.
-    \item Notifications or warnings if data is incomplete or inconsistent.
-\end{itemize}
-
-\paragraph{Performance Requirements}
-\begin{itemize}
-    \item \textbf{Static Requirement:} The system shall allow Placement Cell staff to track student groups on industrial projects securely and efficiently.
-    \item \textbf{Dynamic Requirement:} 99\% of tracking requests should be processed within 3--5 seconds under normal conditions.
-\end{itemize}
-
-\paragraph{Design Constraints}
-\begin{itemize}
-    \item \textbf{Standards Compliance:} Must follow university policies for student data access and confidentiality.
-    \item \textbf{Hardware Limitation:} Function must operate using existing servers without additional hardware requirements.
-\end{itemize}
-
-\paragraph{Attributes}
-\begin{itemize}
-    \item \textbf{Availability:} Accessible during working hours with minimal downtime.
-    \item \textbf{Security:} Only authorized staff can view tracking data; all records are encrypted.
-    \item \textbf{Maintainability:} Tracking functionality can be updated without major redesign.
-    \item \textbf{Transferability / Conversion:} Can integrate with future project management or evaluation modules.
-\end{itemize}
-
-\subsection{External and Internal (faculty) Evaluators Module}
-
-
+\subsection{External and Internal Evaluators Module}
 \subsubsection{Requirement 1: View Assigned Projects for Evaluation}
 \paragraph{Introduction}
 This function allows External and Internal Evaluators to view the list of Final Year Projects assigned to them for assessment. It ensures that evaluators have access only to projects they are authorized to evaluate, supporting impartial and organized evaluation processes. The system provides secure access to project details and related documents.
@@ -2634,7 +1794,112 @@ This function allows External Evaluators to access the detailed evaluation crite
 
 \subsection{Coordinator Module}
 
-\subsubsection{Requirement 1: Manage FYP Timelines of Milestones}
+
+
+\subsubsection{Requirement 1: Manage Student Groups and Project Details}
+
+\paragraph{Introduction}
+The purpose of this function is to enable the FYP Coordinator to create and manage student groups and their assigned project details. The coordinator can form groups, assign members, and specify complete project information through structured form inputs. This ensures proper organization and documentation of all FYP groups and projects.
+
+\paragraph{Input}
+\begin{itemize}
+\item \textbf{For Group Formation:}
+  \begin{itemize}
+  \item Group Name/ID (e.g., "FYP-2024-G01")
+  \item Group Formation Date
+  \item Student Registration Numbers (member assignments)
+  \item Number of Members
+  \end{itemize}
+  
+\item \textbf{For Project Details:}
+  \begin{itemize}
+  \item Project Title
+  \item Project Full Description
+  \item Project Objectives (detailed)
+  \item Project Scope and Deliverables
+  \item Technology Stack/Requirements
+  \item Required Prerequisite Skills
+  \item Assigned Supervisor Name
+  \item Project Category/Type
+  \item Project Status (Available/Assigned/In Progress/Completed)
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Processing}
+\begin{description}
+\item[Input Validity Checks] 
+  \begin{itemize}
+  \item Verify all student registration numbers exist in the system
+  \item Ensure group size meets minimum and maximum requirements
+  \item Check for duplicate group names/IDs
+  \item Validate that students are not already assigned to other groups
+  \item Ensure all required project detail fields are completed
+  \item Verify supervisor availability and validity
+  \end{itemize}
+
+\item[Sequence of Operations] 
+  Coordinator accesses group/project management form → fills in all required details → submits the form → system validates all inputs → system saves group and project records to database → links group with project → updates all related entities → generates confirmation
+
+\item[Abnormal Situations] 
+  Duplicate group names, invalid student registration numbers, students already in other groups, incomplete form fields, database connection failures, or supervisor assignment conflicts
+
+\item[Parameters Affected] 
+  Group records, project details, student assignments, supervisor allocations, and dashboard displays
+
+\item[Degrade Operation] 
+  During system issues, form submissions are queued for processing; data integrity is maintained while operations resume normally after recovery
+
+\item[Methods Used] 
+  Form validation, relational database operations, transaction processing, and unique constraint enforcement
+
+\item[Output Validity Check] 
+  System verifies successful database insertion, confirms group-project linkage, and validates that all data is correctly stored and retrievable
+\end{description}
+
+\paragraph{Outputs}
+\begin{itemize}
+\item Success confirmation message with Group ID and Project Reference
+\item Updated group listing in the system
+\item Updated project assignment records
+\item Automatic notifications to assigned students and supervisor
+\item Error messages for invalid inputs or conflicts
+\item Form validation feedback for incomplete fields
+\end{itemize}
+
+\paragraph{Performance Requirements}
+\begin{description}
+\item[Static Requirement] The system shall support group and project management for all FYP students across all departments
+
+\item[Dynamic Requirement] 
+  \begin{itemize}
+  \item 95\% of group and project form submissions shall be processed within 5 seconds
+  \item System shall handle multiple coordinator operations concurrently
+  \end{itemize}
+\end{description}
+
+\paragraph{Design Constraints}
+\begin{description}
+\item[Standard Compliance] Group formation and project details shall comply with university FYP regulations and department guidelines
+
+\item[Hardware Limitation] Operations shall function within existing server and database infrastructure
+\end{description}
+
+\paragraph{Attributes}
+\begin{description}
+\item[Availability] Group and project management functions shall be available during FYP administration periods
+
+\item[Security] 
+  \begin{itemize}
+  \item Only FYP Coordinator and authorized administrators can create/modify groups and projects
+  \item Student data privacy is maintained throughout the process
+  \end{itemize}
+
+\item[Maintainability] The form structure and validation rules can be updated as per changing academic requirements
+\end{description}
+
+
+
+\subsubsection{Requirement 2: Manage FYP Timelines of Milestones}
 
 \paragraph{Introduction}
 Purpose of this function is that system makes the coordinator to manage the timeline of FYP milestones. This contains the creating, updating, scheduling and making the deadlines of project milestones. 
@@ -2696,7 +1961,7 @@ Purpose of this function is that system makes the coordinator to manage the time
 \end{enumerate}
 
 
-\subsubsection{Requirement 2: Assign evaluators and evaluation schedules}
+\subsubsection{Requirement 3: Assign evaluators and evaluation schedules}
 
 \paragraph{Introduction}
 Purpose of this function is that system allows the Coordinator to assign the internal and external evaluator to FYP groups and evaluation schedules. This function makes the process evaluation schedule and evaluator according to the university assessment policies.
@@ -2765,7 +2030,7 @@ Purpose of this function is that system allows the Coordinator to assign the int
 \end{enumerate}
 
 
-\subsubsection{Requirement 3: Assign supervisors and co-supervisors}
+\subsubsection{Requirement 4: Assign supervisors and co-supervisors}
 
 \paragraph{Introduction}
 Purpose of this function is that system allows the coordinator to assign the superviors and co supervisors to FYP groups. This function shows the each group get well guidance of project with according to department.
@@ -2828,7 +2093,7 @@ Purpose of this function is that system allows the coordinator to assign the sup
 \end{enumerate}
 
 
-\subsubsection{Requirement 4: Handle Issues of All Users related to FYP}
+\subsubsection{Requirement 5: Handle Issues of All Users related to FYP}
 
 \paragraph{Introduction}
 Purpose of this function is that system allows the coordinator to manage and settle the FYP related issue raised by users that are in FYP process. Issues like projects conflict, deadlines problems, scheduling issues etc.
