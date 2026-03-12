@@ -1,0 +1,529 @@
+\documentclass[12pt,a4paper]{report}
+
+
+\usepackage[a4paper, margin=1in, headheight=15pt]{geometry}
+\usepackage{setspace}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}     
+\usepackage{cite}         
+\usepackage{url}  
+\usepackage{float}
+\usepackage{longtable}  
+\usepackage{array}      
+\usepackage{fancyhdr}  
+
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\newcommand{\hdrrow}{}
+\newcommand{\altrow}{}
+
+\setstretch{1.2}
+
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+
+\pagestyle{fancy}
+\fancyhf{} 
+
+
+\fancyhead[R]{\underline{FYP Management System - Project Proposal}}
+
+
+\fancyfoot[C]{\rule{\linewidth}{0.4pt}\vspace{2pt}\\\thepage}
+
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+\begin{document}
+
+% TITLE PAGE
+\begin{titlepage}
+    \centering
+    \includegraphics[width=4cm]{Namal.png}\par\vspace{1cm}
+
+    {\LARGE \textbf{Department of Computer Science}}\\[0.3cm]
+    {\Large \textbf{Namal University, Mianwali}}\\[1.5cm]
+
+    {\Huge \textbf{FYP Management System}}\\[0.5cm]
+    {\Large \textbf{Project Proposal}}\\[1cm]
+    {\large \textbf{Subject Title:} Database System}\\[1.5cm]
+
+    \textbf{Team Members:}\\[0.3cm]
+    \begin{center}
+    \begin{tabular}{|l|l|p{6cm}|} 
+    \hline
+    \textbf{Name} & \textbf{Roll Number} & \textbf{Email} \\ \hline
+    Mubashir Hassan & NUM-BSCS-2024-38 & bscs24f38@namal.edu.pk \\ \hline
+    Shumaila Sarfaraz & NUM-BSCS-2024-74 & bscs24f74@namal.edu.pk \\ \hline
+    Sadia & NUM-BSCS-2024-68 & bscs24f68@namal.edu.pk \\ \hline
+    \end{tabular}
+    \end{center}
+
+    \vspace{1.5cm}
+    \textbf{Submission Date:} March 12, 2026\\[2cm]
+
+    \vfill
+    \textbf{Submitted to:}\\
+    Miss Asiya Batool\\
+    Lecturer, Department of Computer Science
+
+\end{titlepage}
+
+% TABLE OF CONTENTS
+\tableofcontents
+\newpage
+
+\section{Introduction}
+Final Year Project (FYP) is an extremely significant and mandatory component of undergraduate degree program. The stage involves students combining practical and theoretical knowledge to solve a real world problem. It is essentially the final substantial need prior to the achievement of the degree thus has much significance to the students and the university.
+It is not so easy to manage the FYP process at any University. Today all the FYP related work is performed manually. Students would be forced to hand in their ideas on paper and wait to have them approved by the coordinator. They do not have an appropriate follow-up of what group is at what point. University mostly stores FYP data in Excel sheets and other manual tools to track the project development process since the group formation, to the final evaluation.
+This manual method introduces numerous issues such as repetition of data in various files, the maintenance of the information is not done in the correct manner and the entire process is slow and ineffective. This approach is becoming more difficult to cope with as the amount of students is rising annually. We are designing an FYP Management System, which is specifically developed to address all these issues and is to be applied to Namal University. Any FYPMS needs a centralized database  driven to digitalize this system and automate all the stages of FYP like proposal submission, supervisor assignment and final submission to ensure that all processes are done in a smooth manner through a single centralized location. A well designed database system can defines the system automation and these can settle the FYPMS with modern digital academics plateform.
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Problem Statement}
+
+
+All the tasks associated with Final Year Projects are now handled at Namal University using manual processes or basic Excel based programs. The management team with coordinators and faculty are struggling with numerous challenges as a consequence of the rising number of students and projects per year. There is no centralized platform that to manage FYP process from student group formation to last final defense that creates data redundancy, inconsistency, loss of records and significant administrative overhead.
+ All these problems will be resolved by our proposed FYP Management System which will offer one platform where all steps will be actively handled and monitored with relational database driven system that centralizes all FYP tasks,data integrity and role based access for every users. Reduce the gap between data and system which gives smooth FYP Management system.
+
+
+
+
+
+
+
+
+% ════════════════════════════════════════════════════════════════════
+\section{Objectives}
+The key aims of the FYP Management System include:
+
+\begin{enumerate}
+    \item To computerize the entire process of FYP management that involves formation of student groups up to the last assessment.
+
+
+    \item To grant role based access to all users such that the students, supervisors, coordinators  can only view and perform what is relevant to their position.
+
+
+
+    \item To have adequate and comprehensive records of all FYPs of the past and present that are kept in one centralized system.
+   
+    \item To design and implement a structured relational database to efficiently store and handle FYP-related data.
+  
+    \item To eliminate the duplication of data and have all information uniform and stored under one roof.
+
+    \item To ensure that the system is scalable such that it can support a high number of users and projects without any performance problems.
+
+    \item Make ensure data integrity, consistency and security in system database by using  constraints, normalization and access control mechanisms.
+
+ 
+\end{enumerate}
+
+%═════════════════════════════════════════════════════════════════════
+\section{Scope}
+
+A centralized web application to digitize and handle the complete Final Year Project lifecycle at Namal University.
+
+\subsection{Included Features}
+
+    \begin{itemize}
+        \item \textbf{Secure login} with role-based access control.
+        
+        \item \textbf{Centralized relational database} for all FYP data.
+        
+        \item \textbf{Management of student }groups, projects, and advisor assignments.
+        
+        \item \textbf{Online submission and status tracking} of project milestones.
+        
+        \item \textbf{Advisor feedback} on submissions.
+    \end{itemize}
+
+
+    \begin{itemize}
+        \item \textbf{Management of evaluation} schedules, criteria, and result submission.
+        
+        \item \textbf{Student view} of projects, groups, advisors, feedback, and results.
+        
+        \item \textbf{User account and role management} by administrators.
+        
+    \end{itemize}
+
+
+\subsection{Excluded Features}
+
+\begin{itemize}
+    \item \textbf{No integration} with external university systems 
+    
+    \item \textbf{No native mobile application} System based on web technology.
+    
+    \item \textbf{No AI-based features} System has no AI integration init.
+    
+    \item \textbf{No non-FYP processes} There is external processes like attendance, course registration.
+    
+\end{itemize}
+\section{Data Collection}
+
+
+The following methods will be employed to collect and generate data for populating the database and testing the system:
+
+\vspace{6pt}
+\begin{longtable}{|L{3.5cm}|p{10cm}|}
+    \hline
+    \textbf{Method} & \textbf{Description} \\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Method} & \textbf{Description} \\
+    \hline
+    \endhead
+    
+    Manual Entry &
+    Data created manually by  during system setup.This includes student data, faculty data and project details etc. \\
+    \hline
+    
+   Github &
+   System like FYP management data available on GitHub will be read and find to design schema 
+    structure inspiration and get data patterns for FYP 
+    management system. \\
+    \hline
+    
+    Kaggle &
+    FYP management datasets on Kaggle will be used for 
+    database and testing purposes. \\
+    \hline
+    
+    AI-Generated Data (LLMs) &
+    AI tools will be used to generate dummy and sample data for testing system.\\
+    \hline
+    
+    Scripts &
+    Automated Python scripts using libraries like Faker will be developed to generate data. \\
+    \hline
+\end{longtable}
+
+% ══════════════════════════════════════════════════════════════════
+\section{System Functionality}
+
+The Final Year Project Management System (FYPMS) gives a centralized, specific role-based 
+platform that handles all phases of FYPs. System has 
+5 different users that has functionalities based on their role and responsibilities. All users has same authentication method, but tasks and functionalities are differ by role to ensure data security and access control.
+
+\subsection{Common Functionality}
+
+\textbf{Authentication} is a functionality that is the same across all users. Every user logs in using stored credentials table and checks their data related to Person record .After login, system knows the user's role and gives access to features and data specific to that role only.
+
+\subsection{Coordinator}
+
+The Coordinator is a user responsible for handling all FYP related data and its workflow. Coordinator performs the following functions:
+
+\begin{itemize}
+    \item \textbf{Group Management} that gives access to create, update and delete student groups.
+    
+    \item \textbf{Project Management} has ability to create, update and handle project data.
+    
+    \item \textbf{Project Assignment Management} assigns a project to a specific student group.
+    
+    \item \textbf{Advisor Assignment Management} allows linking a supervisor and co-supervisor to each project assignment.
+    
+    \item \textbf{Evaluation Management}   defines and manages evaluation milestones.
+    
+    \item \textbf{Evaluation Result Management} records and updates group evaluation results.
+\end{itemize}
+
+\subsection{Super Admin}
+
+The Super Admin works at an administrative level and does not interact with FYP content directly. Super Admin responsibilities  on user management and access control.
+
+\begin{itemize}
+    
+    \item \textbf{User Account Management} allows creating, updating, and deleting credentials,user records and assigning roles to each user account.
+    
+    \item \textbf{Student, Faculty and Evaluator Account Management} enables to create and handle student, faculty, and evaluator records.
+    
+    \item \textbf{Role and Permission Management} assigns and modifies user roles across all account types.
+    
+    \item \textbf{Credential Management} has ability to reset and update username and password for any user account when needed.
+    
+    \item \textbf{User Record Viewing} allows to view all registered persons and their associated account roles across the system.
+    
+\end{itemize}
+
+\subsection{Student}
+
+Student has ability to view information relevant to its group and project.
+
+\begin{itemize}
+    \item \textbf{Group Information Viewing} allows to view assigned group details.
+    
+    \item \textbf{Project Information Viewing} allows to view the project details.
+    
+    \item \textbf{Advisor Information Viewing} enables to view the details of the supervisor and co-supervisor associated to their group's project.
+    
+    \item \textbf{Evaluation Result Viewing} allows to view  evaluation results.
+     
+    \item \textbf{Adivisor comments and status of Document/text of milestone  Viewing} allows to view  feedback or comment and status of the milestone submission.
+
+  \item \textbf{Note:} There are two option to store pdf or files, ones is stores the path of file in database and other we make tables related to type of proposal to info directly tables.
+    
+\end{itemize}
+
+\subsection{Faculty (Supervisor / Co-Supervisor)}
+
+Faculty members can  monitor their assigned groups and provide 
+academic guidance during the FYP phase.
+
+\begin{itemize}
+    \item \textbf{Assigned Group Viewing} allows to view all groups where appear as supervisor or co-supervisor.
+    
+    \item \textbf{Group Membership Viewing} allows to view  students of each assigned group.
+    
+    \item \textbf{Project Detail Viewing} provides access to view projects details associated to their assigned groups.
+    
+    \item \textbf{Evaluation Schedule Viewing} allows  to view  evaluation details.
+    
+    \item \textbf{Feedback and Comment Submission} allows to submit  feedback and comments on project submissions.
+\end{itemize}
+
+\subsection{Evaluator}
+
+Evaluators are those check the different milestones of the FYP. These are following functionalities:
+
+\begin{itemize}
+    \item \textbf{Assigned Group Viewing} allows to view the groups assigned for evaluation.
+    
+    \item \textbf{Project Detail Viewing} enables to view the project details of their assigned groups.
+    
+    \item \textbf{Evaluation Criteria Viewing}  view the evaluation criteria.
+    
+    \item \textbf{Evaluation Result Submission} allows to insert evaluation result and comment into the Evaluation Result table.
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════════════
+\section{Technology Stack}
+
+The following technologies and tools have been selected for the development of the
+FYPMS database system.
+
+\vspace{6pt}
+\begin{longtable}{|L{2.8cm}|L{3.2cm}|p{7.2cm}|} 
+    \hline
+    \textbf{Component} &
+    \textbf{Technology} &
+    \textbf{Justification} \\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Component} &
+    \textbf{Technology} &
+    \textbf{Justification} \\
+    \hline
+    \endhead
+    
+    DBMS &
+     MySQL &
+    Use relational DBMS  to make relational between different tables with full support of constraints and data integrity. \\
+    \hline
+    
+    Query Language &
+    SQL (Standard SQL) &
+    Standard language for schema creation, data manipulation and
+    reporting queries. \\
+    \hline
+    
+    Backend Framework &
+    ASP.NET / Node.js / Python &
+    Gives ORM and API layer between the database and the frontend application. \\
+    \hline
+    
+    Frontend &
+    HTML, CSS, JavaScript and its frameworks (react) &
+    Web based interface accessible through standard browsers on desktop and mobile devices. \\
+    \hline
+    
+    Schema Design Tool &
+    Visual Paradigm / dbdiagram.io &
+    Used for ER diagram creation, relationship mapping and schema visualization. \\
+    \hline
+    
+    Version Control &
+    Git / GitHub &
+    Source code and schema versioning for collaborative development. \\
+    \hline
+
+\end{longtable}
+
+% ════════════════════════════════════════════════════════════════════
+\section{User Classes}
+
+The FYPMS has multiple different user classes with specific roles, access permissions and interaction with associated database.
+
+\vspace{6pt}
+\begin{longtable}{|L{2.4cm}|L{2.6cm}|p{8.2cm}|} 
+    \hline
+    \textbf{User Class} &
+    \textbf{System Role} &
+    \textbf{Database Access \& Responsibilities} \\
+    \hline
+    \endfirsthead
+
+    
+    Student &
+    Read / Write (Limited) &
+    View own group, project assignment, evaluation results and advisors details. Submit documents/text and check status of submssion from advisor. \\
+    \hline
+    
+    Faculty / Advisor &
+    Read/Write (Limited) &
+    View assigned groups and project documents. Add comments and feedback on submissions. Access evaluation schedules. \\
+    \hline
+    
+    
+    Evaluators &
+    Read / Write (Limited) &
+    View assigned project documents and evaluation criteria. Submit evaluation marks and remarks for assigned groups. \\
+    \hline
+    
+    Coordinator &
+    Read/Write (Full FYP) &
+    Create and manage groups, assign projects and advisors, manage evaluation schedules and milestones, handle user issues. \\
+    \hline
+    
+    Super Administrator &
+    Full Access &
+    Create, update, and delete all user accounts.Manage roles and permissions.Full system access including backup and configuration. \\
+    \hline
+\end{longtable}
+
+% ════════════════════════════════════════════════════════════════════
+\section{Task Division}
+
+The project responsibilities have been divided among team members ensuring balanced 
+contribution and clear accountability across all phases of the project.
+
+\vspace{6pt}
+
+\scriptsize
+\begin{longtable}{|p{1.6cm}|p{1.6cm}|p{3.0cm}|p{3.0cm}|p{3.0cm}|}
+    \hline
+    \textbf{Phase} &
+    \textbf{Task} &
+    \textbf{Mubashir Hassan} &
+    \textbf{Shumaila Sarfaraz} &
+    \textbf{Sadia} \\
+    \hline
+    \endfirsthead
+    
+    
+    \hline
+    \multicolumn{5}{|r|}{{Continued on next page}} \\
+    \endfoot
+    
+    \hline
+    \endlastfoot
+    
+    % Report Row
+    \textbf{Report} &
+    \textbf{Writing \& Doc} &
+        User Classes, System Functionalities, Data Collection, Formatting, References &
+        Technology Stack, Objectives, Conclusion, References &
+        Introduction, Problem Statement, Scope, References \\
+    \hline
+    
+    % ER Diagram Row
+    \textbf{ER Diagram} &
+    \textbf{Entity \& Relation} &
+        Person, User Account, Student, Group Membership, Entities,  Attributes, Relationships &
+        Faculty,Group, Group Membership, Project, Project Assignment, Relationships &
+        Evaluator, Evaluation, Evaluation Result, Entities, Relationships \\
+    \hline
+    
+  
+    \textbf{Database Design} &
+    \textbf{Schema \& Norm} &
+        Person, User Account, Student, Group membership; DDL Scripts &
+        Group, faculty, Project, Project Assignment Tables; DDL Scripts &
+        Evaluator, Evaluation, Evaluation Result Tables; DDL Scripts \\
+    \hline
+    
+    % Development & Implementation Row
+    \textbf{Development \& Implementation} &
+    \textbf{Backend \& Integration} &
+        \textbf{Super Admin:} Person, Student, Faculty, User Account, Credential Management &
+        \textbf{Coordinator:} Group, Membership, Project, Assignment, Advisor Managemet &
+        \textbf{Evaluator:} Evaluation Type, Result Management; \textbf{Student/Faculty:} View Modules \\
+    \hline
+    
+
+    \textbf{Web Development} &
+    \textbf{Frontend Modules} &
+        \textbf{Super Admin:} Person, Account, Role, Permission Pages \textbf{Student:} Viewing Pages; &
+        \textbf{Coordinator:} Group, Project, Assignment, Advisor Pages &
+        \textbf{Evaluator:} Evaluation, Result Pages;  \textbf{Faculty:} Feedback Pages \\
+    \hline
+    
+\end{longtable}
+
+\normalsize
+\vspace{4pt}
+
+All team members will collaborate on sample data population, final schema validation and system presentation. These task division is based on base system required.During design and development further task may occur and divided on requirement.
+
+% ════════════════════════════════════════════════════════════════════
+\section{Conclusion}
+
+Final Year Project Management System represents advancement in term how academic project management is managed at Namal University and 
+current methodology is manual, separated in multiple processes that creates a inefficiencies.These
+affect the users and administrative . designing a system with centraliazed
+relational database present in the foundation of FYP process. This proposed FYPMS will provide
+a platform that is  technically and practically useful. Implementation of this system can enhance efficiency, reduce manual workload and maintain data records which work as centralized with the help of a well-designed database and web interface. The FYP management process can become more transparent, reliable and easier to handle.
+
+% ═══════════════════════════════════════════════════════════════════
+\section{References}
+
+\bibitem{openai}
+OpenAI. (2024). \textit{ChatGPT } [Large language model]. 
+\url{https://chat.openai.com} \\
+\textit \textbf{Prompt: } using give document to create a latex proposal template
+
+
+\bibitem{openai}
+OpenAI. (2024). \textit{ChatGPT (} [Large language model]. 
+\url{https://chat.openai.com} \\
+\textit \textbf{Prompt: } Read give SRS and explain main functionalities and users.
+
+\bibitem{Claude}
+Anthropic. (2024). \textit{Claude } [Large language model]. 
+\url{https://claude.ai} \\
+\textit{Prompt: } tell me web technology to design simple and attractive website and east backend language to integrate databases
+
+\bibitem{Claude}
+Anthropic. (2024). \textit{Claude } [Large language model]. 
+\url{https://claude.ai} \\
+\textit{Prompt: } Remove errors from latex code 
+
+\bibitem{openai}
+OpenAI. (2024). \textit{ChatGPT (Version 4)} [Large language model]. 
+\url{https://chat.openai.com} \\
+\textit \textbf{Prompt: } how we relate these functionality to Database 
+
+\bibitem{Claude}
+Anthropic. (2024). \textit{Claude } [Large language model]. 
+\url{https://claude.ai} \\
+\textit{Prompt: } Settle and check gramatical mistakes from this documents
+
+\bibitem{fypms-srs}
+Mubashir Hassan, Shumaila Sarfaraz, \& Sadia. (2025). \textit{FYP Management System - 
+Software Requirements Specification (SRS)}. GitHub Repository. 
+\url{https://github.com/mubashir-hassan-git/FYP-Management-System/tree/main/SRS\%20Report}
+
+
+
+
+\end{document}
