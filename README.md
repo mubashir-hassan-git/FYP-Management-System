@@ -41,7 +41,7 @@ Managing FYPs manually at Namal University has become increasingly difficult wit
 The FYP Management System automates these processes to ensure efficiency, transparency, and consistency.
 
 ## Objectives
-
+ These are major 4 objectives:
 - Automate the FYP management process from forming student groups to last evaluation.
 - Provide role base access to each user.
 - Maintain proper records of all past and present FYPs.
@@ -60,24 +60,25 @@ The system follows a three-tier architecture:
 | Category         | Technology                      |
 |----------------- |---------------------------------|
 | Frontend         | HTML, CSS, JavaScript, React.js |
-| Backend          | Node.js (Express.js Framework)  |
+| Backend          | Node.js Express.js Framework    |
 | Database         | MySQL                           |
 | Version Control  | Git & GitHub                    |
 | IDE              | Visual Studio Code              |
 | Testing          | Mocha, Chai                     |
 | Deployment       | Docker / XAMPP                  |
 | Design Tools     | Figma                           |
+| Schema           | paradiagam / dbdiagram.io       |
 
 ## Development Phases
 
-| Phase                             | Duration    | Description                                      |
-|---------------------------------- |------------ |--------------------------------------------------|
-| Requirement Gathering & Planning  | Month 1–2   | Collect and analyze requirements, define scope   |
-| Design & Prototyping              | Month 3–4   | Create UML diagrams, ER diagrams, and UI mockups |
-| Implementation                    | Month 5–7   | Develop backend APIs and frontend components     |
-| Integration & Testing             | Month 8–9   | Integrate modules and perform system testing     |
-| Deployment & Feedback             | Month 10–11 | Deploy system and collect user feedback          |
-| Maintenance & Documentation       | Month 12    | Final documentation and improvements             |
+| Phase                             | Duration | Description                                   |
+|---------------------------------- |----------|--------------------------------------------------|
+| Requirement Gathering & Planning  | week 1   | Collect and analyze requirements, define scope   |
+| Design & Prototyping              | week 2   | Create UML diagrams, ER diagrams, and UI mockups |
+| Implementation                    | week 3   | Develop backend APIs and frontend components     |
+| Integration & Testing             | week 3   | Integrate modules and perform system testing     |
+| Deployment & Feedback             | week 4   | Deploy system and collect user feedback          |
+|Documentation                      | week 1-4 | Final documentation and improvements             |
 
 ## Software Development Methodology
 
