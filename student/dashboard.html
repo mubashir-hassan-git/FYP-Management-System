@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Student Dashboard | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+    <div id="app-sidebar"></div>
+    <main class="ml-sidebar-width min-h-screen">
+        <div id="app-topnav"></div>
+        <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto">
+            <header class="mb-unit-lg">
+                <h1 class="font-headline-lg text-headline-lg text-primary">Welcome Back, Ahmed!</h1>
+                <p class="font-body-md text-text-muted">Here's your Final Year Project overview for today.</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-unit-lg">
+                <div class="bento-card p-unit-md flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">flag</span>
+                    </div>
+                    <div>
+                        <p class="font-label-sm text-label-sm text-text-muted">Total Milestones</p>
+                        <p class="font-headline-sm text-headline-sm text-on-surface">05</p>
+                    </div>
+                </div>
+                <div class="bento-card p-unit-md flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-success-emerald/10 flex items-center justify-center text-success-emerald">
+                        <span class="material-symbols-outlined">check_circle</span>
+                    </div>
+                    <div>
+                        <p class="font-label-sm text-label-sm text-text-muted">Completed</p>
+                        <p class="font-headline-sm text-headline-sm text-on-surface">03</p>
+                    </div>
+                </div>
+                <div class="bento-card p-unit-md flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-warning-amber/10 flex items-center justify-center text-warning-amber">
+                        <span class="material-symbols-outlined">pending_actions</span>
+                    </div>
+                    <div>
+                        <p class="font-label-sm text-label-sm text-text-muted">Pending</p>
+                        <p class="font-headline-sm text-headline-sm text-on-surface">02</p>
+                    </div>
+                </div>
+                <div class="bento-card p-unit-md flex items-center gap-4 border-l-4 border-secondary">
+                    <div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary">
+                        <span class="material-symbols-outlined">trending_up</span>
+                    </div>
+                    <div>
+                        <p class="font-label-sm text-label-sm text-text-muted">Project Status</p>
+                        <p class="font-headline-sm text-headline-sm text-on-surface">In Progress</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+                <div class="lg:col-span-8 space-y-gutter">
+                    <div class="bento-card p-unit-lg overflow-hidden relative">
+                        <div class="absolute top-0 right-0 p-unit-md">
+                            <span class="px-3 py-1 bg-success-emerald/10 text-success-emerald text-label-sm font-bold rounded-full">On Track</span>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-unit-lg">
+                            <div class="flex-1">
+                                <h3 class="font-headline-md text-headline-md text-primary mb-2">AI-Driven Automated Grading</h3>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-unit-md mt-4">
+                                    <div><p class="font-label-sm text-label-sm text-text-muted">Domain</p><p class="font-body-md text-on-surface font-semibold">NLP</p></div>
+                                    <div><p class="font-label-sm text-label-sm text-text-muted">Supervisor</p><p class="font-body-md text-on-surface font-semibold">Dr. Sohail</p></div>
+                                    <div><p class="font-label-sm text-label-sm text-text-muted">Group ID</p><p class="font-body-md text-on-surface font-semibold">FYP-24-082</p></div>
+                                </div>
+                            </div>
+                            <div class="md:w-1/3">
+                                <div class="bg-surface-container-low p-unit-md rounded-xl">
+                                    <p class="font-label-sm text-label-sm text-text-muted mb-2">Next Deadline</p>
+                                    <p class="font-body-md text-on-surface font-bold">15 Oct, 2023</p>
+                                    <p class="font-body-sm text-error text-[12px] font-medium mt-1">Design Document</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card overflow-hidden">
+                        <div class="p-unit-md border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Submissions</h3>
+                            <a href="submissions.html" class="text-primary font-label-md text-label-md hover:underline">View All</a>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-surface-container-low text-text-muted font-label-sm uppercase tracking-wider">
+                                    <tr>
+                                        <th class="px-6 py-4">Milestone</th>
+                                        <th class="px-6 py-4">Submitted Date</th>
+                                        <th class="px-6 py-4">Status</th>
+                                        <th class="px-6 py-4">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-outline-variant">
+                                    <tr class="hover:bg-surface-container-low transition-colors">
+                                        <td class="px-6 py-4 font-body-md font-medium">Software Requirement Spec</td>
+                                        <td class="px-6 py-4 text-text-muted">Sept 22, 2023</td>
+                                        <td class="px-6 py-4"><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-emerald/10 text-success-emerald">Accepted</span></td>
+                                        <td class="px-6 py-4"><button class="text-primary hover:text-secondary-container"><span class="material-symbols-outlined">download</span></button></td>
+                                    </tr>
+                                    <tr class="hover:bg-surface-container-low transition-colors">
+                                        <td class="px-6 py-4 font-body-md font-medium">Initial Proposal Draft</td>
+                                        <td class="px-6 py-4 text-text-muted">Aug 15, 2023</td>
+                                        <td class="px-6 py-4"><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-emerald/10 text-success-emerald">Accepted</span></td>
+                                        <td class="px-6 py-4"><button class="text-primary hover:text-secondary-container"><span class="material-symbols-outlined">download</span></button></td>
+                                    </tr>
+                                    <tr class="hover:bg-surface-container-low transition-colors">
+                                        <td class="px-6 py-4 font-body-md font-medium">FYP Design Document</td>
+                                        <td class="px-6 py-4 text-text-muted">Oct 05, 2023</td>
+                                        <td class="px-6 py-4"><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container/10 text-secondary-container">Reviewing</span></td>
+                                        <td class="px-6 py-4"><button class="text-primary hover:text-secondary-container"><span class="material-symbols-outlined">visibility</span></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 space-y-gutter">
+                    <div class="bento-card p-unit-lg">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-unit-lg">Milestone Timeline</h3>
+                        <div class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-success-emerald before:via-secondary before:to-surface-container-high">
+                            <div class="relative flex items-center">
+                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-success-emerald text-white shadow-md z-10"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">check</span></div>
+                                <div class="ml-4"><p class="font-body-md font-bold">Proposal</p><p class="font-label-sm text-success-emerald">Done</p></div>
+                            </div>
+                            <div class="relative flex items-center">
+                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-success-emerald text-white shadow-md z-10"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">check</span></div>
+                                <div class="ml-4"><p class="font-body-md font-bold">SRS Document</p><p class="font-label-sm text-success-emerald">Done</p></div>
+                            </div>
+                            <div class="relative flex items-center">
+                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-secondary-container text-white shadow-md z-10 ring-4 ring-secondary-fixed"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">edit_note</span></div>
+                                <div class="ml-4"><p class="font-body-md font-bold">Design Phase</p><p class="font-label-sm text-secondary-container font-bold">Active</p></div>
+                            </div>
+                            <div class="relative flex items-center">
+                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-surface-container-highest text-text-muted border border-outline-variant z-10"><span class="material-symbols-outlined text-[20px]">hourglass_empty</span></div>
+                                <div class="ml-4"><p class="font-body-md text-text-muted font-medium">Implementation</p><p class="font-label-sm text-text-muted">Pending</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card p-unit-lg bg-primary-container text-on-primary-container">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-on-primary-container/70">comment</span>
+                            <h3 class="font-label-md font-bold uppercase tracking-wider">Latest Feedback</h3>
+                        </div>
+                        <p class="font-body-md italic mb-4">"The architecture diagrams for the NLP pipeline are well-structured. Ensure you document the specific transformer models you intend to benchmark against."</p>
+                        <div class="flex items-center gap-3">
+                            <img alt="Dr. Sohail" class="w-8 h-8 rounded-full border border-on-primary-container/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhjU_kL6boBqIoFYE9gIpbHJhUhmtwZ-WnQzJFopPxwYcxffVTlwOmISF_y4leF6Ds1oMDiqYSsZqA_DJ_M1fzgG5jP0CkbXQ2uYNhBDmWs65JBNYeq7wg9Xl17R8BqIbUX5tF6a6ocWR9x6HtM_gCUY40VDyFDGf6NQ3iOTt7Qq8niUZ6hccRpRDzrbTlxCHRX6IvcuEuI1jgjybj52bUVD3CGKkqRE7A1z6eyYa4Thz204_hETWE2-z0pmkTEyowrdcXvVCW7p0"/>
+                            <div><p class="font-label-sm font-bold">Dr. Sohail Ahmed</p><p class="text-[11px] opacity-70">2 days ago</p></div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card p-unit-lg">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Team Members</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded-lg transition-all">
+                                <img alt="Hamza" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_4i1Kcso4mNVfUitROn_b8w4FsiutFzvV8NA72-p2B8x6-FGLM-LX7KfsPavpm3taQ4XJT0arVr70K5dGE5VmOzmTP9PnvVLS_Ec07qdcOmvRkYA8VGqKyiXTorkgPHGO-caIZ0fMUH6rq0hRiDg_Flstq1C8F1ny8Bdms0ZQsXMFYqIXFpmYlew1y9y36YH1XikfVqtDBtyhx8Dlb3v3IOgVY4fnAydysc_50O3HWzThXMF8FYwQvSH54B5ARwNYSC0lzGVVHUs"/>
+                                <div class="flex-1"><p class="font-body-md font-semibold">Hamza Malik</p><p class="font-label-sm text-text-muted">Lead Developer</p></div>
+                                <span class="w-2 h-2 rounded-full bg-success-emerald"></span>
+                            </div>
+                            <div class="flex items-center gap-3 p-2 hover:bg-surface-container-low rounded-lg transition-all">
+                                <img alt="Zain" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi2GLhA33aavwQLHW2MdHcmvY9hI1Wo4TTqkecGBjJY7V-jH2sq_clNcxEfWN5XHDFmqGyr5h7TimTYlt6pWsdvpUV2O7RYxx4e31N_37w3AU0w2AdnRKiCtYjiPGBBdNV2rPzBrvf7OQiuPftQ3xxDvQmsmosCgRyi4L0Cl-6JHjyQUGEUKZeSJMV2sCTNiQgoUnYfpRZgFRZd-le_kdbsCu3Z-YBUm-3Jz8VYgnoBJzBLZYi7PJSLOnGt3tASrAX4Ai1boD-h5o"/>
+                                <div class="flex-1"><p class="font-body-md font-semibold">Zain Ul Abidin</p><p class="font-label-sm text-text-muted">Documentation Lead</p></div>
+                                <span class="w-2 h-2 rounded-full bg-success-emerald"></span>
+                            </div>
+                        </div>
+                        <a href="group.html" class="w-full mt-4 py-2 border border-outline-variant rounded-xl text-primary font-label-md hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">group_add</span> Manage Group
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>initPage('student', 'dashboard', { searchPlaceholder: 'Search milestones...' });</script>
+</body>
+</html>

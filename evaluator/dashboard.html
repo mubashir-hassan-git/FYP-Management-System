@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Evaluator Dashboard | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+<div id="app-sidebar"></div>
+<div id="app-topnav"></div>
+<main class="ml-sidebar-width pt-16 min-h-screen bg-background">
+    <div class="p-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <div class="flex items-end justify-between">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-primary">Evaluator Dashboard</h2>
+                <p class="font-body-md text-on-surface-variant">Your assigned evaluations and upcoming schedule.</p>
+            </div>
+            <a href="marking.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-md">
+                <span class="material-symbols-outlined text-[18px]">add</span> Mark Evaluation
+            </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow border-l-4 border-l-primary">
+                <p class="font-label-md text-on-surface-variant mb-1">Assigned</p>
+                <p class="text-3xl font-bold text-primary" id="stat-assigned">—</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow border-l-4 border-l-warning-amber">
+                <p class="font-label-md text-on-surface-variant mb-1">Pending</p>
+                <p class="text-3xl font-bold text-warning-amber" id="stat-pending">—</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow border-l-4 border-l-success-emerald">
+                <p class="font-label-md text-on-surface-variant mb-1">Completed</p>
+                <p class="text-3xl font-bold text-success-emerald" id="stat-completed">—</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow border-l-4 border-l-secondary">
+                <p class="font-label-md text-on-surface-variant mb-1">Avg Score %</p>
+                <p class="text-3xl font-bold text-secondary" id="stat-avg">—</p>
+            </div>
+        </div>
+
+        <!-- Upcoming evaluations -->
+        <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 overflow-hidden">
+            <div class="p-unit-lg border-b border-outline-variant/20 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">event</span>
+                <h3 class="font-headline-sm text-headline-sm">Upcoming Evaluations</h3>
+            </div>
+            <div id="upcoming-list">
+                <div class="p-8 text-center text-on-surface-variant">Loading...</div>
+            </div>
+        </div>
+
+        <!-- All evaluations table -->
+        <div class="bento-card overflow-hidden">
+            <div class="p-unit-md border-b border-outline-variant/20">
+                <h3 class="font-headline-sm text-headline-sm">Evaluation History</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Group</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Project</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Date</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eval-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('evaluator', 'dashboard');
+
+    const token = getToken();
+    const base = '../';
+
+    const fetchAPI = async (url, opts = {}) => {
+        const r = await fetch(base + 'api' + url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers||{}) } });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const statusBadge = s => {
+        const m = { 'Completed':'bg-success-emerald/10 text-success-emerald', 'Scheduled':'bg-warning-amber/10 text-warning-amber', 'Absent':'bg-error/10 text-error' };
+        return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${m[s]||'bg-outline-variant/20 text-text-muted'}">${s}</span>`;
+    };
+
+    async function load() {
+        try {
+            const data = await fetchAPI('/evaluations/dashboard');
+            document.getElementById('stat-assigned').textContent  = data.stats.assigned;
+            document.getElementById('stat-pending').textContent   = data.stats.pending;
+            document.getElementById('stat-completed').textContent = data.stats.completed;
+            document.getElementById('stat-avg').textContent       = data.stats.averageMarks ? `${data.stats.averageMarks}%` : '—';
+
+            // Upcoming
+            const upcoming = data.evaluations.filter(e => e.status === 'Scheduled');
+            const upEl = document.getElementById('upcoming-list');
+            if (!upcoming.length) {
+                upEl.innerHTML = `<div class="p-8 text-center text-on-surface-variant"><span class="material-symbols-outlined text-3xl block text-outline mb-2">event_available</span>No upcoming evaluations.</div>`;
+            } else {
+                upEl.innerHTML = upcoming.map(ev => `
+                    <div class="p-5 border-b border-outline-variant/20 last:border-0 hover:bg-surface-container-low transition-colors flex items-center justify-between gap-4">
+                        <div class="flex gap-4 items-center">
+                            <div class="w-14 h-14 bg-primary/10 rounded-xl flex flex-col items-center justify-center flex-shrink-0">
+                                <span class="text-xs text-primary font-bold">${new Date(ev.date).toLocaleDateString(undefined,{month:'short'})}</span>
+                                <span class="text-xl font-bold text-primary">${new Date(ev.date).getDate()}</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-primary">${ev.groupName}</p>
+                                <p class="text-sm text-on-surface-variant">${ev.projectTitle}</p>
+                                <p class="text-xs text-on-surface-variant mt-0.5 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[14px]">flag</span>${ev.milestone}
+                                </p>
+                            </div>
+                        </div>
+                        <a href="marking.html?id=${ev.evaluationId}" class="bg-primary text-on-primary px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 flex-shrink-0">Mark Now</a>
+                    </div>`).join('');
+            }
+
+            // History table
+            const tbody = document.getElementById('eval-tbody');
+            if (!data.evaluations.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">No evaluations assigned yet.</td></tr>`;
+            } else {
+                tbody.innerHTML = data.evaluations.map(ev => `
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="px-6 py-4 font-semibold text-primary">${ev.groupName}</td>
+                        <td class="px-6 py-4 text-sm text-on-surface-variant max-w-[160px] truncate" title="${ev.projectTitle}">${ev.projectTitle}</td>
+                        <td class="px-6 py-4 text-sm">${ev.milestone}</td>
+                        <td class="px-6 py-4 text-on-surface-variant">${new Date(ev.date).toLocaleDateString()}</td>
+                        <td class="px-6 py-4">${statusBadge(ev.status)}</td>
+                        <td class="px-6 py-4 text-center">
+                            ${ev.status === 'Scheduled'
+                                ? `<a href="marking.html?id=${ev.evaluationId}" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-90">Mark</a>`
+                                : `<a href="results.html?id=${ev.evaluationId}" class="text-primary text-xs font-bold hover:underline">View Results</a>`}
+                        </td>
+                    </tr>`).join('');
+            }
+        } catch(e) {
+            document.getElementById('eval-tbody').innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

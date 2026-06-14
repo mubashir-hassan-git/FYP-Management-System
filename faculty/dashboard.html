@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Faculty Dashboard | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+    <div id="app-sidebar"></div>
+    <div id="app-topnav"></div>
+    <main class="ml-sidebar-width mt-16 p-margin-desktop min-h-screen">
+        <div class="max-w-container-max-width mx-auto">
+            <div class="mb-unit-xl">
+                <h2 class="font-headline-lg text-headline-lg text-primary mb-1">Faculty Overview</h2>
+                <p class="text-on-surface-variant font-body-md">Welcome back. Here is what needs your attention today.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-unit-xl">
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow flex items-start justify-between border border-outline-variant/30">
+                    <div>
+                        <p class="text-on-surface-variant font-label-md mb-2">Assigned Projects</p>
+                        <h3 class="font-headline-md text-headline-md text-primary">12</h3>
+                        <p class="text-success-emerald font-label-sm mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-sm">trending_up</span> +2 this semester</p>
+                    </div>
+                    <div class="bg-primary-fixed p-unit-sm rounded-lg"><span class="material-symbols-outlined text-primary">assignment</span></div>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow flex items-start justify-between border border-outline-variant/30">
+                    <div>
+                        <p class="text-on-surface-variant font-label-md mb-2">Total Groups</p>
+                        <h3 class="font-headline-md text-headline-md text-primary">08</h3>
+                        <p class="text-on-surface-variant font-label-sm mt-1">32 Students total</p>
+                    </div>
+                    <div class="bg-secondary-fixed p-unit-sm rounded-lg"><span class="material-symbols-outlined text-secondary">groups</span></div>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow flex items-start justify-between border border-outline-variant/30">
+                    <div>
+                        <p class="text-on-surface-variant font-label-md mb-2">Pending Reviews</p>
+                        <h3 class="font-headline-md text-headline-md text-error">05</h3>
+                        <p class="text-error font-label-sm mt-1">3 Overdue</p>
+                    </div>
+                    <div class="bg-error-container p-unit-sm rounded-lg"><span class="material-symbols-outlined text-error">pending_actions</span></div>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow flex items-start justify-between border border-outline-variant/30">
+                    <div>
+                        <p class="text-on-surface-variant font-label-md mb-2">Upcoming Evaluations</p>
+                        <h3 class="font-headline-md text-headline-md text-warning-amber">02</h3>
+                        <p class="text-on-surface-variant font-label-sm mt-1">Starting next week</p>
+                    </div>
+                    <div class="bg-tertiary-fixed p-unit-sm rounded-lg"><span class="material-symbols-outlined text-on-tertiary-fixed-variant">event_upcoming</span></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-unit-xl">
+                <div class="lg:col-span-2 bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 overflow-hidden">
+                    <div class="px-unit-lg py-unit-md border-b border-outline-variant/20 flex justify-between items-center">
+                        <h4 class="font-headline-sm text-headline-sm text-primary">Project Monitoring</h4>
+                        <a href="projects.html" class="text-primary font-label-md hover:underline">View All</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead><tr class="bg-surface-container-low">
+                                <th class="px-unit-lg py-4 font-label-sm text-on-surface-variant uppercase">Project Name</th>
+                                <th class="px-unit-lg py-4 font-label-sm text-on-surface-variant uppercase">Group</th>
+                                <th class="px-unit-lg py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                                <th class="px-unit-lg py-4 font-label-sm text-on-surface-variant uppercase">Progress</th>
+                            </tr></thead>
+                            <tbody class="divide-y divide-outline-variant/10">
+                                <tr class="hover:bg-surface-container-low transition-colors">
+                                    <td class="px-unit-lg py-4 font-label-md text-main">AI-Based Water Mgmt</td>
+                                    <td class="px-unit-lg py-4 text-body-sm text-on-surface-variant">Group-04</td>
+                                    <td class="px-unit-lg py-4"><span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Prototyping</span></td>
+                                    <td class="px-unit-lg py-4 w-32"><div class="flex items-center gap-2"><div class="progress-bar-container flex-1"><div class="progress-bar-fill" style="width:65%"></div></div><span class="font-label-sm">65%</span></div></td>
+                                </tr>
+                                <tr class="hover:bg-surface-container-low transition-colors">
+                                    <td class="px-unit-lg py-4 font-label-md text-main">Smart Grid Analytics</td>
+                                    <td class="px-unit-lg py-4 text-body-sm text-on-surface-variant">Group-12</td>
+                                    <td class="px-unit-lg py-4"><span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Literature</span></td>
+                                    <td class="px-unit-lg py-4 w-32"><div class="flex items-center gap-2"><div class="progress-bar-container flex-1"><div class="progress-bar-fill" style="width:25%"></div></div><span class="font-label-sm">25%</span></div></td>
+                                </tr>
+                                <tr class="hover:bg-surface-container-low transition-colors">
+                                    <td class="px-unit-lg py-4 font-label-md text-main">Eco-Friendly Concrete</td>
+                                    <td class="px-unit-lg py-4 text-body-sm text-on-surface-variant">Group-07</td>
+                                    <td class="px-unit-lg py-4"><span class="bg-error-container text-on-error-container text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Design</span></td>
+                                    <td class="px-unit-lg py-4 w-32"><div class="flex items-center gap-2"><div class="progress-bar-container flex-1"><div class="progress-bar-fill bg-error" style="width:15%"></div></div><span class="font-label-sm">15%</span></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 flex flex-col">
+                    <div class="px-unit-lg py-unit-md border-b border-outline-variant/20">
+                        <h4 class="font-headline-sm text-headline-sm text-primary">Submissions Queue</h4>
+                    </div>
+                    <div class="flex-1 p-unit-lg space-y-4">
+                        <div class="p-unit-md bg-surface-container-low rounded-lg border border-outline-variant/20 hover:border-primary/30 transition-all">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-surface-white rounded-lg flex items-center justify-center text-primary"><span class="material-symbols-outlined">description</span></div>
+                                    <div><p class="font-label-md text-main truncate w-32">proposal_final.pdf</p><p class="text-[12px] text-on-surface-variant">Group-04 • 2h ago</p></div>
+                                </div>
+                                <a href="submission-review.html" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-label-sm hover:opacity-90">Review</a>
+                            </div>
+                        </div>
+                        <div class="p-unit-md bg-surface-container-low rounded-lg border border-outline-variant/20 hover:border-primary/30 transition-all">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-surface-white rounded-lg flex items-center justify-center text-secondary"><span class="material-symbols-outlined">analytics</span></div>
+                                    <div><p class="font-label-md text-main truncate w-32">data_model_v2.xlsx</p><p class="text-[12px] text-on-surface-variant">Group-12 • 5h ago</p></div>
+                                </div>
+                                <a href="submission-review.html" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg font-label-sm hover:opacity-90">Review</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-unit-lg mt-auto"><a href="submissions.html" class="block w-full py-2 border border-outline text-on-surface-variant rounded-lg font-label-md text-center hover:bg-surface-container-high">View Full Queue</a></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-gutter">
+                <div class="lg:col-span-3 bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30">
+                    <div class="flex justify-between items-center mb-unit-lg">
+                        <div>
+                            <h4 class="font-headline-sm text-headline-sm text-primary">Student Progress Summary</h4>
+                            <p class="text-on-surface-variant font-label-sm">Milestone submission status across supervised groups</p>
+                        </div>
+                    </div>
+                    <div id="progress-summary" class="space-y-3">
+                        <div class="text-on-surface-variant text-sm text-center py-4">Loading progress data...</div>
+                    </div>
+                </div>
+                <div class="lg:col-span-1 bg-primary text-on-primary p-unit-lg rounded-xl custom-shadow relative overflow-hidden">
+                    <div class="relative z-10 h-full flex flex-col">
+                        <h4 class="font-headline-sm text-headline-sm mb-4">Evaluation Guide</h4>
+                        <p class="font-body-sm text-white/80 mb-6">Review the rubric for Final Year Projects to ensure consistent grading across all groups.</p>
+                        <div class="space-y-3">
+                            <button class="w-full py-2 bg-on-primary text-primary rounded-lg font-label-md flex items-center justify-center gap-2 hover:bg-primary-fixed"><span class="material-symbols-outlined text-sm">download</span> Download Rubric</button>
+                            <button class="w-full py-2 border border-on-primary/30 text-on-primary rounded-lg font-label-md hover:bg-white/10">View Policy</button>
+                        </div>
+                        <div class="mt-auto pt-6 flex items-center gap-2 text-white/60"><span class="material-symbols-outlined text-sm">info</span><span class="text-[10px] uppercase font-bold tracking-widest">Version 2.4</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>
+        initPage('faculty', 'dashboard', { searchPlaceholder: 'Search projects or students...' });
+
+        // Populate progress summary after dashboard data loads
+        setTimeout(async () => {
+            const token = localStorage.getItem('namal_fyp_token');
+            if (!token) return;
+            try {
+                const r = await fetch('../api/faculty/dashboard', { headers: { 'Authorization': `Bearer ${token}` } });
+                const data = await r.json();
+                const ps = document.getElementById('progress-summary');
+                if (ps && data.projects && data.projects.length) {
+                    ps.innerHTML = data.projects.map(p => {
+                        const col = p.progress >= 70 ? 'bg-success-emerald' : p.progress >= 40 ? 'bg-warning-amber' : 'bg-error';
+                        return `<div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-label-md text-on-surface">${p.title}</span>
+                                <span class="font-label-sm text-on-surface-variant">${p.groupName} · ${p.progress}%</span>
+                            </div>
+                            <div class="h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                <div class="${col} h-full rounded-full transition-all" style="width:${p.progress}%"></div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                } else if (ps) {
+                    ps.innerHTML = '<p class="text-on-surface-variant text-sm text-center py-4">No supervised projects yet.</p>';
+                }
+            } catch(e) { /* silent */ }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Settings | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+    <div id="app-sidebar"></div>
+    <main class="ml-sidebar-width min-h-screen">
+        <div id="app-topnav"></div>
+        <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+            <header>
+                <h1 class="font-headline-lg text-headline-lg text-primary">Portal Settings</h1>
+                <p class="font-body-md text-text-muted">View system configuration, database statistics and batch information.</p>
+            </header>
+
+            <!-- System Info Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-primary/10 rounded-lg text-primary"><span class="material-symbols-outlined">school</span></div>
+                        <p class="font-label-md text-on-surface-variant">Total Students</p>
+                    </div>
+                    <p class="text-3xl font-bold text-primary" id="cfg-students">—</p>
+                </div>
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-secondary/10 rounded-lg text-secondary"><span class="material-symbols-outlined">rocket_launch</span></div>
+                        <p class="font-label-md text-on-surface-variant">Active Projects</p>
+                    </div>
+                    <p class="text-3xl font-bold text-secondary" id="cfg-projects">—</p>
+                </div>
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-tertiary/10 rounded-lg text-tertiary"><span class="material-symbols-outlined">flag</span></div>
+                        <p class="font-label-md text-on-surface-variant">Active Milestones</p>
+                    </div>
+                    <p class="text-3xl font-bold text-tertiary" id="cfg-milestones">—</p>
+                </div>
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="p-2 bg-success-emerald/10 rounded-lg text-success-emerald"><span class="material-symbols-outlined">upload_file</span></div>
+                        <p class="font-label-md text-on-surface-variant">Submissions</p>
+                    </div>
+                    <p class="text-3xl font-bold text-success-emerald" id="cfg-submissions">—</p>
+                </div>
+            </div>
+
+            <!-- Batch configuration -->
+            <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 overflow-hidden">
+                <div class="p-unit-lg border-b border-outline-variant/20 flex items-center justify-between">
+                    <h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">layers</span> Academic Batches
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low">
+                            <tr>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Batch Name</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Start Year</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">End Year</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Session</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Department</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Students</th>
+                            </tr>
+                        </thead>
+                        <tbody id="batch-tbody" class="divide-y divide-outline-variant">
+                            <tr><td colspan="6" class="px-6 py-8 text-center text-on-surface-variant">Loading batches...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Department listing -->
+            <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 overflow-hidden">
+                <div class="p-unit-lg border-b border-outline-variant/20">
+                    <h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">domain</span> Departments
+                    </h3>
+                </div>
+                <div id="dept-grid" class="p-unit-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="text-on-surface-variant text-sm">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>
+        initPage('coordinator', 'settings');
+
+        const token = getToken();
+        const base = '../';
+
+        const fetchAPI = async (url, opts = {}) => {
+            const r = await fetch(base + 'api' + url, {
+                ...opts,
+                headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers || {}) }
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(d.message || r.statusText);
+            return d;
+        };
+
+        async function load() {
+            try {
+                const [stats, batches, depts] = await Promise.all([
+                    fetchAPI('/dashboard/stats'),
+                    fetchAPI('/batches'),
+                    fetchAPI('/departments')
+                ]);
+
+                // Stats cards
+                document.getElementById('cfg-students').textContent    = stats.stats.students;
+                document.getElementById('cfg-projects').textContent    = stats.stats.projects;
+                document.getElementById('cfg-submissions').textContent = stats.stats.groups;
+
+                // Count active milestones
+                const ms = await fetchAPI('/milestones').catch(() => []);
+                document.getElementById('cfg-milestones').textContent = ms.filter(m => m.Status === 'Active').length;
+
+                // Batch table
+                const batchTbody = document.getElementById('batch-tbody');
+                if (batches.length) {
+                    // Get student counts per batch
+                    const students = await fetchAPI('/students').catch(() => []);
+                    batchTbody.innerHTML = batches.map(b => {
+                        const stuCount = students.filter(s => s.BatchID === b.BatchID).length;
+                        return `
+                        <tr class="hover:bg-surface-container-low transition-colors">
+                            <td class="px-6 py-4 font-semibold text-primary">${b.BatchName}</td>
+                            <td class="px-6 py-4 text-on-surface-variant">${b.StartYear}</td>
+                            <td class="px-6 py-4 text-on-surface-variant">${b.EndYear}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary/10 text-secondary">${b.Session}</span>
+                            </td>
+                            <td class="px-6 py-4 text-on-surface-variant">${b.DepartmentName||'—'}</td>
+                            <td class="px-6 py-4 font-bold text-secondary">${stuCount}</td>
+                        </tr>`;
+                    }).join('');
+                } else {
+                    batchTbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-on-surface-variant">No batches found.</td></tr>`;
+                }
+
+                // Department grid
+                const deptGrid = document.getElementById('dept-grid');
+                if (depts.length) {
+                    deptGrid.innerHTML = depts.map(d => `
+                        <div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/20 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined">domain</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-on-surface">${d.DepartmentName}</p>
+                                <p class="font-label-sm text-on-surface-variant">ID: ${d.DepartmentID}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    deptGrid.innerHTML = '<p class="text-on-surface-variant text-sm">No departments found.</p>';
+                }
+
+            } catch(e) {
+                console.error('Settings load error:', e.message);
+            }
+        }
+
+        load();
+    </script>
+</body>
+</html>

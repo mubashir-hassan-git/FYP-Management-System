@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Marking Sheet | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface bg-background">
+<div id="app-sidebar"></div>
+<div id="app-topnav"></div>
+<main class="ml-sidebar-width pt-16 min-h-screen">
+    <div class="p-margin-desktop max-w-[1000px] mx-auto space-y-gutter">
+
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-sm text-on-surface-variant">
+            <a href="dashboard.html" class="hover:text-primary">Dashboard</a>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            <span class="text-primary font-semibold">Marking Sheet</span>
+        </nav>
+
+        <!-- Project info card -->
+        <div class="bg-surface-white rounded-2xl custom-shadow border border-outline-variant/30 p-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 id="eval-project" class="font-headline-md text-headline-md text-primary">Loading...</h2>
+                    <p id="eval-group" class="font-body-md text-on-surface-variant mt-1">Group · Milestone</p>
+                </div>
+                <div class="flex items-center gap-4 flex-shrink-0">
+                    <div class="text-center">
+                        <p class="text-xs text-on-surface-variant mb-1">Total Score</p>
+                        <p class="text-3xl font-bold text-primary" id="total-score">0</p>
+                        <p class="text-xs text-on-surface-variant" id="total-max">/ 0</p>
+                    </div>
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                        <p class="text-sm font-bold text-primary" id="pct-display">0%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Criteria form -->
+        <div id="criteria-form" class="space-y-4">
+            <div class="bg-surface-white rounded-xl border border-outline-variant/30 p-8 text-center text-on-surface-variant">
+                <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading criteria...
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div id="action-bar" class="hidden flex justify-between items-center bg-surface-white rounded-xl border border-outline-variant/30 p-4">
+            <p class="font-label-sm text-on-surface-variant flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">info</span>
+                Enter marks for each criterion. All fields are required.
+            </p>
+            <div class="flex gap-3">
+                <a href="dashboard.html" class="px-5 py-2.5 border border-outline-variant rounded-xl text-sm font-label-md hover:bg-surface-container-low">Cancel</a>
+                <button id="submit-btn" class="bg-primary text-on-primary px-6 py-2.5 rounded-xl text-sm font-label-md font-bold hover:opacity-90 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">send</span> Submit Marks
+                </button>
+            </div>
+        </div>
+
+        <!-- Already completed message -->
+        <div id="completed-msg" class="hidden bg-success-emerald/10 border border-success-emerald/20 rounded-xl p-5 flex items-center gap-3">
+            <span class="material-symbols-outlined text-success-emerald text-2xl">check_circle</span>
+            <div>
+                <p class="font-label-md font-bold text-success-emerald">Evaluation Already Completed</p>
+                <p class="font-body-sm text-on-surface-variant">Marks have been recorded. You can view them in Results.</p>
+            </div>
+            <a href="results.html" class="ml-auto text-primary font-bold text-sm hover:underline">View Results →</a>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('evaluator', 'marking');
+
+    const token  = getToken();
+    const base   = '../';
+    const params = new URLSearchParams(window.location.search);
+    const evalId = params.get('id');
+
+    if (!evalId) { alert('No evaluation ID specified.'); window.location.href = 'dashboard.html'; }
+
+    const fetchAPI = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    let rubrics = [];
+
+    function recalc() {
+        let total = 0, maxTotal = 0;
+        rubrics.forEach(r => {
+            const inp = document.getElementById(`score-${r.criteriaId}`);
+            const val = parseFloat(inp?.value) || 0;
+            total    += Math.min(val, r.maxMarks);
+            maxTotal += r.maxMarks;
+        });
+        document.getElementById('total-score').textContent = total.toFixed(1);
+        document.getElementById('total-max').textContent   = `/ ${maxTotal}`;
+        const pct = maxTotal > 0 ? ((total / maxTotal) * 100).toFixed(0) : 0;
+        document.getElementById('pct-display').textContent = `${pct}%`;
+    }
+
+    async function load() {
+        try {
+            const data = await fetchAPI(`/evaluations/marking-sheet/${evalId}`);
+            const ev   = data.evaluation;
+            rubrics    = data.rubrics;
+
+            document.getElementById('eval-project').textContent = ev.projectTitle;
+            document.getElementById('eval-group').textContent   = `${ev.groupName} · ${ev.milestone} · ${new Date(ev.date).toLocaleDateString()}`;
+
+            if (ev.status === 'Completed') {
+                // Show read-only view
+                document.getElementById('completed-msg').classList.remove('hidden');
+                document.getElementById('action-bar').classList.add('hidden');
+
+                const maxT = rubrics.reduce((s, r) => s + r.maxMarks, 0);
+                const obtT = rubrics.reduce((s, r) => s + (r.obtainedMarks || 0), 0);
+                document.getElementById('total-score').textContent = obtT.toFixed(1);
+                document.getElementById('total-max').textContent   = `/ ${maxT}`;
+                document.getElementById('pct-display').textContent = maxT > 0 ? `${((obtT/maxT)*100).toFixed(0)}%` : '0%';
+
+                document.getElementById('criteria-form').innerHTML = rubrics.map(r => `
+                    <div class="bg-surface-white rounded-xl border border-outline-variant/30 p-5">
+                        <div class="flex items-start justify-between gap-4 mb-2">
+                            <div>
+                                <h4 class="font-semibold text-on-surface">${r.criteriaName}</h4>
+                                <p class="text-xs text-on-surface-variant mt-0.5">${r.description||''}</p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                                <span class="text-lg font-bold text-primary">${r.obtainedMarks ?? '—'}</span>
+                                <span class="text-sm text-on-surface-variant"> / ${r.maxMarks}</span>
+                            </div>
+                        </div>
+                        ${r.remarks ? `<p class="text-xs text-secondary italic mt-2">"${r.remarks}"</p>` : ''}
+                        <div class="mt-3 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+                            <div class="bg-primary h-full rounded-full" style="width:${r.obtainedMarks!=null?((r.obtainedMarks/r.maxMarks)*100).toFixed(0):0}%"></div>
+                        </div>
+                    </div>`).join('');
+                return;
+            }
+
+            // Editable form
+            document.getElementById('action-bar').classList.remove('hidden');
+            document.getElementById('criteria-form').innerHTML = rubrics.map(r => `
+                <div class="bg-surface-white rounded-xl border border-outline-variant/30 p-5">
+                    <div class="flex flex-col md:flex-row md:items-start gap-4">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-on-surface mb-1">${r.criteriaName}</h4>
+                            <p class="text-xs text-on-surface-variant">${r.description||'—'}</p>
+                        </div>
+                        <div class="flex items-center gap-3 flex-shrink-0">
+                            <div class="text-right">
+                                <label class="block text-xs text-on-surface-variant mb-1">Marks (max ${r.maxMarks})</label>
+                                <input id="score-${r.criteriaId}" type="number" min="0" max="${r.maxMarks}" step="0.5"
+                                       value="${r.obtainedMarks ?? ''}"
+                                       class="w-24 px-3 py-2 border border-outline-variant rounded-xl text-center font-bold focus:ring-2 focus:ring-primary/30"
+                                       placeholder="0" oninput="recalc()" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="block text-xs text-on-surface-variant mb-1">Remarks (optional)</label>
+                        <input id="remarks-${r.criteriaId}" type="text"
+                               value="${r.remarks||''}"
+                               class="w-full px-3 py-2 border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-primary/30"
+                               placeholder="Feedback for this criterion..."/>
+                    </div>
+                </div>`).join('');
+
+            recalc();
+        } catch(e) {
+            document.getElementById('criteria-form').innerHTML = `<div class="bg-error-container text-on-error-container rounded-xl p-4">${e.message}</div>`;
+        }
+    }
+
+    document.getElementById('submit-btn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('submit-btn');
+        const marks = [];
+        let valid = true;
+
+        for (const r of rubrics) {
+            const val = parseFloat(document.getElementById(`score-${r.criteriaId}`)?.value);
+            if (isNaN(val) || val < 0) { alert(`Please enter a valid score for "${r.criteriaName}"`); valid = false; break; }
+            if (val > r.maxMarks) { alert(`Score for "${r.criteriaName}" cannot exceed ${r.maxMarks}`); valid = false; break; }
+            marks.push({ criteriaId: r.criteriaId, obtainedMarks: val, remarks: document.getElementById(`remarks-${r.criteriaId}`)?.value || '' });
+        }
+        if (!valid) return;
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span> Saving...';
+
+        try {
+            await fetchAPI('/evaluations/record-marks', { method: 'POST', body: { evaluationId: evalId, marks } });
+            btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Submitted!';
+            btn.classList.replace('bg-primary', 'bg-success-emerald');
+            setTimeout(() => window.location.href = 'dashboard.html', 1500);
+        } catch(e) {
+            alert(e.message);
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">send</span> Submit Marks';
+        }
+    });
+
+    load();
+</script>
+</body>
+</html>

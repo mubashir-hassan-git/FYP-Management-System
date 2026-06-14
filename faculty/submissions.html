@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Submissions & Feedback | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-primary">Submissions & Feedback</h1>
+                <p class="font-body-md text-text-muted">Review student submissions and manage all feedback.</p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+                <select id="filter-status" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low">
+                    <option value="">All Statuses</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Reviewed">Reviewed</option>
+                    <option value="Late_Submission">Late Submission</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-outline-variant/30 gap-2">
+            <button id="tab-subs" class="px-5 py-2.5 font-label-md font-bold text-primary border-b-2 border-primary transition-colors">
+                Submissions
+            </button>
+            <button id="tab-feed" class="px-5 py-2.5 font-label-md text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors">
+                Feedback History
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"          id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-warning-amber"    id="stat-pending">—</p>
+                <p class="font-label-sm text-on-surface-variant">Pending</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald"  id="stat-reviewed">—</p>
+                <p class="font-label-sm text-on-surface-variant">Reviewed</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-error"            id="stat-late">—</p>
+                <p class="font-label-sm text-on-surface-variant">Late</p>
+            </div>
+        </div>
+
+        <!-- Submissions panel -->
+        <div id="panel-subs">
+            <div class="bento-card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low">
+                            <tr>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">File</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Group</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Version</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subs-tbody" class="divide-y divide-outline-variant">
+                            <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback panel (hidden by default) -->
+        <div id="panel-feed" class="hidden space-y-4">
+            <div id="feed-list">
+                <div class="text-center py-12 text-on-surface-variant">
+                    <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading feedback...
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('faculty', 'submissions');
+
+    const token = getToken();
+    const base = '../';
+    let allSubs = [];
+    let allFeed = [];
+
+    const fetchAPI = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const statusBadge = s => {
+        const m = { 'Reviewed':'bg-success-emerald/10 text-success-emerald', 'Submitted':'bg-warning-amber/10 text-warning-amber', 'Late_Submission':'bg-error/10 text-error' };
+        return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${m[s]||'bg-outline-variant/20 text-text-muted'}">${s.replace('_',' ')}</span>`;
+    };
+
+    function renderSubs(list) {
+        const tbody = document.getElementById('subs-tbody');
+        if (!list.length) { tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No submissions found.</td></tr>`; return; }
+        tbody.innerHTML = list.map(s => `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-6 py-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-outline text-[18px]">description</span>
+                        <span class="font-medium truncate max-w-[140px]" title="${s.FileName||''}">${s.FileName||'No file'}</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4 font-semibold">${s.GroupName}</td>
+                <td class="px-6 py-4 text-sm">${s.MilestoneTitle}</td>
+                <td class="px-6 py-4 font-mono text-secondary font-bold">${s.SubmissionVersion}</td>
+                <td class="px-6 py-4">${statusBadge(s.Status)}</td>
+                <td class="px-6 py-4 text-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <a href="submission-review.html?id=${s.SubmissionID}" class="bg-primary text-on-primary px-3 py-1.5 rounded-lg text-xs font-bold hover:opacity-90">Review</a>
+                        ${s.FileID ? `<a href="${base}api/submissions/download/${s.FileID}" class="bg-surface-container px-2 py-1.5 rounded-lg text-xs hover:bg-surface-container-high flex items-center"><span class="material-symbols-outlined text-[16px]">download</span></a>` : ''}
+                    </div>
+                </td>
+            </tr>`).join('');
+    }
+
+    function renderFeed(list) {
+        const container = document.getElementById('feed-list');
+        if (!list.length) { container.innerHTML = `<div class="text-center py-12 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No feedback given yet.</div>`; return; }
+        const typeColor = t => ({ 'Approval':'bg-success-emerald/10 text-success-emerald border-success-emerald/20', 'Revision Required':'bg-warning-amber/10 text-warning-amber border-warning-amber/20', 'Rejection':'bg-error/10 text-error border-error/20' }[t] || 'bg-outline-variant/10 text-on-surface-variant border-outline-variant/20');
+        container.innerHTML = list.map(fb => `
+            <div class="bg-surface-white border border-outline-variant/30 rounded-2xl p-5 custom-shadow">
+                <div class="flex items-start justify-between gap-3 mb-3">
+                    <div>
+                        <p class="font-label-md font-bold text-primary">${fb.GroupName||'—'}</p>
+                        <p class="font-label-sm text-on-surface-variant">${fb.MilestoneTitle||'—'} · ${new Date(fb.FeedbackDate).toLocaleDateString()}</p>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold border flex-shrink-0 ${typeColor(fb.FeedbackType)}">${fb.FeedbackType}</span>
+                </div>
+                <p class="font-body-sm text-on-surface bg-surface-container-low rounded-xl p-3 border border-outline-variant/20 leading-relaxed">${fb.Comment}</p>
+            </div>`).join('');
+    }
+
+    // Tab switching
+    const tabSubs = document.getElementById('tab-subs');
+    const tabFeed = document.getElementById('tab-feed');
+    const panelSubs = document.getElementById('panel-subs');
+    const panelFeed = document.getElementById('panel-feed');
+
+    tabSubs.onclick = () => {
+        panelSubs.classList.remove('hidden'); panelFeed.classList.add('hidden');
+        tabSubs.className = 'px-5 py-2.5 font-label-md font-bold text-primary border-b-2 border-primary transition-colors';
+        tabFeed.className = 'px-5 py-2.5 font-label-md text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors';
+    };
+    tabFeed.onclick = () => {
+        panelFeed.classList.remove('hidden'); panelSubs.classList.add('hidden');
+        tabFeed.className = 'px-5 py-2.5 font-label-md font-bold text-primary border-b-2 border-primary transition-colors';
+        tabSubs.className = 'px-5 py-2.5 font-label-md text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors';
+        if (allFeed.length) renderFeed(allFeed);
+    };
+
+    document.getElementById('filter-status').addEventListener('change', e => {
+        const val = e.target.value;
+        renderSubs(val ? allSubs.filter(s => s.Status === val) : allSubs);
+    });
+
+    async function load() {
+        try {
+            allSubs = await fetchAPI('/faculty/submissions');
+            document.getElementById('stat-total').textContent    = allSubs.length;
+            document.getElementById('stat-pending').textContent  = allSubs.filter(s => ['Submitted','Late_Submission'].includes(s.Status)).length;
+            document.getElementById('stat-reviewed').textContent = allSubs.filter(s => s.Status==='Reviewed').length;
+            document.getElementById('stat-late').textContent     = allSubs.filter(s => s.Status==='Late_Submission').length;
+            renderSubs(allSubs);
+
+            // Load feedback data (all feedback from faculty's submissions)
+            allFeed = [];
+            for (const s of allSubs) {
+                const detail = await fetchAPI(`/submissions/${s.SubmissionID}`).catch(() => null);
+                if (detail && detail.history) {
+                    detail.history.forEach(fb => allFeed.push({ ...fb, GroupName: s.GroupName, MilestoneTitle: s.MilestoneTitle, SubmissionVersion: s.SubmissionVersion }));
+                }
+            }
+        } catch(e) {
+            document.getElementById('subs-tbody').innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

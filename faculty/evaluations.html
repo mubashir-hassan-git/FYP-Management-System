@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Evaluations | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header>
+            <h1 class="font-headline-lg text-headline-lg text-primary">Evaluation Schedule</h1>
+            <p class="font-body-md text-text-muted">Evaluations scheduled for your supervised groups. Click a row to view detail.</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"          id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-warning-amber"    id="stat-scheduled">—</p>
+                <p class="font-label-sm text-on-surface-variant">Scheduled</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald"  id="stat-completed">—</p>
+                <p class="font-label-sm text-on-surface-variant">Completed</p>
+            </div>
+        </div>
+
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Group</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Project</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Date</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Evaluators</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ev-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Evaluation Detail Modal -->
+<div id="ev-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl max-h-[85vh] flex flex-col">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+            <div>
+                <h3 id="modal-title" class="font-headline-sm text-primary">Evaluation Detail</h3>
+                <p id="modal-sub" class="font-label-sm text-on-surface-variant mt-0.5"></p>
+            </div>
+            <button id="close-modal" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div id="modal-body" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="text-center py-6 text-on-surface-variant">Loading...</div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('faculty', 'evaluations');
+
+    const token = getToken();
+    const base  = '../';
+    let evals = [];
+
+    const fetchAPI = async (url, opts = {}) => {
+        const r = await fetch(base + 'api' + url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers||{}) } });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const statusBadge = s => {
+        const m = { 'Completed':'bg-success-emerald/10 text-success-emerald', 'Scheduled':'bg-warning-amber/10 text-warning-amber', 'Absent':'bg-error/10 text-error' };
+        return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${m[s]||'bg-outline-variant/20 text-text-muted'}">${s}</span>`;
+    };
+
+    async function openModal(ev) {
+        const modal = document.getElementById('ev-modal');
+        const body  = document.getElementById('modal-body');
+        document.getElementById('modal-title').textContent = ev.GroupName;
+        document.getElementById('modal-sub').textContent   = `${ev.ProjectTitle} · ${ev.MilestoneTitle}`;
+        modal.classList.remove('hidden');
+        body.innerHTML = `<div class="text-center py-4 text-on-surface-variant"><span class="material-symbols-outlined text-3xl block mb-2">hourglass_empty</span>Loading...</div>`;
+
+        try {
+            // Fetch evaluation criteria / results
+            const [allEvals] = await Promise.all([fetchAPI('/evaluations')]);
+            const evDetail = allEvals.find(e => e.EvaluationID === ev.EvaluationID);
+
+            body.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-surface-container-low rounded-xl p-4"><p class="text-xs text-on-surface-variant mb-1">Date</p><p class="font-semibold">${new Date(ev.EvaluationDate).toLocaleDateString()}</p></div>
+                    <div class="bg-surface-container-low rounded-xl p-4"><p class="text-xs text-on-surface-variant mb-1">Status</p>${statusBadge(ev.Status)}</div>
+                    <div class="bg-surface-container-low rounded-xl p-4 col-span-2"><p class="text-xs text-on-surface-variant mb-1">Evaluators</p><p class="font-semibold">${ev.Evaluators||'Not assigned'}</p></div>
+                </div>
+                ${ev.Status === 'Completed' ? `
+                <div>
+                    <h4 class="font-semibold text-on-surface mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">analytics</span>Results</h4>
+                    <div class="bg-success-emerald/10 border border-success-emerald/20 rounded-xl p-4">
+                        <p class="text-sm font-bold text-success-emerald">Evaluation completed. View detailed scores in the evaluation results section.</p>
+                    </div>
+                </div>` : `
+                <div class="bg-warning-amber/10 border border-warning-amber/20 rounded-xl p-4">
+                    <p class="text-sm text-warning-amber font-semibold">This evaluation is scheduled and awaiting completion by the assigned evaluators.</p>
+                </div>`}`;
+        } catch(e) {
+            body.innerHTML = `<div class="text-error text-sm">${e.message}</div>`;
+        }
+    }
+
+    document.getElementById('close-modal').onclick = () => document.getElementById('ev-modal').classList.add('hidden');
+    document.getElementById('ev-modal').addEventListener('click', e => { if (e.target === document.getElementById('ev-modal')) document.getElementById('ev-modal').classList.add('hidden'); });
+
+    async function load() {
+        try {
+            // Get all evaluations, then filter for supervised groups
+            const [projects, allEvals] = await Promise.all([
+                fetchAPI('/faculty/projects'),
+                fetchAPI('/evaluations')
+            ]);
+
+            const groupNames = new Set(projects.map(p => p.GroupName).filter(Boolean));
+            evals = groupNames.size > 0 ? allEvals.filter(e => groupNames.has(e.GroupName)) : allEvals;
+
+            document.getElementById('stat-total').textContent     = evals.length;
+            document.getElementById('stat-scheduled').textContent = evals.filter(e => e.Status==='Scheduled').length;
+            document.getElementById('stat-completed').textContent = evals.filter(e => e.Status==='Completed').length;
+
+            const tbody = document.getElementById('ev-tbody');
+            if (!evals.length) {
+                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">event_busy</span>No evaluations for your groups yet.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = evals.map(e => `
+                <tr class="hover:bg-surface-container-low transition-colors cursor-pointer ev-row" data-id="${e.EvaluationID}">
+                    <td class="px-6 py-4 font-semibold text-primary">${e.GroupName}</td>
+                    <td class="px-6 py-4 text-sm text-on-surface-variant max-w-[140px] truncate" title="${e.ProjectTitle}">${e.ProjectTitle}</td>
+                    <td class="px-6 py-4 text-sm">${e.MilestoneTitle}</td>
+                    <td class="px-6 py-4 text-on-surface-variant">${new Date(e.EvaluationDate).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 text-sm text-on-surface-variant max-w-[140px] truncate" title="${e.Evaluators||''}">${e.Evaluators||'—'}</td>
+                    <td class="px-6 py-4">${statusBadge(e.Status)}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="text-primary hover:bg-primary/10 rounded-lg p-1.5">
+                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                        </button>
+                    </td>
+                </tr>`).join('');
+
+            document.querySelectorAll('.ev-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    const ev = evals.find(e => String(e.EvaluationID) === row.dataset.id);
+                    if (ev) openModal(ev);
+                });
+            });
+        } catch(e) {
+            document.getElementById('ev-tbody').innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

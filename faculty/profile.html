@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Faculty Profile | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+    <div id="app-sidebar"></div>
+    <div id="app-topnav"></div>
+    <main class="ml-sidebar-width pt-16 min-h-screen bg-background"></main>
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/page-templates.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>
+        renderProfilePage('faculty');
+        initPage('faculty', 'profile', { searchPlaceholder: 'Search...' });
+        bootstrapProfilePage();
+    </script>
+</body>
+</html>

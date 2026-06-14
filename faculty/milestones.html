@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Milestones | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header>
+            <h1 class="font-headline-lg text-headline-lg text-primary">Group Milestones</h1>
+            <p class="font-body-md text-text-muted">Milestones for batches assigned to your supervised groups. Click a row to view details.</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"         id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-secondary"       id="stat-active">—</p>
+                <p class="font-label-sm text-on-surface-variant">Active</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-on-surface-variant" id="stat-closed">—</p>
+                <p class="font-label-sm text-on-surface-variant">Closed</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald" id="stat-submitted">—</p>
+                <p class="font-label-sm text-on-surface-variant">Submitted</p>
+            </div>
+        </div>
+
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Batch</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Due Date</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Weightage</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ms-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Milestone Detail Modal -->
+<div id="ms-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl max-h-[85vh] flex flex-col">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+            <h3 id="modal-title" class="font-headline-sm text-primary">Milestone Detail</h3>
+            <button id="close-modal" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div id="modal-body" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="text-center py-6 text-on-surface-variant">Loading...</div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('faculty', 'milestones');
+
+    const token = getToken();
+    const base  = '../';
+    let milestones = [];
+
+    const fetchAPI = async (url, opts = {}) => {
+        const r = await fetch(base + 'api' + url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers||{}) } });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const statusBadge = s => {
+        const c = s === 'Active' ? 'bg-secondary/10 text-secondary' : 'bg-outline-variant/20 text-on-surface-variant';
+        return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${c}">${s}</span>`;
+    };
+
+    async function openModal(ms) {
+        const modal = document.getElementById('ms-modal');
+        const body  = document.getElementById('modal-body');
+        document.getElementById('modal-title').textContent = ms.Title;
+        modal.classList.remove('hidden');
+
+        // Load submission stats for this milestone across supervised projects
+        body.innerHTML = `<div class="text-center py-4 text-on-surface-variant"><span class="material-symbols-outlined text-3xl block mb-2">hourglass_empty</span>Loading...</div>`;
+        try {
+            const subs = await fetchAPI('/faculty/submissions');
+            const related = subs.filter(s => s.MilestoneTitle === ms.Title);
+
+            const isOverdue = new Date(ms.DueDate) < new Date();
+            body.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-surface-container-low rounded-xl p-4">
+                        <p class="text-xs text-on-surface-variant mb-1">Due Date</p>
+                        <p class="font-semibold ${isOverdue?'text-error':''}">${new Date(ms.DueDate).toLocaleDateString()}</p>
+                        ${isOverdue ? '<p class="text-xs text-error mt-0.5">Overdue</p>' : ''}
+                    </div>
+                    <div class="bg-surface-container-low rounded-xl p-4">
+                        <p class="text-xs text-on-surface-variant mb-1">Weightage</p>
+                        <p class="font-semibold text-secondary">${ms.Weightage}%</p>
+                    </div>
+                    <div class="bg-surface-container-low rounded-xl p-4">
+                        <p class="text-xs text-on-surface-variant mb-1">Batch</p>
+                        <p class="font-semibold">${ms.BatchName}</p>
+                    </div>
+                    <div class="bg-surface-container-low rounded-xl p-4">
+                        <p class="text-xs text-on-surface-variant mb-1">Status</p>
+                        ${statusBadge(ms.Status)}
+                    </div>
+                </div>
+                ${ms.Description ? `<p class="text-sm text-on-surface-variant bg-surface-container-low rounded-xl p-4">${ms.Description}</p>` : ''}
+                <div>
+                    <h4 class="font-semibold text-on-surface mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-[18px]">upload_file</span>
+                        Submissions for this Milestone (${related.length})
+                    </h4>
+                    ${related.length ? `
+                    <div class="space-y-2">
+                        ${related.map(s => `
+                        <div class="flex items-center justify-between p-3 bg-surface-container-low rounded-xl border border-outline-variant/20">
+                            <div>
+                                <p class="font-semibold text-sm text-on-surface">${s.GroupName}</p>
+                                <p class="text-xs text-on-surface-variant">${s.FileName||'No file'} · ${s.SubmissionVersion}</p>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full text-xs font-bold ${s.Status==='Reviewed'?'bg-success-emerald/10 text-success-emerald':s.Status==='Late_Submission'?'bg-error/10 text-error':'bg-warning-amber/10 text-warning-amber'}">${s.Status.replace('_',' ')}</span>
+                        </div>`).join('')}
+                    </div>` : `<p class="text-sm text-on-surface-variant italic">No submissions yet.</p>`}
+                </div>`;
+        } catch(e) {
+            body.innerHTML = `<div class="text-error text-sm">${e.message}</div>`;
+        }
+    }
+
+    document.getElementById('close-modal').onclick = () => document.getElementById('ms-modal').classList.add('hidden');
+    document.getElementById('ms-modal').addEventListener('click', e => { if (e.target === document.getElementById('ms-modal')) document.getElementById('ms-modal').classList.add('hidden'); });
+
+    async function load() {
+        try {
+            // Get milestones for batches of supervised groups
+            const [projects, allMs] = await Promise.all([
+                fetchAPI('/faculty/projects'),
+                fetchAPI('/milestones')  // coordinator endpoint accessible to all auth users
+            ]);
+
+            // Collect batch IDs from supervised groups
+            const batchSet = new Set();
+            projects.forEach(p => { if (p.BatchID) batchSet.add(p.BatchID); });
+
+            // Filter milestones to relevant batches (or show all if no specific batch found)
+            milestones = batchSet.size > 0 ? allMs.filter(m => batchSet.has(m.BatchID)) : allMs;
+
+            document.getElementById('stat-total').textContent    = milestones.length;
+            document.getElementById('stat-active').textContent   = milestones.filter(m => m.Status==='Active').length;
+            document.getElementById('stat-closed').textContent   = milestones.filter(m => m.Status==='Closed').length;
+
+            // Count total submissions reviewed
+            const subs = await fetchAPI('/faculty/submissions').catch(() => []);
+            document.getElementById('stat-submitted').textContent = subs.filter(s => s.Status === 'Reviewed').length;
+
+            const tbody = document.getElementById('ms-tbody');
+            if (!milestones.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No milestones for your supervised batches.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = milestones.map(m => `
+                <tr class="hover:bg-surface-container-low transition-colors cursor-pointer ms-row" data-id="${m.MilestoneID}">
+                    <td class="px-6 py-4 font-semibold text-primary">${m.Title}</td>
+                    <td class="px-6 py-4 text-sm text-on-surface-variant">${m.BatchName}</td>
+                    <td class="px-6 py-4 text-on-surface-variant ${new Date(m.DueDate)<new Date()?'text-error font-semibold':''}">${new Date(m.DueDate).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 font-bold text-secondary">${m.Weightage}%</td>
+                    <td class="px-6 py-4">${statusBadge(m.Status)}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="text-primary hover:bg-primary/10 rounded-lg p-1.5">
+                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                        </button>
+                    </td>
+                </tr>`).join('');
+
+            document.querySelectorAll('.ms-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    const ms = milestones.find(m => String(m.MilestoneID) === row.dataset.id);
+                    if (ms) openModal(ms);
+                });
+            });
+        } catch(e) {
+            document.getElementById('ms-tbody').innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

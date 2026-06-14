@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="assets/tailwind-config.js"></script>
+    <link href="assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="min-h-screen flex">
+    <!-- Left: Branding -->
+    <div class="hidden lg:flex lg:w-1/2 login-gradient flex-col justify-between p-12 text-on-primary">
+        <div>
+            <h1 class="font-headline-lg text-headline-lg font-bold">Namal FYP</h1>
+            <p class="font-label-md text-on-primary/70 mt-1">Academic Excellence Portal</p>
+        </div>
+        <div class="space-y-6">
+            <h2 class="font-headline-md text-headline-md font-bold leading-tight">Manage Final Year Projects with confidence.</h2>
+            <p class="font-body-lg text-on-primary/80 max-w-md">Track milestones, review submissions, schedule evaluations, and monitor student progress — all in one place.</p>
+            <div class="flex gap-4 pt-4">
+                <div class="bg-on-primary/10 rounded-xl p-4 flex-1">
+                    <span class="material-symbols-outlined text-3xl mb-2">school</span>
+                    <p class="font-label-sm text-label-sm font-bold">450+ Students</p>
+                </div>
+                <div class="bg-on-primary/10 rounded-xl p-4 flex-1">
+                    <span class="material-symbols-outlined text-3xl mb-2">assignment</span>
+                    <p class="font-label-sm text-label-sm font-bold">124 Projects</p>
+                </div>
+            </div>
+        </div>
+        <p class="font-label-sm text-on-primary/50">© 2024 Namal University. All rights reserved.</p>
+    </div>
+
+    <!-- Right: Login Form -->
+    <div class="flex-1 flex items-center justify-center p-8 bg-background">
+        <div class="w-full max-w-md">
+            <div class="lg:hidden mb-8 text-center">
+                <h1 class="font-headline-md text-headline-md font-bold text-primary">Namal FYP</h1>
+                <p class="text-on-surface-variant">Academic Excellence Portal</p>
+            </div>
+
+            <div class="bg-surface-white rounded-2xl shadow-xl border border-outline-variant/30 p-8">
+                <h2 class="font-headline-sm text-headline-sm text-primary mb-1">Welcome back</h2>
+                <p class="font-body-sm text-on-surface-variant mb-8">Sign in to access your dashboard</p>
+
+                <div id="login-error" class="hidden mb-4 p-3 bg-error-container text-on-error-container rounded-lg text-body-sm"></div>
+
+                <form id="login-form" class="space-y-5">
+                    <div>
+                        <label class="block font-label-md text-label-md text-on-surface mb-2" for="username">Username</label>
+                        <input class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-body-md" id="username" name="username" placeholder="Enter your username" required type="text"/>
+                    </div>
+                    <div>
+                        <label class="block font-label-md text-label-md text-on-surface mb-2" for="password">Password</label>
+                        <input class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-body-md" id="password" name="password" placeholder="Enter your password" required type="password"/>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input class="rounded border-outline-variant text-primary focus:ring-primary" id="remember" type="checkbox"/>
+                            <span class="font-label-sm text-label-sm text-on-surface-variant">Remember Me</span>
+                        </label>
+                        <a class="font-label-sm text-label-sm text-primary hover:underline" href="#">Forgot Password?</a>
+                    </div>
+                    <button class="w-full bg-primary text-on-primary py-3 rounded-xl font-label-md font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/20" type="submit">
+                        Sign In
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/auth.js"></script>
+</body>
+</html>

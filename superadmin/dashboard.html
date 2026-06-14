@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Super Admin Dashboard | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+    <div id="app-sidebar"></div>
+    <div id="app-topnav"></div>
+    <main class="ml-sidebar-width pt-16 min-h-screen bg-background">
+        <div class="p-margin-desktop max-w-[1440px] mx-auto space-y-gutter">
+
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-unit-md">
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-primary">System Control Center</h2>
+                    <p class="font-body-lg text-on-surface-variant mt-1">Full system overview and access management for Namal FYP Portal.</p>
+                </div>
+                <div class="flex gap-unit-sm">
+                    <a href="accounts.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined text-[18px]">manage_accounts</span> Manage Accounts
+                    </a>
+                    <a href="audit.html" class="bg-surface-white text-primary border border-outline-variant px-5 py-2.5 rounded-xl font-label-md hover:bg-surface-container-low">
+                        View Audit Log
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-gutter">
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-primary-fixed rounded-lg text-primary"><span class="material-symbols-outlined">school</span></div>
+                        <span class="text-primary font-label-sm bg-primary/10 px-2 py-1 rounded-full">Students</span>
+                    </div>
+                    <span class="font-label-md text-on-surface-variant">Total Students</span>
+                    <span class="font-display-lg text-display-lg mt-1" data-stat="students">—</span>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-secondary-fixed rounded-lg text-secondary"><span class="material-symbols-outlined">person_book</span></div>
+                        <span class="text-secondary font-label-sm bg-secondary/10 px-2 py-1 rounded-full">Faculty</span>
+                    </div>
+                    <span class="font-label-md text-on-surface-variant">Total Faculty</span>
+                    <span class="font-display-lg text-display-lg mt-1" data-stat="faculty">—</span>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-tertiary-fixed rounded-lg text-tertiary"><span class="material-symbols-outlined">rocket_launch</span></div>
+                        <span class="text-tertiary font-label-sm bg-tertiary/10 px-2 py-1 rounded-full">Projects</span>
+                    </div>
+                    <span class="font-label-md text-on-surface-variant">Active Projects</span>
+                    <span class="font-display-lg text-display-lg mt-1" data-stat="projects">—</span>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-error-container rounded-lg text-error"><span class="material-symbols-outlined">upload_file</span></div>
+                        <span class="text-success-emerald font-label-sm bg-success-emerald/10 px-2 py-1 rounded-full">Total</span>
+                    </div>
+                    <span class="font-label-md text-on-surface-variant">Submissions</span>
+                    <span class="font-display-lg text-display-lg mt-1" data-stat="submissions">—</span>
+                </div>
+            </div>
+
+            <!-- Access Control Overview + Audit Log -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+
+                <!-- Access Control Card -->
+                <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg space-y-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">lock</span> Access Control
+                        </h3>
+                        <a href="accounts.html" class="text-primary font-label-md hover:underline text-sm">Manage →</a>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-success-emerald/5 rounded-xl border border-success-emerald/20">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-success-emerald"></div>
+                                <span class="font-label-md">Active Accounts</span>
+                            </div>
+                            <span class="font-headline-sm text-success-emerald font-bold" data-stat="active_accounts">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-error/5 rounded-xl border border-error/20">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-error"></div>
+                                <span class="font-label-md">Suspended Accounts</span>
+                            </div>
+                            <span class="font-headline-sm text-error font-bold" data-stat="suspended_accounts">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-primary/5 rounded-xl border border-primary/20">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-primary"></div>
+                                <span class="font-label-md">Evaluators</span>
+                            </div>
+                            <span class="font-headline-sm text-primary font-bold" data-stat="evaluators">—</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-secondary/5 rounded-xl border border-secondary/20">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+                                <span class="font-label-md">Groups Formed</span>
+                            </div>
+                            <span class="font-headline-sm text-secondary font-bold" data-stat="groups">—</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 flex flex-col gap-2">
+                        <a href="accounts.html" class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 rounded-xl font-label-md hover:opacity-90 transition-all">
+                            <span class="material-symbols-outlined text-[18px]">manage_accounts</span> User Accounts
+                        </a>
+                        <a href="access.html" class="w-full flex items-center justify-center gap-2 bg-surface-container text-on-surface py-2.5 rounded-xl font-label-md hover:bg-surface-container-high transition-all">
+                            <span class="material-symbols-outlined text-[18px]">lock</span> Role Assignments
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Activity (live accounts list) -->
+                <div class="lg:col-span-2 bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">people</span> Recent User Accounts
+                        </h3>
+                        <a href="accounts.html" class="text-primary font-label-md hover:underline text-sm">View All →</a>
+                    </div>
+                    <div id="audit-list" class="divide-y divide-outline-variant/20">
+                        <div class="py-8 text-center text-on-surface-variant">Loading accounts...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg">
+                <h3 class="font-headline-sm text-headline-sm mb-unit-lg">Quick Actions</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+                    <a href="accounts.html" class="flex flex-col items-center gap-3 p-unit-lg rounded-xl bg-primary/5 hover:bg-primary/10 border border-primary/20 transition-all group text-center">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all">
+                            <span class="material-symbols-outlined">person_add</span>
+                        </div>
+                        <p class="font-label-md font-bold">Add User</p>
+                        <p class="font-label-sm text-on-surface-variant text-xs">Create new account</p>
+                    </a>
+                    <a href="access.html" class="flex flex-col items-center gap-3 p-unit-lg rounded-xl bg-secondary/5 hover:bg-secondary/10 border border-secondary/20 transition-all group text-center">
+                        <div class="w-12 h-12 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-on-primary transition-all">
+                            <span class="material-symbols-outlined">admin_panel_settings</span>
+                        </div>
+                        <p class="font-label-md font-bold">Access Control</p>
+                        <p class="font-label-sm text-on-surface-variant text-xs">Manage roles & permissions</p>
+                    </a>
+                    <a href="accounts.html" class="flex flex-col items-center gap-3 p-unit-lg rounded-xl bg-tertiary/5 hover:bg-tertiary/10 border border-tertiary/20 transition-all group text-center">
+                        <div class="w-12 h-12 rounded-xl bg-tertiary/10 text-tertiary flex items-center justify-center group-hover:bg-tertiary group-hover:text-on-primary transition-all">
+                            <span class="material-symbols-outlined">manage_search</span>
+                        </div>
+                        <p class="font-label-md font-bold">All Accounts</p>
+                        <p class="font-label-sm text-on-surface-variant text-xs">View & manage all users</p>
+                    </a>
+                    <a href="profile.html" class="flex flex-col items-center gap-3 p-unit-lg rounded-xl bg-error/5 hover:bg-error/10 border border-error/20 transition-all group text-center">
+                        <div class="w-12 h-12 rounded-xl bg-error/10 text-error flex items-center justify-center group-hover:bg-error group-hover:text-on-error transition-all">
+                            <span class="material-symbols-outlined">manage_accounts</span>
+                        </div>
+                        <p class="font-label-md font-bold">Admin Profile</p>
+                        <p class="font-label-sm text-on-surface-variant text-xs">Update your settings</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>initPage('superadmin', 'dashboard', { searchPlaceholder: 'Search system...' });</script>
+</body>
+</html>

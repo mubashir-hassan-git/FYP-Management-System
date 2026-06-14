@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Milestones | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header>
+            <h1 class="font-headline-lg text-headline-lg text-primary">Milestone Tracker</h1>
+            <p class="font-body-md text-text-muted">All milestones for your batch with submission status.</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"          id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-secondary"        id="stat-active">—</p>
+                <p class="font-label-sm text-on-surface-variant">Active</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald"  id="stat-submitted">—</p>
+                <p class="font-label-sm text-on-surface-variant">Submitted</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-warning-amber"    id="stat-pending">—</p>
+                <p class="font-label-sm text-on-surface-variant">Pending</p>
+            </div>
+        </div>
+
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">#</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Due Date</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Weightage</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone Status</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Your Submission</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ms-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('student', 'milestones');
+
+    const token = getToken();
+    const base  = '../';
+
+    const fetchAPI = async (url, opts = {}) => {
+        const r = await fetch(base + 'api' + url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers||{}) } });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    async function load() {
+        const tbody = document.getElementById('ms-tbody');
+        try {
+            const [dash, milestones] = await Promise.all([
+                fetchAPI('/students/dashboard'),
+                fetchAPI('/students/milestones')
+            ]);
+
+            const projectId = dash.student.projectId;
+            let submissions = [];
+            if (projectId) {
+                submissions = await fetchAPI(`/submissions/project/${projectId}`).catch(() => []);
+            }
+
+            document.getElementById('stat-total').textContent    = milestones.length;
+            document.getElementById('stat-active').textContent   = milestones.filter(m => m.Status==='Active').length;
+            document.getElementById('stat-submitted').textContent= milestones.filter(m => submissions.some(s => s.MilestoneID===m.MilestoneID && s.Status==='Reviewed')).length;
+            document.getElementById('stat-pending').textContent  = milestones.filter(m => !submissions.some(s => s.MilestoneID===m.MilestoneID)).length;
+
+            if (!milestones.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No milestones for your batch yet.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = milestones.map((m, idx) => {
+                const sub = submissions.find(s => s.MilestoneID === m.MilestoneID);
+                const msBadge = m.Status === 'Active'
+                    ? '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-secondary/10 text-secondary">Active</span>'
+                    : '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-outline-variant/20 text-on-surface-variant">Closed</span>';
+
+                let subCell;
+                if (!sub) {
+                    subCell = m.Status === 'Active'
+                        ? `<a href="submissions.html" class="text-primary text-xs font-bold hover:underline flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">upload</span>Submit Now</a>`
+                        : '<span class="text-on-surface-variant text-xs">—</span>';
+                } else {
+                    const sc = { 'Reviewed':'text-success-emerald', 'Submitted':'text-warning-amber', 'Late_Submission':'text-error' };
+                    subCell = `<div class="flex items-center gap-2">
+                        <span class="text-xs font-bold ${sc[sub.Status]||'text-on-surface-variant'}">${sub.Status.replace('_',' ')}</span>
+                        ${sub.FileID ? `<a href="${base}api/submissions/download/${sub.FileID}" class="text-primary hover:underline text-xs flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">download</span></a>` : ''}
+                    </div>`;
+                }
+
+                const isOverdue = new Date(m.DueDate) < new Date() && !sub;
+                return `
+                <tr class="hover:bg-surface-container-low transition-colors">
+                    <td class="px-6 py-4 font-mono font-bold text-on-surface-variant text-xs">${String(idx+1).padStart(2,'0')}</td>
+                    <td class="px-6 py-4 font-semibold text-primary">${m.Title}</td>
+                    <td class="px-6 py-4 ${isOverdue?'text-error font-semibold':'text-on-surface-variant'}">${new Date(m.DueDate).toLocaleDateString()}${isOverdue?' (overdue)':''}</td>
+                    <td class="px-6 py-4 font-bold text-secondary">${m.Weightage}%</td>
+                    <td class="px-6 py-4">${msBadge}</td>
+                    <td class="px-6 py-4">${subCell}</td>
+                </tr>`;
+            }).join('');
+        } catch(e) {
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Access Control | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+<div id="app-sidebar"></div>
+<div id="app-topnav"></div>
+<main class="ml-sidebar-width pt-16 min-h-screen bg-background">
+    <div class="p-margin-desktop max-w-[1440px] mx-auto space-y-gutter">
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-unit-md">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-primary">Access Control</h2>
+                <p class="font-body-md text-on-surface-variant mt-1">Manage roles, suspend accounts or reset passwords system-wide.</p>
+            </div>
+            <a href="accounts.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-md">
+                <span class="material-symbols-outlined text-[18px]">manage_accounts</span> Full Account Management
+            </a>
+        </div>
+
+        <!-- Role count cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-surface-white rounded-xl custom-shadow border border-primary/20 p-unit-lg text-center">
+                <div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined">school</span></div>
+                <p class="font-headline-sm text-primary font-bold" id="cnt-student">—</p>
+                <p class="font-label-md text-on-surface-variant">Students</p>
+            </div>
+            <div class="bg-surface-white rounded-xl custom-shadow border border-secondary/20 p-unit-lg text-center">
+                <div class="w-12 h-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined">person_book</span></div>
+                <p class="font-headline-sm text-secondary font-bold" id="cnt-faculty">—</p>
+                <p class="font-label-md text-on-surface-variant">Faculty</p>
+            </div>
+            <div class="bg-surface-white rounded-xl custom-shadow border border-tertiary/20 p-unit-lg text-center">
+                <div class="w-12 h-12 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined">badge</span></div>
+                <p class="font-headline-sm text-tertiary font-bold" id="cnt-external">—</p>
+                <p class="font-label-md text-on-surface-variant">External</p>
+            </div>
+            <div class="bg-surface-white rounded-xl custom-shadow border border-error/20 p-unit-lg text-center">
+                <div class="w-12 h-12 rounded-full bg-error/10 text-error flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined">block</span></div>
+                <p class="font-headline-sm text-error font-bold" id="cnt-suspended">—</p>
+                <p class="font-label-md text-on-surface-variant">Suspended</p>
+            </div>
+        </div>
+
+        <!-- Quick role/status management table -->
+        <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 overflow-hidden">
+            <div class="p-unit-lg border-b border-outline-variant/20 flex items-center justify-between">
+                <div>
+                    <h3 class="font-headline-sm text-headline-sm">Role & Status Management</h3>
+                    <p class="font-body-sm text-on-surface-variant mt-1">Suspend/activate accounts or update roles without full deletion.</p>
+                </div>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+                    <input id="search-input" class="pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-xl text-sm w-52" placeholder="Search users..." type="text"/>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-surface-container-low border-b border-outline-variant/20">
+                        <tr>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">User</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Email</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Status</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Role</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Type</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-center">Quick Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="access-tbody" class="divide-y divide-outline-variant/10">
+                        <tr><td colspan="6" class="px-4 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('superadmin', 'access', { searchPlaceholder: 'Search users...' });
+
+    const token = getToken();
+    const base  = '../';
+    let allAccounts = [];
+
+    const api = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const toast = (msg, err=false) => {
+        const t = document.createElement('div');
+        t.className = `fixed bottom-6 right-6 ${err?'bg-error text-on-error':'bg-success-emerald text-white'} px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 z-50 font-label-md`;
+        t.innerHTML = `<span class="material-symbols-outlined">${err?'error':'check_circle'}</span>${msg}`;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+    };
+
+    function renderTable(list) {
+        const tbody = document.getElementById('access-tbody');
+        if (!list.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No accounts found.</td></tr>`;
+            return;
+        }
+        const sc = { Active:'bg-success-emerald/10 text-success-emerald', Suspended:'bg-error/10 text-error', Inactive:'bg-outline-variant/20 text-text-muted' };
+        tbody.innerHTML = list.map(a => {
+            const isSA = a.Username === 'superadmin';
+            const actions = isSA ? `<span class="text-xs text-on-surface-variant italic">Protected</span>` : `
+                <div class="flex gap-1 justify-center">
+                    <button class="toggle-btn px-2 py-1 text-xs rounded-lg font-bold ${a.Status==='Active'?'bg-warning-amber/10 text-warning-amber hover:bg-warning-amber/20':'bg-success-emerald/10 text-success-emerald hover:bg-success-emerald/20'}"
+                        data-pid="${a.PersonID}" data-status="${a.Status}">
+                        ${a.Status==='Active'?'Suspend':'Activate'}
+                    </button>
+                    <button class="reset-btn px-2 py-1 text-xs rounded-lg bg-secondary/10 text-secondary font-bold hover:bg-secondary/20" data-pid="${a.PersonID}">Reset PW</button>
+                </div>`;
+            return `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent((a.FirstName||'U')+' '+(a.LastName||''))}&background=0D9488&color=fff&size=64" class="w-8 h-8 rounded-full"/>
+                        <div>
+                            <p class="font-semibold text-sm">${a.FirstName} ${a.LastName||''}</p>
+                            <p class="text-xs text-on-surface-variant">${a.Username}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-4 py-3 text-sm text-on-surface-variant">${a.Email}</td>
+                <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${sc[a.Status]||''}">${a.Status}</span></td>
+                <td class="px-4 py-3 text-sm">${a.Roles||'—'}</td>
+                <td class="px-4 py-3 text-sm text-on-surface-variant">${a.PersonType}</td>
+                <td class="px-4 py-3 text-center">${actions}</td>
+            </tr>`;
+        }).join('');
+
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const ns = btn.dataset.status === 'Active' ? 'Suspended' : 'Active';
+                if (!confirm(`${ns==='Suspended'?'Suspend':'Activate'} this account?`)) return;
+                try { await api(`/admin/accounts/${btn.dataset.pid}/status`, { method:'PATCH', body:{ status:ns } }); toast(`Account ${ns.toLowerCase()}`); load(); }
+                catch(e) { toast(e.message, true); }
+            };
+        });
+        document.querySelectorAll('.reset-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const pw = prompt('Enter new password (min 6 chars):');
+                if (!pw || pw.length < 6) { if (pw !== null) toast('Password too short', true); return; }
+                try { await api(`/admin/accounts/${btn.dataset.pid}/reset-password`, { method:'PATCH', body:{ newPassword:pw } }); toast('Password reset'); }
+                catch(e) { toast(e.message, true); }
+            };
+        });
+    }
+
+    document.getElementById('search-input').addEventListener('input', e => {
+        const q = e.target.value.toLowerCase();
+        renderTable(q ? allAccounts.filter(a => `${a.FirstName} ${a.LastName||''} ${a.Username} ${a.Email}`.toLowerCase().includes(q)) : allAccounts);
+    });
+
+    async function load() {
+        try {
+            allAccounts = await api('/admin/accounts');
+            document.getElementById('cnt-student').textContent   = allAccounts.filter(a => a.PersonType==='Student').length;
+            document.getElementById('cnt-faculty').textContent   = allAccounts.filter(a => a.PersonType==='Faculty').length;
+            document.getElementById('cnt-external').textContent  = allAccounts.filter(a => a.PersonType==='External').length;
+            document.getElementById('cnt-suspended').textContent = allAccounts.filter(a => a.Status==='Suspended').length;
+            renderTable(allAccounts);
+        } catch(e) {
+            document.getElementById('access-tbody').innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

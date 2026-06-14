@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Projects & Groups | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header>
+            <h1 class="font-headline-lg text-headline-lg text-primary">Assigned Projects & Student Groups</h1>
+            <p class="font-body-md text-text-muted">All projects and their student groups under your supervision.</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"        id="stat-projects">—</p>
+                <p class="font-label-sm text-on-surface-variant">Projects</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-secondary"      id="stat-groups">—</p>
+                <p class="font-label-sm text-on-surface-variant">Groups</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald" id="stat-students">—</p>
+                <p class="font-label-sm text-on-surface-variant">Students</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-warning-amber"  id="stat-pending">—</p>
+                <p class="font-label-sm text-on-surface-variant">Pending Reviews</p>
+            </div>
+        </div>
+
+        <!-- Projects table -->
+        <div class="bento-card overflow-hidden">
+            <div class="p-unit-md border-b border-outline-variant/20 flex items-center justify-between">
+                <h3 class="font-headline-sm text-headline-sm">Projects & Groups</h3>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+                    <input id="search-input" class="pl-9 pr-4 py-2 bg-surface-container-low border-none rounded-xl text-sm w-44" placeholder="Search..." type="text"/>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Project</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Domain</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Group</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Students</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Progress</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">View</th>
+                        </tr>
+                    </thead>
+                    <tbody id="proj-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Project Detail Drawer -->
+<div id="detail-drawer" class="hidden fixed inset-0 bg-black/40 z-50 flex justify-end">
+    <div class="w-full max-w-[480px] bg-white h-full overflow-y-auto shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between sticky top-0 bg-white z-10">
+            <h3 class="font-headline-sm text-primary" id="drawer-title">Project Detail</h3>
+            <button id="close-drawer" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div id="drawer-content" class="flex-1 p-6 space-y-6">
+            <div class="text-center py-8 text-on-surface-variant">Loading...</div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('faculty', 'projects');
+
+    const token = getToken();
+    const base = '../';
+    let allProjects = [];
+
+    const fetchAPI = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const statusBadge = s => {
+        const m = { 'Active':'bg-success-emerald/10 text-success-emerald', 'Approved':'bg-secondary/10 text-secondary', 'Proposed':'bg-warning-amber/10 text-warning-amber', 'Completed':'bg-primary/10 text-primary' };
+        return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${m[s]||'bg-outline-variant/20 text-text-muted'}">${s}</span>`;
+    };
+
+    function progressBar(pct) {
+        const col = pct >= 70 ? 'bg-success-emerald' : pct >= 40 ? 'bg-warning-amber' : 'bg-error';
+        return `<div class="flex items-center gap-2">
+            <div class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                <div class="${col} h-full rounded-full" style="width:${pct}%"></div>
+            </div>
+            <span class="text-xs font-bold text-on-surface-variant w-8">${pct}%</span>
+        </div>`;
+    }
+
+    function renderTable(list) {
+        const tbody = document.getElementById('proj-tbody');
+        if (!list.length) { tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No projects found.</td></tr>`; return; }
+        tbody.innerHTML = list.map(p => `
+            <tr class="hover:bg-surface-container-low transition-colors cursor-pointer project-row" data-id="${p.projectId}">
+                <td class="px-6 py-4 font-semibold text-primary max-w-[180px] truncate" title="${p.title}">${p.title}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${p.Domain || p.domain || '—'}</td>
+                <td class="px-6 py-4 font-semibold">${p.groupName}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant max-w-[180px] truncate" title="${p.members||''}">${p.members || '—'}</td>
+                <td class="px-6 py-4">${statusBadge(p.ProjectStatus || p.status || 'Active')}</td>
+                <td class="px-6 py-4 w-32">${progressBar(p.progress || 0)}</td>
+                <td class="px-6 py-4 text-center">
+                    <button class="text-primary hover:bg-primary/10 rounded-lg p-1.5 view-btn" data-id="${p.projectId}">
+                        <span class="material-symbols-outlined text-[20px]">open_in_new</span>
+                    </button>
+                </td>
+            </tr>`).join('');
+
+        document.querySelectorAll('.project-row, .view-btn').forEach(el => {
+            el.addEventListener('click', e => {
+                const id = el.dataset.id || el.closest('[data-id]')?.dataset.id;
+                if (id) openDrawer(id);
+            });
+        });
+    }
+
+    async function openDrawer(projectId) {
+        const drawer = document.getElementById('detail-drawer');
+        const content = document.getElementById('drawer-content');
+        drawer.classList.remove('hidden');
+        content.innerHTML = `<div class="text-center py-8 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block mb-2">hourglass_empty</span>Loading...</div>`;
+
+        try {
+            const proj = allProjects.find(p => String(p.projectId) === String(projectId));
+            if (!proj) return;
+
+            document.getElementById('drawer-title').textContent = proj.title;
+
+            // Fetch group members detail
+            let membersHtml = '<p class="text-on-surface-variant text-sm">No group assigned</p>';
+            if (proj.groupId) {
+                const groups = await fetchAPI('/faculty/groups').catch(() => []);
+                const grp = groups.find(g => g.groupId == proj.groupId);
+                if (grp) {
+                    membersHtml = `<div class="space-y-2">${(grp.students||'').split(', ').map(s => `
+                        <div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.split('(')[0].trim())}&background=0D9488&color=fff&size=64" class="w-9 h-9 rounded-full"/>
+                            <p class="font-semibold text-sm">${s}</p>
+                        </div>`).join('')}</div>`;
+                }
+            }
+
+            content.innerHTML = `
+                <div class="space-y-5">
+                    <div class="bg-surface-container-low rounded-xl p-4 space-y-3">
+                        <div><p class="text-xs text-on-surface-variant mb-0.5">Domain</p><p class="font-semibold">${proj.Domain||proj.domain||'—'}</p></div>
+                        <div><p class="text-xs text-on-surface-variant mb-0.5">Status</p>${statusBadge(proj.ProjectStatus||proj.status||'Active')}</div>
+                        <div><p class="text-xs text-on-surface-variant mb-0.5">Group</p><p class="font-semibold">${proj.groupName}</p></div>
+                        <div><p class="text-xs text-on-surface-variant mb-0.5">Progress</p>${progressBar(proj.progress||0)}</div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-on-surface mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">group</span> Group Members</h4>
+                        ${membersHtml}
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-on-surface mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">supervised_user_circle</span> Supervision Role</h4>
+                        <p class="text-sm text-on-surface-variant bg-surface-container-low rounded-xl p-3">You are assigned as <strong class="text-primary">${proj.supervisorRole || 'Supervisor'}</strong> for this project.</p>
+                    </div>
+                    <a href="submissions.html" class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-3 rounded-xl font-label-md hover:opacity-90">
+                        <span class="material-symbols-outlined text-[18px]">upload_file</span> View Submissions
+                    </a>
+                </div>`;
+        } catch(e) {
+            content.innerHTML = `<div class="text-error text-sm">${e.message}</div>`;
+        }
+    }
+
+    document.getElementById('close-drawer').onclick = () => document.getElementById('detail-drawer').classList.add('hidden');
+    document.getElementById('detail-drawer').addEventListener('click', e => { if (e.target === document.getElementById('detail-drawer')) document.getElementById('detail-drawer').classList.add('hidden'); });
+
+    document.getElementById('search-input').addEventListener('input', e => {
+        const q = e.target.value.toLowerCase();
+        renderTable(q ? allProjects.filter(p => (p.title||'').toLowerCase().includes(q) || (p.groupName||'').toLowerCase().includes(q)) : allProjects);
+    });
+
+    async function load() {
+        try {
+            const [dash, projects] = await Promise.all([
+                fetchAPI('/faculty/dashboard'),
+                fetchAPI('/faculty/projects')
+            ]);
+
+            // Enrich with progress from dashboard
+            const dashProjs = dash.projects || [];
+            allProjects = projects.map(p => {
+                const dp = dashProjs.find(d => d.projectId === p.ProjectID);
+                return { ...p, projectId: p.ProjectID, title: p.Title, groupName: p.GroupName || '—', domain: p.Domain, progress: dp?.progress || 0, status: p.ProjectStatus };
+            });
+
+            document.getElementById('stat-projects').textContent = allProjects.length;
+            document.getElementById('stat-groups').textContent   = new Set(allProjects.map(p=>p.GroupName).filter(Boolean)).size;
+            document.getElementById('stat-pending').textContent  = dash.stats.pendingReviews;
+
+            // Count students
+            let stuCount = 0;
+            (projects).forEach(p => { if (p.members) stuCount += p.members.split(',').filter(Boolean).length; });
+            document.getElementById('stat-students').textContent = stuCount || '—';
+
+            renderTable(allProjects);
+        } catch(e) {
+            document.getElementById('proj-tbody').innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

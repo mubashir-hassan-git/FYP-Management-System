@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Accounts | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+<div id="app-sidebar"></div>
+<div id="app-topnav"></div>
+<main class="ml-sidebar-width pt-16 min-h-screen bg-background">
+    <div class="p-margin-desktop max-w-[1440px] mx-auto space-y-gutter">
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-unit-md">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-primary">User Account Management</h2>
+                <p class="font-body-md text-on-surface-variant mt-1">Add, suspend, reset passwords or delete user accounts.</p>
+            </div>
+            <button id="add-account-btn" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-lg whitespace-nowrap">
+                <span class="material-symbols-outlined text-[18px]">person_add</span> Add Account
+            </button>
+        </div>
+
+        <div class="bg-primary-container/30 border border-primary/20 rounded-xl p-4 flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary mt-0.5">info</span>
+            <p class="font-body-sm text-on-surface-variant">Email, username and CNIC are <strong>permanently assigned</strong> and cannot be changed after account creation.</p>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"          id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald"  id="stat-active">—</p>
+                <p class="font-label-sm text-on-surface-variant">Active</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-error"            id="stat-suspended">—</p>
+                <p class="font-label-sm text-on-surface-variant">Suspended</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-on-surface-variant" id="stat-inactive">—</p>
+                <p class="font-label-sm text-on-surface-variant">Inactive</p>
+            </div>
+        </div>
+
+        <!-- Accounts Table -->
+        <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 overflow-hidden">
+            <div class="p-unit-lg border-b border-outline-variant/20 flex items-center justify-between">
+                <h3 class="font-headline-sm text-headline-sm">All User Accounts</h3>
+                <div class="flex gap-3 items-center">
+                    <select id="filter-type" class="px-3 py-2 border border-outline-variant rounded-xl text-sm bg-surface-container-low">
+                        <option value="">All Types</option>
+                        <option value="Student">Student</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="External">External</option>
+                    </select>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+                        <input id="account-search" class="pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-xl text-sm w-56" placeholder="Search accounts..." type="text"/>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-surface-container-low border-b border-outline-variant/20">
+                        <tr>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">User</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Email</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Status</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Role</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-left">Type</th>
+                            <th class="px-4 py-3 font-label-sm text-on-surface-variant uppercase text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="accounts-tbody" class="divide-y divide-outline-variant/10">
+                        <tr><td colspan="6" class="px-4 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading accounts...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Add Account Modal -->
+<div id="add-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between sticky top-0 bg-white">
+            <h3 class="font-headline-sm text-primary">Create New Account</h3>
+            <button id="close-add" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <form id="add-form" class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="block font-label-md font-bold mb-2">First Name *</label><input id="a-fname" type="text" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low" required/></div>
+                <div><label class="block font-label-md font-bold mb-2">Last Name</label><input id="a-lname" type="text" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"/></div>
+            </div>
+            <div><label class="block font-label-md font-bold mb-2">Email * <span class="font-normal text-xs text-on-surface-variant">(permanent)</span></label><input id="a-email" type="email" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low" required/></div>
+            <div><label class="block font-label-md font-bold mb-2">CNIC * <span class="font-normal text-xs text-on-surface-variant">(permanent)</span></label><input id="a-cnic" type="text" placeholder="35201-1234567-1" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low" required/></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="block font-label-md font-bold mb-2">Gender</label><select id="a-gender" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"><option>Male</option><option>Female</option><option>Other</option></select></div>
+                <div><label class="block font-label-md font-bold mb-2">Date of Birth</label><input id="a-dob" type="date" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"/></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-label-md font-bold mb-2">Person Type *</label>
+                    <select id="a-ptype" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low">
+                        <option value="Student">Student</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="External">External</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-label-md font-bold mb-2">Role *</label>
+                    <select id="a-role" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"></select>
+                </div>
+            </div>
+            <div><label class="block font-label-md font-bold mb-2">Username * <span class="font-normal text-xs text-on-surface-variant">(permanent)</span></label><input id="a-uname" type="text" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low" required/></div>
+            <div><label class="block font-label-md font-bold mb-2">Password * (min 6 chars)</label><input id="a-pass" type="password" minlength="6" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low" required/></div>
+            <div id="add-error" class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm"></div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" id="cancel-add" class="flex-1 px-4 py-2.5 border border-outline-variant rounded-xl text-sm">Cancel</button>
+                <button type="submit" class="flex-1 bg-primary text-on-primary px-4 py-2.5 rounded-xl text-sm font-bold hover:opacity-90">Create Account</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Account Modal (superadmin can edit details) -->
+<div id="edit-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+            <h3 class="font-headline-sm text-primary">Edit Account</h3>
+            <button id="close-edit" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <form id="edit-form" class="p-6 space-y-4">
+            <input type="hidden" id="edit-pid"/>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="block font-label-md font-bold mb-2">First Name *</label><input id="e-fname" type="text" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low" required/></div>
+                <div><label class="block font-label-md font-bold mb-2">Last Name</label><input id="e-lname" type="text" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"/></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="block font-label-md font-bold mb-2">Gender</label><select id="e-gender" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"><option>Male</option><option>Female</option><option>Other</option></select></div>
+                <div><label class="block font-label-md font-bold mb-2">Date of Birth</label><input id="e-dob" type="date" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"/></div>
+            </div>
+            <div><label class="block font-label-md font-bold mb-2">Person Type</label><select id="e-ptype" class="w-full px-3 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low"><option value="Student">Student</option><option value="Faculty">Faculty</option><option value="External">External</option></select></div>
+            <div id="edit-error" class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm"></div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" id="cancel-edit" class="flex-1 px-4 py-2.5 border border-outline-variant rounded-xl text-sm">Cancel</button>
+                <button type="submit" class="flex-1 bg-primary text-on-primary px-4 py-2.5 rounded-xl text-sm font-bold hover:opacity-90">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('superadmin', 'accounts', { searchPlaceholder: 'Search accounts...' });
+
+    const token = getToken();
+    const base  = '../';
+    let allAccounts = [];
+    let roles = [];
+
+    const api = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const toast = (msg, err=false) => {
+        const t = document.createElement('div');
+        t.className = `fixed bottom-6 right-6 ${err?'bg-error text-on-error':'bg-success-emerald text-white'} px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 z-50 font-label-md`;
+        t.innerHTML = `<span class="material-symbols-outlined">${err?'error':'check_circle'}</span>${msg}`;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+    };
+
+    function renderTable(list) {
+        const tbody = document.getElementById('accounts-tbody');
+        if (!list.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">inbox</span>No accounts found.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = list.map(a => {
+            const isSA = a.Username === 'superadmin';
+            const sc = { Active:'bg-success-emerald/10 text-success-emerald', Suspended:'bg-error/10 text-error', Inactive:'bg-outline-variant/20 text-text-muted' };
+            const actions = isSA
+                ? `<span class="text-xs text-on-surface-variant italic px-2">System Account</span>`
+                : `<div class="flex gap-1 justify-center flex-wrap">
+                    <button class="edit-btn px-2 py-1 text-xs rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20"
+                        data-pid="${a.PersonID}" data-fname="${a.FirstName}" data-lname="${a.LastName||''}" data-gender="${a.Gender||'Male'}" data-dob="${a.DOB?String(a.DOB).substring(0,10):''}" data-ptype="${a.PersonType}">
+                        Edit
+                    </button>
+                    <button class="toggle-btn px-2 py-1 text-xs rounded-lg font-bold ${a.Status==='Active'?'bg-warning-amber/10 text-warning-amber hover:bg-warning-amber/20':'bg-success-emerald/10 text-success-emerald hover:bg-success-emerald/20'}"
+                        data-pid="${a.PersonID}" data-status="${a.Status}">
+                        ${a.Status==='Active'?'Suspend':'Activate'}
+                    </button>
+                    <button class="reset-btn px-2 py-1 text-xs rounded-lg bg-secondary/10 text-secondary font-bold hover:bg-secondary/20" data-pid="${a.PersonID}">Reset PW</button>
+                    <button class="del-btn px-2 py-1 text-xs rounded-lg bg-error/10 text-error font-bold hover:bg-error/20" data-pid="${a.PersonID}" data-name="${a.FirstName} ${a.LastName||''}">Delete</button>
+                   </div>`;
+            return `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-4 py-3">
+                    <div class="flex items-center gap-2">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent((a.FirstName||'U')+' '+(a.LastName||''))}&background=0D9488&color=fff&size=64" class="w-8 h-8 rounded-full"/>
+                        <div>
+                            <p class="font-semibold text-sm text-on-surface">${a.FirstName} ${a.LastName||''}</p>
+                            <p class="text-xs text-on-surface-variant">${a.Username}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-4 py-3 text-sm text-on-surface-variant">${a.Email}</td>
+                <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${sc[a.Status]||'bg-outline-variant/20 text-text-muted'}">${a.Status}</span></td>
+                <td class="px-4 py-3 text-sm">${a.Roles||'—'}</td>
+                <td class="px-4 py-3 text-sm text-on-surface-variant">${a.PersonType}</td>
+                <td class="px-4 py-3 text-center">${actions}</td>
+            </tr>`;
+        }).join('');
+
+        // Bind buttons
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.onclick = () => openEditModal(btn.dataset);
+        });
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const newStatus = btn.dataset.status === 'Active' ? 'Suspended' : 'Active';
+                if (!confirm(`${newStatus === 'Suspended' ? 'Suspend' : 'Activate'} this account?`)) return;
+                try { await api(`/admin/accounts/${btn.dataset.pid}/status`, { method: 'PATCH', body: { status: newStatus } }); toast(`Account ${newStatus.toLowerCase()}`); load(); }
+                catch(e) { toast(e.message, true); }
+            };
+        });
+        document.querySelectorAll('.reset-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const pw = prompt('New password (min 6 characters):');
+                if (!pw || pw.length < 6) { if (pw !== null) toast('Password too short', true); return; }
+                try { await api(`/admin/accounts/${btn.dataset.pid}/reset-password`, { method: 'PATCH', body: { newPassword: pw } }); toast('Password reset successfully'); }
+                catch(e) { toast(e.message, true); }
+            };
+        });
+        document.querySelectorAll('.del-btn').forEach(btn => {
+            btn.onclick = async () => {
+                if (!confirm(`Permanently delete account for "${btn.dataset.name}"? This cannot be undone.`)) return;
+                try { await api(`/admin/accounts/${btn.dataset.pid}`, { method: 'DELETE' }); toast('Account deleted'); load(); }
+                catch(e) { toast(e.message, true); }
+            };
+        });
+    }
+
+    function applyFilters() {
+        const q  = document.getElementById('account-search').value.toLowerCase();
+        const tp = document.getElementById('filter-type').value;
+        renderTable(allAccounts.filter(a =>
+            (!q  || `${a.FirstName} ${a.LastName||''} ${a.Username} ${a.Email}`.toLowerCase().includes(q))
+         && (!tp || a.PersonType === tp)
+        ));
+    }
+
+    document.getElementById('account-search').addEventListener('input', applyFilters);
+    document.getElementById('filter-type').addEventListener('change', applyFilters);
+
+    // Add Account
+    const addModal = document.getElementById('add-modal');
+    document.getElementById('add-account-btn').onclick = () => { document.getElementById('add-error').classList.add('hidden'); document.getElementById('add-form').reset(); addModal.classList.remove('hidden'); };
+    document.getElementById('close-add').onclick  = () => addModal.classList.add('hidden');
+    document.getElementById('cancel-add').onclick = () => addModal.classList.add('hidden');
+    addModal.addEventListener('click', e => { if (e.target === addModal) addModal.classList.add('hidden'); });
+
+    // Auto-suggest username from email
+    document.getElementById('a-email').addEventListener('input', e => {
+        const uname = e.target.value.split('@')[0].toLowerCase().replace(/[^a-z0-9._]/g,'_');
+        if (!document.getElementById('a-uname').value) document.getElementById('a-uname').value = uname;
+    });
+
+    document.getElementById('add-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const errEl = document.getElementById('add-error');
+        errEl.classList.add('hidden');
+        try {
+            await api('/admin/accounts', { method: 'POST', body: {
+                firstName:  document.getElementById('a-fname').value.trim(),
+                lastName:   document.getElementById('a-lname').value.trim(),
+                email:      document.getElementById('a-email').value.trim(),
+                cnic:       document.getElementById('a-cnic').value.trim(),
+                gender:     document.getElementById('a-gender').value,
+                dob:        document.getElementById('a-dob').value || null,
+                personType: document.getElementById('a-ptype').value,
+                roleId:     document.getElementById('a-role').value,
+                username:   document.getElementById('a-uname').value.trim(),
+                password:   document.getElementById('a-pass').value
+            }});
+            addModal.classList.add('hidden');
+            toast('Account created successfully');
+            load();
+        } catch(err) { errEl.textContent = err.message; errEl.classList.remove('hidden'); }
+    });
+
+    // Edit Account
+    const editModal = document.getElementById('edit-modal');
+    function openEditModal(data) {
+        document.getElementById('edit-pid').value   = data.pid;
+        document.getElementById('e-fname').value    = data.fname || '';
+        document.getElementById('e-lname').value    = data.lname || '';
+        document.getElementById('e-gender').value   = data.gender || 'Male';
+        document.getElementById('e-dob').value      = data.dob || '';
+        document.getElementById('e-ptype').value    = data.ptype || 'Student';
+        document.getElementById('edit-error').classList.add('hidden');
+        editModal.classList.remove('hidden');
+    }
+    document.getElementById('close-edit').onclick  = () => editModal.classList.add('hidden');
+    document.getElementById('cancel-edit').onclick = () => editModal.classList.add('hidden');
+    editModal.addEventListener('click', e => { if (e.target === editModal) editModal.classList.add('hidden'); });
+
+    document.getElementById('edit-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const errEl = document.getElementById('edit-error');
+        errEl.classList.add('hidden');
+        const pid = document.getElementById('edit-pid').value;
+        try {
+            await api(`/admin/accounts/${pid}`, { method: 'PUT', body: {
+                firstName:  document.getElementById('e-fname').value.trim(),
+                lastName:   document.getElementById('e-lname').value.trim(),
+                gender:     document.getElementById('e-gender').value,
+                dob:        document.getElementById('e-dob').value || null,
+                personType: document.getElementById('e-ptype').value
+            }});
+            editModal.classList.add('hidden');
+            toast('Account updated');
+            load();
+        } catch(err) { errEl.textContent = err.message; errEl.classList.remove('hidden'); }
+    });
+
+    async function load() {
+        try {
+            [allAccounts, roles] = await Promise.all([api('/admin/accounts'), api('/admin/roles')]);
+
+            document.getElementById('stat-total').textContent    = allAccounts.length;
+            document.getElementById('stat-active').textContent   = allAccounts.filter(a => a.Status === 'Active').length;
+            document.getElementById('stat-suspended').textContent= allAccounts.filter(a => a.Status === 'Suspended').length;
+            document.getElementById('stat-inactive').textContent = allAccounts.filter(a => a.Status === 'Inactive').length;
+
+            // Populate role dropdown
+            document.getElementById('a-role').innerHTML = roles.map(r => `<option value="${r.RoleID}">${r.RoleName}</option>`).join('');
+
+            renderTable(allAccounts);
+        } catch(e) {
+            document.getElementById('accounts-tbody').innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

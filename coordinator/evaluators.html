@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Evaluators | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-primary">Evaluator Management</h1>
+                <p class="font-body-md text-text-muted">Manage internal and external evaluators for FYP panels.</p>
+            </div>
+            <div class="flex gap-2 flex-wrap items-center">
+                <button id="btn-add-external" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-md">
+                    <span class="material-symbols-outlined text-[18px]">person_add</span> Add External Evaluator
+                </button>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+                    <input id="search-input" class="pl-9 pr-4 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low w-44" placeholder="Search..." type="text"/>
+                </div>
+                <select id="filter-type" class="px-4 py-2.5 border border-outline-variant rounded-xl text-sm bg-surface-container-low">
+                    <option value="">All Types</option>
+                    <option value="Internal">Internal</option>
+                    <option value="External">External</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"    id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-secondary"  id="stat-internal">—</p>
+                <p class="font-label-sm text-on-surface-variant">Internal</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-tertiary"   id="stat-external">—</p>
+                <p class="font-label-sm text-on-surface-variant">External</p>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Name</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Email</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Type</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Evaluations</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eval-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="5" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Add External Evaluator Modal -->
+<div id="add-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+            <h3 class="font-headline-sm text-primary">Add External Evaluator</h3>
+            <button id="close-add" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <form id="add-form" class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-label-md font-bold mb-2">First Name *</label>
+                    <input id="ev-fname" type="text" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary/30" required/>
+                </div>
+                <div>
+                    <label class="block font-label-md font-bold mb-2">Last Name</label>
+                    <input id="ev-lname" type="text" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary/30"/>
+                </div>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Email * <span class="font-normal text-on-surface-variant text-sm">(used as login)</span></label>
+                <input id="ev-email" type="email" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary/30" required/>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">CNIC *</label>
+                <input id="ev-cnic" type="text" placeholder="e.g. 35201-1234567-1" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary/30" required/>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Gender</label>
+                <select id="ev-gender" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700 flex items-start gap-2">
+                <span class="material-symbols-outlined text-amber-500 text-[18px] mt-0.5">info</span>
+                Default password will be <strong>evaluator123</strong>. The evaluator should change it on first login.
+            </div>
+            <div id="add-error" class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm"></div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" id="cancel-add" class="flex-1 px-4 py-3 border border-outline-variant rounded-xl font-label-md hover:bg-surface-container-low">Cancel</button>
+                <button type="submit" id="add-submit" class="flex-1 bg-primary text-on-primary px-4 py-3 rounded-xl font-label-md font-bold hover:opacity-90">Add Evaluator</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('coordinator', 'evaluators');
+
+    const token = getToken();
+    const base  = '../';
+    let allEvals = [];
+
+    const fetchAPI = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const toast = (msg, err=false) => {
+        const t = document.createElement('div');
+        t.className = `fixed bottom-6 right-6 ${err?'bg-error text-on-error':'bg-success-emerald text-white'} px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 z-50 font-label-md`;
+        t.innerHTML = `<span class="material-symbols-outlined">${err?'error':'check_circle'}</span>${msg}`;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+    };
+
+    function renderTable(list) {
+        const tbody = document.getElementById('eval-tbody');
+        if (!list.length) {
+            tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-12 text-center text-on-surface-variant">
+                <span class="material-symbols-outlined text-4xl block text-outline mb-2">person_off</span>No evaluators found.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = list.map(ev => {
+            const tc = ev.EvaluatorType === 'Internal' ? 'bg-secondary/10 text-secondary' : 'bg-tertiary/10 text-tertiary';
+            return `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent((ev.FirstName||'')+ ' '+(ev.LastName||''))}&background=0D9488&color=fff&bold=true&size=64"
+                             class="w-9 h-9 rounded-full object-cover"/>
+                        <p class="font-semibold">${ev.FirstName} ${ev.LastName||''}</p>
+                    </div>
+                </td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${ev.Email||'—'}</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${tc}">${ev.EvaluatorType}</span></td>
+                <td class="px-6 py-4 font-bold text-secondary">${ev.AssignmentCount||0}</td>
+                <td class="px-6 py-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-success-emerald/10 text-success-emerald">Active</span></td>
+            </tr>`;
+        }).join('');
+    }
+
+    // Add modal
+    const addModal = document.getElementById('add-modal');
+    document.getElementById('btn-add-external').onclick = () => {
+        document.getElementById('add-error').classList.add('hidden');
+        document.getElementById('add-form').reset();
+        addModal.classList.remove('hidden');
+    };
+    document.getElementById('close-add').onclick  = () => addModal.classList.add('hidden');
+    document.getElementById('cancel-add').onclick = () => addModal.classList.add('hidden');
+    addModal.addEventListener('click', e => { if (e.target === addModal) addModal.classList.add('hidden'); });
+
+    document.getElementById('add-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const errEl = document.getElementById('add-error');
+        errEl.classList.add('hidden');
+        const btn = document.getElementById('add-submit');
+        btn.disabled = true; btn.textContent = 'Adding...';
+        try {
+            await fetchAPI('/evaluations/evaluators/add-external', {
+                method: 'POST',
+                body: {
+                    firstName: document.getElementById('ev-fname').value.trim(),
+                    lastName:  document.getElementById('ev-lname').value.trim(),
+                    email:     document.getElementById('ev-email').value.trim(),
+                    cnic:      document.getElementById('ev-cnic').value.trim(),
+                    gender:    document.getElementById('ev-gender').value
+                }
+            });
+            addModal.classList.add('hidden');
+            toast('External evaluator added successfully');
+            load();
+        } catch(err) {
+            errEl.textContent = err.message;
+            errEl.classList.remove('hidden');
+        } finally {
+            btn.disabled = false; btn.textContent = 'Add Evaluator';
+        }
+    });
+
+    function applyFilters() {
+        const q  = document.getElementById('search-input').value.toLowerCase();
+        const tp = document.getElementById('filter-type').value;
+        renderTable(allEvals.filter(e => {
+            const name = `${e.FirstName||''} ${e.LastName||''}`.toLowerCase();
+            return (!q  || name.includes(q) || (e.Email||'').toLowerCase().includes(q))
+                && (!tp || e.EvaluatorType === tp);
+        }));
+    }
+
+    document.getElementById('search-input').addEventListener('input', applyFilters);
+    document.getElementById('filter-type').addEventListener('change', applyFilters);
+
+    async function load() {
+        try {
+            allEvals = await fetchAPI('/evaluations/evaluators/list');
+            const assignments = await fetchAPI('/evaluations').catch(() => []);
+            allEvals = allEvals.map(ev => ({
+                ...ev,
+                AssignmentCount: assignments.filter(a => (a.Evaluators||'').includes(ev.FirstName)).length
+            }));
+            document.getElementById('stat-total').textContent    = allEvals.length;
+            document.getElementById('stat-internal').textContent = allEvals.filter(e => e.EvaluatorType === 'Internal').length;
+            document.getElementById('stat-external').textContent = allEvals.filter(e => e.EvaluatorType === 'External').length;
+            renderTable(allEvals);
+        } catch(e) {
+            document.getElementById('eval-tbody').innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

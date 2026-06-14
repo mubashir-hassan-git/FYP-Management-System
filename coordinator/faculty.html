@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Faculty | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-primary">Faculty Management</h1>
+                <p class="font-body-md text-text-muted">View, add and manage faculty members.</p>
+            </div>
+        </header>
+
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Employee No</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Name</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Email</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Department</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant">
+                        <tr><td colspan="5" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading faculty...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>initPage('coordinator', 'faculty', { searchPlaceholder: 'Search faculty...' });</script>
+</body>
+</html>

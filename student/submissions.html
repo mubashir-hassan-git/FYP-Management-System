@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Submissions | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+    <div id="app-sidebar"></div>
+    <main class="ml-sidebar-width min-h-screen">
+        <div id="app-topnav"></div>
+        <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto">
+
+            <!-- Header -->
+            <header class="mb-unit-lg flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                <div>
+                    <h1 class="font-headline-lg text-headline-lg text-primary">Submissions</h1>
+                    <p class="font-body-md text-text-muted">Submit milestone documents and track review status.</p>
+                </div>
+                <button id="btn-upload" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-md">
+                    <span class="material-symbols-outlined text-[18px]">upload_file</span> Upload Submission
+                </button>
+            </header>
+
+            <!-- Stats row -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-unit-lg">
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                    <p class="text-2xl font-bold text-primary" id="stat-total">—</p>
+                    <p class="font-label-sm text-on-surface-variant">Total</p>
+                </div>
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                    <p class="text-2xl font-bold text-success-emerald" id="stat-reviewed">—</p>
+                    <p class="font-label-sm text-on-surface-variant">Reviewed</p>
+                </div>
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                    <p class="text-2xl font-bold text-warning-amber" id="stat-pending">—</p>
+                    <p class="font-label-sm text-on-surface-variant">Pending</p>
+                </div>
+                <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                    <p class="text-2xl font-bold text-error" id="stat-late">—</p>
+                    <p class="font-label-sm text-on-surface-variant">Late</p>
+                </div>
+            </div>
+
+            <!-- Submissions table -->
+            <div class="bento-card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-surface-container-low">
+                            <tr>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">File</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Version</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Type</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                                <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submissions-tbody" class="divide-y divide-outline-variant">
+                            <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                                <span class="material-symbols-outlined text-4xl mb-2 block text-outline">hourglass_empty</span>
+                                Loading submissions...
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl">
+            <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+                <h3 class="font-headline-sm text-primary">New Submission</h3>
+                <button id="modal-close" class="p-1 hover:bg-surface-container-high rounded-lg">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="upload-form" class="p-6 space-y-4">
+                <div>
+                    <label class="block font-label-md font-bold mb-2">Milestone *</label>
+                    <select id="sel-milestone" name="milestoneId" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                        <option value="">Loading milestones...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-label-md font-bold mb-2">Submission Type *</label>
+                    <select name="submissionType" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                        <option>PDF Document</option>
+                        <option>Code Repository</option>
+                        <option>Presentation</option>
+                        <option>ZIP Archive</option>
+                        <option>Word Document</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-label-md font-bold mb-2">File <span class="font-normal text-on-surface-variant">(pdf, docx, pptx, zip – max 50MB)</span></label>
+                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors" id="file-drop-zone">
+                        <span class="material-symbols-outlined text-3xl text-outline mb-1">upload_file</span>
+                        <p class="font-label-sm text-on-surface-variant" id="file-label">Click or drag a file here</p>
+                        <input type="file" name="submissionFile" id="file-input" class="hidden" accept=".pdf,.docx,.pptx,.zip"/>
+                    </label>
+                </div>
+                <div id="upload-error" class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm"></div>
+                <div id="upload-progress" class="hidden">
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="material-symbols-outlined animate-spin">autorenew</span>
+                        <span class="font-label-md">Uploading...</span>
+                    </div>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" id="modal-cancel" class="flex-1 px-4 py-3 border border-outline-variant rounded-xl font-label-md hover:bg-surface-container-low">Cancel</button>
+                    <button type="submit" id="btn-submit" class="flex-1 bg-primary text-on-primary px-4 py-3 rounded-xl font-label-md font-bold hover:opacity-90">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>
+        // Initialize sidebar/topnav
+        initPage('student', 'submissions');
+
+        const token = getToken();
+        const base = '../';
+        let projectId = null;
+        let milestones = [];
+
+        const fetchAPI = async (url, opts = {}) => {
+            const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+            if (opts.body && !(opts.body instanceof FormData)) {
+                headers['Content-Type'] = 'application/json';
+                opts.body = JSON.stringify(opts.body);
+            }
+            const r = await fetch(base + 'api' + url, { ...opts, headers });
+            if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.message || r.statusText); }
+            return r.json();
+        };
+
+        const statusBadge = s => {
+            const map = {
+                'Reviewed':       'bg-success-emerald/10 text-success-emerald',
+                'Submitted':      'bg-warning-amber/10 text-warning-amber',
+                'Late_Submission':'bg-error/10 text-error',
+            };
+            return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${map[s]||'bg-outline-variant/20 text-text-muted'}">${s.replace('_',' ')}</span>`;
+        };
+
+        const fmtSize = b => b > 1048576 ? `${(b/1048576).toFixed(1)} MB` : `${(b/1024).toFixed(0)} KB`;
+
+        async function loadSubmissions() {
+            const tbody = document.getElementById('submissions-tbody');
+            try {
+                // Get dashboard to find projectId
+                const dash = await fetchAPI('/students/dashboard');
+                projectId = dash.student.projectId;
+                milestones = await fetchAPI('/students/milestones');
+
+                // Populate milestone dropdown
+                const sel = document.getElementById('sel-milestone');
+                const active = milestones.filter(m => m.Status === 'Active');
+                sel.innerHTML = active.length
+                    ? active.map(m => `<option value="${m.MilestoneID}">${m.Title}</option>`).join('')
+                    : '<option value="">No active milestones</option>';
+
+                if (!projectId) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                        <span class="material-symbols-outlined text-4xl mb-2 block text-outline">folder_off</span>
+                        No project assigned yet.</td></tr>`;
+                    return;
+                }
+
+                const subs = await fetchAPI(`/submissions/project/${projectId}`);
+
+                // Update stats
+                document.getElementById('stat-total').textContent    = subs.length;
+                document.getElementById('stat-reviewed').textContent = subs.filter(s=>s.Status==='Reviewed').length;
+                document.getElementById('stat-pending').textContent  = subs.filter(s=>s.Status==='Submitted').length;
+                document.getElementById('stat-late').textContent     = subs.filter(s=>s.Status==='Late_Submission').length;
+
+                if (!subs.length) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                        <span class="material-symbols-outlined text-4xl mb-2 block text-outline">inbox</span>
+                        No submissions yet. Click "Upload Submission" to start.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = subs.map(s => `
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="px-6 py-4 font-semibold text-primary">${s.MilestoneTitle}</td>
+                        <td class="px-6 py-4">
+                            ${s.FileName
+                                ? `<div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-outline text-[18px]">description</span>
+                                    <span class="text-sm text-on-surface-variant truncate max-w-[160px]" title="${s.FileName}">${s.FileName}</span>
+                                   </div>`
+                                : `<span class="text-text-muted text-sm">No file</span>`}
+                        </td>
+                        <td class="px-6 py-4 font-mono font-bold text-secondary">${s.SubmissionVersion}</td>
+                        <td class="px-6 py-4 text-sm text-on-surface-variant">${s.SubmissionType}</td>
+                        <td class="px-6 py-4">${statusBadge(s.Status)}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-2">
+                                ${s.FileID
+                                    ? `<a href="${base}api/submissions/download/${s.FileID}"
+                                          class="flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-xs font-bold hover:bg-primary/20 transition-colors">
+                                          <span class="material-symbols-outlined text-[16px]">download</span> Download
+                                       </a>`
+                                    : `<span class="text-text-muted text-xs">No file attached</span>`}
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+            }
+        }
+
+        // File input display
+        document.getElementById('file-input').addEventListener('change', e => {
+            const f = e.target.files[0];
+            document.getElementById('file-label').textContent = f ? `${f.name} (${fmtSize(f.size)})` : 'Click or drag a file here';
+        });
+
+        // Drag-and-drop
+        const dropZone = document.getElementById('file-drop-zone');
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-primary','bg-primary/5'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-primary','bg-primary/5'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('border-primary','bg-primary/5');
+            const f = e.dataTransfer.files[0];
+            if (f) {
+                const dt = new DataTransfer();
+                dt.items.add(f);
+                document.getElementById('file-input').files = dt.files;
+                document.getElementById('file-label').textContent = `${f.name} (${fmtSize(f.size)})`;
+            }
+        });
+
+        // Modal open/close
+        const modal = document.getElementById('upload-modal');
+        const showErr = msg => { const el=document.getElementById('upload-error'); el.textContent=msg; el.classList.remove('hidden'); };
+        const hideErr = () => document.getElementById('upload-error').classList.add('hidden');
+
+        document.getElementById('btn-upload').onclick = () => { hideErr(); modal.classList.remove('hidden'); };
+        document.getElementById('modal-close').onclick = () => modal.classList.add('hidden');
+        document.getElementById('modal-cancel').onclick = () => modal.classList.add('hidden');
+        modal.addEventListener('click', e => { if(e.target===modal) modal.classList.add('hidden'); });
+
+        // Submit form
+        document.getElementById('upload-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            hideErr();
+            if (!projectId) return showErr('No project assigned to your account.');
+
+            const milestoneId = document.getElementById('sel-milestone').value;
+            if (!milestoneId) return showErr('Please select an active milestone.');
+
+            const formData = new FormData(e.target);
+            formData.append('projectId', projectId);
+
+            document.getElementById('upload-progress').classList.remove('hidden');
+            document.getElementById('btn-submit').disabled = true;
+
+            try {
+                const result = await (async () => {
+                    const r = await fetch(base + 'api/submissions', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData
+                    });
+                    const data = await r.json();
+                    if (!r.ok) throw new Error(data.message || 'Upload failed');
+                    return data;
+                })();
+
+                modal.classList.add('hidden');
+                e.target.reset();
+                document.getElementById('file-label').textContent = 'Click or drag a file here';
+                await loadSubmissions();
+                // Show success toast
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-6 right-6 bg-success-emerald text-white px-6 py-3 rounded-xl shadow-xl flex items-center gap-2 z-50 font-label-md';
+                toast.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Submitted successfully (${result.version})`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4000);
+            } catch(err) {
+                showErr(err.message);
+            } finally {
+                document.getElementById('upload-progress').classList.add('hidden');
+                document.getElementById('btn-submit').disabled = false;
+            }
+        });
+
+        // Load on page ready
+        loadSubmissions();
+    </script>
+</body>
+</html>

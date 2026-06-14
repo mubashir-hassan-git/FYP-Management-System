@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Coordinator Dashboard | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="text-on-surface">
+    <div id="app-sidebar"></div>
+    <div id="app-topnav"></div>
+    <main class="ml-sidebar-width pt-16 min-h-screen bg-background">
+        <div class="p-margin-desktop max-w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-unit-md mb-unit-xl">
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-primary">Academic Excellence Portal</h2>
+                    <p class="font-body-lg text-on-surface-variant mt-1">Hello, Coordinator. Here is your overview for the 2023-24 FYP cycle.</p>
+                </div>
+                <div class="flex gap-unit-sm">
+                    <a href="supervision.html" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-[18px]">add_task</span> Assign Supervisor</a>
+                    <a href="reports.html" class="bg-surface-white text-primary border border-outline-variant px-5 py-2.5 rounded-xl font-label-md hover:bg-surface-container-low">Generate Report</a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-unit-xl">
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 bg-primary-fixed rounded-lg text-primary"><span class="material-symbols-outlined">group</span></div><span class="text-success-emerald font-label-sm bg-success-emerald/10 px-2 py-1 rounded-full">+12%</span></div>
+                    <span class="font-label-md text-on-surface-variant">Total Students</span><span class="font-display-lg text-display-lg mt-1">450</span>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 bg-secondary-fixed rounded-lg text-secondary"><span class="material-symbols-outlined">school</span></div><span class="text-on-surface-variant font-label-sm bg-surface-container-high px-2 py-1 rounded-full">Stable</span></div>
+                    <span class="font-label-md text-on-surface-variant">Faculty</span><span class="font-display-lg text-display-lg mt-1">45</span>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 bg-tertiary-fixed rounded-lg text-tertiary"><span class="material-symbols-outlined">workspaces</span></div><span class="text-warning-amber font-label-sm bg-warning-amber/10 px-2 py-1 rounded-full">Active</span></div>
+                    <span class="font-label-md text-on-surface-variant">Groups</span><span class="font-display-lg text-display-lg mt-1">110</span>
+                </div>
+                <div class="bg-surface-white p-unit-lg rounded-xl custom-shadow border border-outline-variant/30 flex flex-col group hover:-translate-y-0.5 transition-all">
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 bg-error-container rounded-lg text-error"><span class="material-symbols-outlined">rocket_launch</span></div><span class="text-success-emerald font-label-sm bg-success-emerald/10 px-2 py-1 rounded-full">Live</span></div>
+                    <span class="font-label-md text-on-surface-variant">Projects</span><span class="font-display-lg text-display-lg mt-1">124</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+                <div class="lg:col-span-2 space-y-gutter">
+                    <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg">
+                        <div class="flex items-center justify-between mb-unit-lg">
+                            <h3 class="font-headline-sm text-headline-sm">Project Distribution by Domain</h3>
+                            <a href="projects.html" class="text-primary font-label-md hover:underline">View All</a>
+                        </div>
+                        <div class="flex flex-col md:flex-row items-center gap-unit-xl">
+                            <div class="relative w-48 h-48 rounded-full border-[12px] border-surface-container flex items-center justify-center">
+                                <div class="w-24 h-24 bg-surface-white rounded-full z-10 flex flex-col items-center justify-center">
+                                    <span class="text-[24px] font-bold">124</span><span class="text-[10px] text-on-surface-variant uppercase">Total</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 w-full space-y-4">
+                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-primary"></div><span>AI & Machine Learning</span></div><span class="font-label-md font-bold">45%</span></div>
+                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-secondary"></div><span>Cybersecurity</span></div><span class="font-label-md font-bold">30%</span></div>
+                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-tertiary-container"></div><span>Blockchain & IoT</span></div><span class="font-label-md font-bold">15%</span></div>
+                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-3 h-3 rounded-full bg-outline-variant"></div><span>Software Engineering</span></div><span class="font-label-md font-bold">10%</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg">
+                        <div class="flex items-center justify-between mb-unit-lg">
+                            <h3 class="font-headline-sm text-headline-sm">Faculty Supervision Load</h3>
+                            <div class="flex items-center gap-2 text-label-sm text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-full"><div class="w-2 h-2 rounded-full bg-success-emerald"></div> Available Capacity</div>
+                        </div>
+                        <div class="space-y-6">
+                            <div><div class="flex justify-between mb-2"><span class="font-label-md">Dr. Usman Mansoor</span><span class="font-label-md font-bold text-error">4 / 4 Groups</span></div><div class="w-full bg-surface-container-highest rounded-full h-2"><div class="bg-error h-2 rounded-full" style="width:100%"></div></div></div>
+                            <div><div class="flex justify-between mb-2"><span class="font-label-md">Dr. Sara Ahmed</span><span class="font-label-md font-bold text-success-emerald">2 / 4 Groups</span></div><div class="w-full bg-surface-container-highest rounded-full h-2"><div class="bg-success-emerald h-2 rounded-full" style="width:50%"></div></div></div>
+                            <div><div class="flex justify-between mb-2"><span class="font-label-md">Prof. Khalid Malik</span><span class="font-label-md font-bold text-warning-amber">3 / 4 Groups</span></div><div class="w-full bg-surface-container-highest rounded-full h-2"><div class="bg-warning-amber h-2 rounded-full" style="width:75%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-gutter">
+                    <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg">
+                        <h3 class="font-headline-sm text-headline-sm mb-unit-lg">Quick Actions</h3>
+                        <div class="grid grid-cols-1 gap-unit-sm">
+                            <a href="groups.html" class="flex items-center gap-unit-md p-unit-md rounded-xl bg-surface-container hover:bg-surface-container-high transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary"><span class="material-symbols-outlined">group_add</span></div>
+                                <div><p class="font-label-md font-bold">Create Group</p><p class="font-label-sm text-on-surface-variant">Setup new student team</p></div>
+                            </a>
+                            <a href="supervision.html" class="flex items-center gap-unit-md p-unit-md rounded-xl bg-surface-container hover:bg-surface-container-high transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-on-primary"><span class="material-symbols-outlined">person_pin</span></div>
+                                <div><p class="font-label-md font-bold">Assign Supervisor</p><p class="font-label-sm text-on-surface-variant">Match projects with faculty</p></div>
+                            </a>
+                            <a href="evaluations.html" class="flex items-center gap-unit-md p-unit-md rounded-xl bg-surface-container hover:bg-surface-container-high transition-all group">
+                                <div class="w-10 h-10 rounded-lg bg-tertiary/10 text-tertiary flex items-center justify-center group-hover:bg-tertiary group-hover:text-on-primary"><span class="material-symbols-outlined">event_note</span></div>
+                                <div><p class="font-label-md font-bold">Schedule Evaluation</p><p class="font-label-sm text-on-surface-variant">Book a presentation slot</p></div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-surface-white rounded-xl custom-shadow border border-outline-variant/30 p-unit-lg">
+                        <h3 class="font-headline-sm text-headline-sm mb-unit-lg">Recent Activity</h3>
+                        <div class="space-y-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant/30">
+                            <div class="relative pl-8"><div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10"><span class="material-symbols-outlined text-[14px] text-on-primary">upload_file</span></div><div><p class="font-body-sm"><span class="font-bold">Ahmad Hassan</span> submitted proposal</p><p class="text-[12px] text-on-surface-variant mt-0.5">2 hours ago • Group 42</p></div></div>
+                            <div class="relative pl-8"><div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-secondary flex items-center justify-center z-10"><span class="material-symbols-outlined text-[14px] text-on-primary">forum</span></div><div><p class="font-body-sm"><span class="font-bold">Dr. Usman</span> added feedback</p><p class="text-[12px] text-on-surface-variant mt-0.5">5 hours ago • ML Project</p></div></div>
+                            <div class="relative pl-8"><div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-success-emerald flex items-center justify-center z-10"><span class="material-symbols-outlined text-[14px] text-on-primary">check_circle</span></div><div><p class="font-body-sm"><span class="font-bold">Zainab Khan</span> approved evaluation</p><p class="text-[12px] text-on-surface-variant mt-0.5">Yesterday • Phase 1</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../assets/auth.js"></script>
+    <script src="../assets/layout.js"></script>
+    <script>initPage('coordinator', 'dashboard', { searchPlaceholder: 'Search portal...' });</script>
+</body>
+</html>

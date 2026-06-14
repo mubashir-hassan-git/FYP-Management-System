@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Evaluations | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-primary">Evaluation Management</h1>
+                <p class="font-body-md text-text-muted">Schedule evaluations, assign evaluators, and track results.</p>
+            </div>
+            <button id="btn-schedule" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-md">
+                <span class="material-symbols-outlined text-[18px]">event_note</span> Schedule Evaluation
+            </button>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"          id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-warning-amber"    id="stat-scheduled">—</p>
+                <p class="font-label-sm text-on-surface-variant">Scheduled</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald"  id="stat-completed">—</p>
+                <p class="font-label-sm text-on-surface-variant">Completed</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-error"            id="stat-absent">—</p>
+                <p class="font-label-sm text-on-surface-variant">Absent</p>
+            </div>
+        </div>
+
+        <!-- Evaluations Table -->
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">ID</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Group</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Evaluators</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Date</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eval-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Schedule Evaluation Modal -->
+<div id="sched-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between sticky top-0 bg-white">
+            <h3 class="font-headline-sm text-primary">Schedule Evaluation</h3>
+            <button id="close-sched" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div class="p-6 space-y-4">
+            <div>
+                <label class="block font-label-md font-bold mb-2">Group *</label>
+                <select id="sel-group" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                    <option value="">Select group...</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Milestone *</label>
+                <select id="sel-milestone" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                    <option value="">Select milestone...</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Evaluation Date *</label>
+                <input id="eval-date" type="date" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required/>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Evaluators * <span class="font-normal text-on-surface-variant text-sm">(hold Ctrl to select multiple)</span></label>
+                <select id="sel-evaluators" multiple class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low h-32" required>
+                </select>
+            </div>
+            <div id="sched-error" class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm"></div>
+            <div class="flex gap-3 pt-2">
+                <button id="cancel-sched" class="flex-1 px-4 py-3 border border-outline-variant rounded-xl font-label-md hover:bg-surface-container-low">Cancel</button>
+                <button id="do-schedule" class="flex-1 bg-primary text-on-primary px-4 py-3 rounded-xl font-label-md font-bold hover:opacity-90">Schedule</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('coordinator', 'evaluations');
+
+    const token = getToken();
+    const base  = '../';
+
+    const fetchAPI = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const toast = (msg, err=false) => {
+        const t = document.createElement('div');
+        t.className = `fixed bottom-6 right-6 ${err?'bg-error text-on-error':'bg-success-emerald text-white'} px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 z-50 font-label-md`;
+        t.innerHTML = `<span class="material-symbols-outlined">${err?'error':'check_circle'}</span>${msg}`;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+    };
+
+    const statusBadge = s => {
+        const m = { 'Completed':'bg-success-emerald/10 text-success-emerald', 'Scheduled':'bg-warning-amber/10 text-warning-amber', 'Absent':'bg-error/10 text-error' };
+        return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${m[s]||'bg-outline-variant/20 text-text-muted'}">${s}</span>`;
+    };
+
+    function renderTable(evals) {
+        const tbody = document.getElementById('eval-tbody');
+        if (!evals.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">event_busy</span>No evaluations yet. Schedule one above.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = evals.map(e => `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-6 py-4 font-mono font-bold text-on-surface-variant text-xs">EVAL-${String(e.EvaluationID).padStart(3,'0')}</td>
+                <td class="px-6 py-4 font-semibold text-primary">${e.GroupName}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">${e.MilestoneTitle}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant max-w-[180px] truncate" title="${e.Evaluators||''}">${e.Evaluators||'Unassigned'}</td>
+                <td class="px-6 py-4 text-on-surface-variant">${new Date(e.EvaluationDate).toLocaleDateString()}</td>
+                <td class="px-6 py-4">${statusBadge(e.Status)}</td>
+            </tr>`).join('');
+    }
+
+    // Schedule modal
+    const schedModal = document.getElementById('sched-modal');
+    document.getElementById('btn-schedule').onclick = () => { document.getElementById('sched-error').classList.add('hidden'); schedModal.classList.remove('hidden'); };
+    document.getElementById('close-sched').onclick  = () => schedModal.classList.add('hidden');
+    document.getElementById('cancel-sched').onclick = () => schedModal.classList.add('hidden');
+    schedModal.addEventListener('click', e => { if (e.target === schedModal) schedModal.classList.add('hidden'); });
+
+    document.getElementById('do-schedule').onclick = async () => {
+        const errEl = document.getElementById('sched-error');
+        errEl.classList.add('hidden');
+        const groupId      = document.getElementById('sel-group').value;
+        const milestoneId  = document.getElementById('sel-milestone').value;
+        const evalDate     = document.getElementById('eval-date').value;
+        const selectedEvs  = Array.from(document.getElementById('sel-evaluators').selectedOptions).map(o => o.value);
+
+        if (!groupId)     { errEl.textContent='Please select a group.';      errEl.classList.remove('hidden'); return; }
+        if (!milestoneId) { errEl.textContent='Please select a milestone.';  errEl.classList.remove('hidden'); return; }
+        if (!evalDate)    { errEl.textContent='Please pick a date.';         errEl.classList.remove('hidden'); return; }
+        if (!selectedEvs.length) { errEl.textContent='Select at least one evaluator.'; errEl.classList.remove('hidden'); return; }
+
+        const btn = document.getElementById('do-schedule');
+        btn.disabled = true; btn.textContent = 'Scheduling...';
+        try {
+            const res = await fetchAPI('/evaluations/schedule', { method:'POST', body:{ milestoneId, groupId, evaluationDate: evalDate } });
+            const evaluationId = res.evaluationId;
+
+            // Get evaluator objects to determine their role
+            const evalList = await fetchAPI('/evaluations/evaluators/list');
+            for (const evId of selectedEvs) {
+                const ev = evalList.find(e => String(e.EvaluatorID) === String(evId));
+                const role = ev?.EvaluatorType === 'External' ? 'External Examiner' : 'Internal Examiner';
+                await fetchAPI('/evaluations/assign-evaluator', { method:'POST', body:{ evaluationId, evaluatorId: evId, evaluatorRole: role } });
+            }
+
+            schedModal.classList.add('hidden');
+            toast('Evaluation scheduled successfully');
+            load();
+        } catch(e) {
+            errEl.textContent = e.message;
+            errEl.classList.remove('hidden');
+        } finally {
+            btn.disabled = false; btn.textContent = 'Schedule';
+        }
+    };
+
+    async function load() {
+        try {
+            const [evals, groups, milestones, evaluators] = await Promise.all([
+                fetchAPI('/evaluations'),
+                fetchAPI('/groups'),
+                fetchAPI('/milestones'),
+                fetchAPI('/evaluations/evaluators/list')
+            ]);
+
+            document.getElementById('stat-total').textContent     = evals.length;
+            document.getElementById('stat-scheduled').textContent = evals.filter(e => e.Status==='Scheduled').length;
+            document.getElementById('stat-completed').textContent = evals.filter(e => e.Status==='Completed').length;
+            document.getElementById('stat-absent').textContent    = evals.filter(e => e.Status==='Absent').length;
+
+            // Populate modal selects
+            document.getElementById('sel-group').innerHTML = `<option value="">Select group...</option>` +
+                groups.map(g => `<option value="${g.groupId}">${g.groupName} — ${g.projectTitle||'No project'}</option>`).join('');
+            document.getElementById('sel-milestone').innerHTML = `<option value="">Select milestone...</option>` +
+                milestones.filter(m => m.Status==='Active').map(m => `<option value="${m.MilestoneID}">${m.Title} (${m.BatchName})</option>`).join('');
+            document.getElementById('sel-evaluators').innerHTML =
+                evaluators.map(e => `<option value="${e.EvaluatorID}">${e.FirstName} ${e.LastName||''} [${e.EvaluatorType}]</option>`).join('');
+
+            renderTable(evals);
+        } catch(e) {
+            document.getElementById('eval-tbody').innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

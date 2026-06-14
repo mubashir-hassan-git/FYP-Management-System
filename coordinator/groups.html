@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Groups | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-primary">Group Management</h1>
+                <p class="font-body-md text-text-muted">Create and manage student groups of exactly 2 students.</p>
+            </div>
+            <button id="btn-create-group" class="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-label-md flex items-center gap-2 hover:opacity-90 shadow-md">
+                <span class="material-symbols-outlined text-[18px]">group_add</span> Create Group
+            </button>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-primary"         id="stat-total">—</p>
+                <p class="font-label-sm text-on-surface-variant">Total Groups</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-success-emerald" id="stat-assigned">—</p>
+                <p class="font-label-sm text-on-surface-variant">With Project</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-4 text-center custom-shadow">
+                <p class="text-2xl font-bold text-warning-amber"   id="stat-ungrouped">—</p>
+                <p class="font-label-sm text-on-surface-variant">Ungrouped Students</p>
+            </div>
+        </div>
+
+        <!-- Groups table -->
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Group Name</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Members</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Project</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="groups-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="4" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Create Group Modal -->
+<div id="create-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl">
+        <div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+            <h3 class="font-headline-sm text-primary">Create New Group</h3>
+            <button id="close-create" class="p-1.5 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <form id="create-form" class="p-6 space-y-5">
+            <div>
+                <label class="block font-label-md font-bold mb-2">Group Name *</label>
+                <input id="grp-name" type="text" placeholder="e.g. GRP-CS-2024-01"
+                       class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low focus:ring-2 focus:ring-primary/30" required/>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Batch *</label>
+                <select id="grp-batch" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                    <option value="">Select a batch...</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Student 1 * <span class="font-normal text-on-surface-variant text-sm">(must not be in a group)</span></label>
+                <select id="grp-s1" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                    <option value="">Select student 1...</option>
+                </select>
+            </div>
+            <div>
+                <label class="block font-label-md font-bold mb-2">Student 2 * <span class="font-normal text-on-surface-variant text-sm">(must not be in a group)</span></label>
+                <select id="grp-s2" class="w-full px-4 py-3 border border-outline-variant rounded-xl bg-surface-container-low" required>
+                    <option value="">Select student 2...</option>
+                </select>
+            </div>
+            <div id="create-error" class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm"></div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" id="cancel-create" class="flex-1 px-4 py-3 border border-outline-variant rounded-xl font-label-md hover:bg-surface-container-low">Cancel</button>
+                <button type="submit" class="flex-1 bg-primary text-on-primary px-4 py-3 rounded-xl font-label-md font-bold hover:opacity-90">Create Group</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('coordinator', 'groups');
+
+    const token = getToken();
+    const base  = '../';
+    let allGroups = [];
+    let allStudents = [];
+    let batches = [];
+
+    const fetchAPI = async (url, opts = {}) => {
+        const headers = { 'Authorization': `Bearer ${token}`, ...opts.headers };
+        if (opts.body && !(opts.body instanceof FormData)) { headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch(base + 'api' + url, { ...opts, headers });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    const toast = (msg, err=false) => {
+        const t = document.createElement('div');
+        t.className = `fixed bottom-6 right-6 ${err?'bg-error text-on-error':'bg-success-emerald text-white'} px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 z-50 font-label-md`;
+        t.innerHTML = `<span class="material-symbols-outlined">${err?'error':'check_circle'}</span>${msg}`;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+    };
+
+    function renderGroups(list) {
+        const tbody = document.getElementById('groups-tbody');
+        if (!list.length) {
+            tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-12 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl block text-outline mb-2">group_off</span>No groups yet. Create one above.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = list.map(g => `
+            <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-6 py-4 font-bold text-primary">${g.groupName}</td>
+                <td class="px-6 py-4 text-sm text-on-surface-variant">
+                    ${Array.isArray(g.students) ? g.students.map(s => `<span class="inline-block bg-surface-container px-2 py-0.5 rounded-lg text-xs mr-1 mb-1">${s}</span>`).join('') : (g.students||'—')}
+                </td>
+                <td class="px-6 py-4 text-sm">
+                    ${g.projectTitle && g.projectTitle !== 'Unassigned'
+                        ? `<span class="text-success-emerald font-semibold">${g.projectTitle}</span>`
+                        : `<span class="text-on-surface-variant">Unassigned</span>`}
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <button class="disband-btn px-3 py-1.5 bg-error/10 text-error rounded-lg text-xs font-bold hover:bg-error/20 transition-colors"
+                        data-id="${g.groupId}" data-name="${g.groupName}">
+                        Disband
+                    </button>
+                </td>
+            </tr>`).join('');
+
+        document.querySelectorAll('.disband-btn').forEach(btn => {
+            btn.onclick = async () => {
+                if (!confirm(`Disband group "${btn.dataset.name}"? Students will be unlinked.`)) return;
+                try {
+                    await fetchAPI(`/groups/${btn.dataset.id}`, { method: 'DELETE' });
+                    toast('Group disbanded');
+                    load();
+                } catch(e) { toast(e.message, true); }
+            };
+        });
+    }
+
+    // Modal open/close
+    const modal = document.getElementById('create-modal');
+    const openModal = () => {
+        document.getElementById('create-error').classList.add('hidden');
+        document.getElementById('create-form').reset();
+        populateStudents(document.getElementById('grp-batch').value);
+        modal.classList.remove('hidden');
+    };
+    document.getElementById('btn-create-group').onclick = openModal;
+    document.getElementById('close-create').onclick = () => modal.classList.add('hidden');
+    document.getElementById('cancel-create').onclick = () => modal.classList.add('hidden');
+    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    function populateStudents(batchId) {
+        const ungrouped = allStudents.filter(s => !s.GroupID && (!batchId || String(s.BatchID) === String(batchId)));
+        const opts = `<option value="">Select...</option>` + ungrouped.map(s => `<option value="${s.StudentID}">${s.FirstName} ${s.LastName||''} (${s.RegistrationNo})</option>`).join('');
+        document.getElementById('grp-s1').innerHTML = opts;
+        document.getElementById('grp-s2').innerHTML = opts;
+    }
+
+    document.getElementById('grp-batch').addEventListener('change', e => populateStudents(e.target.value));
+
+    // Validate: student 1 ≠ student 2
+    document.getElementById('grp-s1').addEventListener('change', () => {
+        const s1 = document.getElementById('grp-s1').value;
+        const s2 = document.getElementById('grp-s2').value;
+        if (s1 && s1 === s2) {
+            document.getElementById('grp-s2').value = '';
+        }
+    });
+    document.getElementById('grp-s2').addEventListener('change', () => {
+        const s1 = document.getElementById('grp-s1').value;
+        const s2 = document.getElementById('grp-s2').value;
+        if (s2 && s1 === s2) {
+            const errEl = document.getElementById('create-error');
+            errEl.textContent = 'Student 1 and Student 2 must be different people.';
+            errEl.classList.remove('hidden');
+            document.getElementById('grp-s2').value = '';
+        }
+    });
+
+    document.getElementById('create-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const errEl = document.getElementById('create-error');
+        errEl.classList.add('hidden');
+
+        const name = document.getElementById('grp-name').value.trim();
+        const s1   = document.getElementById('grp-s1').value;
+        const s2   = document.getElementById('grp-s2').value;
+
+        if (!name) { errEl.textContent = 'Group name is required.'; errEl.classList.remove('hidden'); return; }
+        if (!s1)   { errEl.textContent = 'Please select Student 1.'; errEl.classList.remove('hidden'); return; }
+        if (!s2)   { errEl.textContent = 'Please select Student 2.'; errEl.classList.remove('hidden'); return; }
+        if (s1 === s2) { errEl.textContent = 'Student 1 and Student 2 cannot be the same person.'; errEl.classList.remove('hidden'); return; }
+
+        try {
+            await fetchAPI('/groups', { method: 'POST', body: { groupName: name, studentId1: s1, studentId2: s2 } });
+            modal.classList.add('hidden');
+            toast('Group created successfully');
+            load();
+        } catch(err) {
+            errEl.textContent = err.message;
+            errEl.classList.remove('hidden');
+        }
+    });
+
+    async function load() {
+        try {
+            [allGroups, allStudents, batches] = await Promise.all([
+                fetchAPI('/groups'),
+                fetchAPI('/students'),
+                fetchAPI('/batches')
+            ]);
+
+            const ungrouped = allStudents.filter(s => !s.GroupID);
+            document.getElementById('stat-total').textContent     = allGroups.length;
+            document.getElementById('stat-assigned').textContent  = allGroups.filter(g => g.projectTitle && g.projectTitle !== 'Unassigned').length;
+            document.getElementById('stat-ungrouped').textContent = ungrouped.length;
+
+            // Populate batch dropdown
+            const batchOpts = `<option value="">All batches</option>` + batches.map(b => `<option value="${b.BatchID}">${b.BatchName}</option>`).join('');
+            document.getElementById('grp-batch').innerHTML = batchOpts;
+            populateStudents('');
+
+            renderGroups(allGroups);
+        } catch(e) {
+            document.getElementById('groups-tbody').innerHTML = `<tr><td colspan="4" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

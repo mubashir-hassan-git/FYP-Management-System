@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Group Members | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header>
+            <h1 class="font-headline-lg text-headline-lg text-primary">Group Members</h1>
+            <p class="font-body-md text-text-muted">Your Final Year Project group and team details.</p>
+        </header>
+
+        <!-- Group info -->
+        <div id="group-info" class="bento-card p-unit-lg">
+            <div class="text-center py-8 text-on-surface-variant">
+                <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading group...
+            </div>
+        </div>
+
+        <!-- Members -->
+        <div id="members-section" class="hidden">
+            <h3 class="font-headline-sm text-headline-sm mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">group</span> Team Members
+            </h3>
+            <div id="members-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('student', 'group');
+
+    const token = getToken();
+    const base  = '../';
+
+    const fetchAPI = async (url, opts = {}) => {
+        const r = await fetch(base + 'api' + url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers||{}) } });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    async function load() {
+        try {
+            const data = await fetchAPI('/students/dashboard');
+            const s    = data.student;
+            const infoCard = document.getElementById('group-info');
+
+            if (!s.groupName || s.groupName === 'N/A') {
+                infoCard.innerHTML = `<div class="text-center py-12 text-on-surface-variant">
+                    <span class="material-symbols-outlined text-5xl block text-outline mb-3">group_off</span>
+                    <p class="font-body-lg font-semibold">You are not in a group yet.</p>
+                    <p class="font-body-sm mt-1">Please contact the coordinator to be assigned to a group.</p>
+                </div>`;
+                return;
+            }
+
+            infoCard.innerHTML = `
+                <div class="flex flex-col md:flex-row md:items-center gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-3xl">groups</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="font-headline-md text-headline-md text-primary">${s.groupName}</h2>
+                        <div class="flex flex-wrap gap-4 mt-3">
+                            <div class="bg-surface-container-low rounded-xl px-4 py-2">
+                                <p class="text-xs text-on-surface-variant">Project</p>
+                                <p class="font-semibold text-sm">${s.projectTitle && s.projectTitle !== 'N/A' ? s.projectTitle : 'Not assigned'}</p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-xl px-4 py-2">
+                                <p class="text-xs text-on-surface-variant">Members</p>
+                                <p class="font-bold text-sm text-primary">${data.team.length}</p>
+                            </div>
+                            <div class="bg-surface-container-low rounded-xl px-4 py-2">
+                                <p class="text-xs text-on-surface-variant">Supervisor</p>
+                                <p class="font-semibold text-sm">${s.supervisorName && s.supervisorName !== 'N/A' ? s.supervisorName : 'Unassigned'}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-2xl bg-success-emerald/10 flex flex-col items-center justify-center">
+                            <span class="text-3xl font-bold text-success-emerald">${data.stats.completedMilestones}</span>
+                            <span class="text-xs text-on-surface-variant">Done</span>
+                        </div>
+                    </div>
+                </div>`;
+
+            // Members
+            if (data.team && data.team.length) {
+                document.getElementById('members-section').classList.remove('hidden');
+                document.getElementById('members-grid').innerHTML = data.team.map(m => `
+                    <div class="flex items-center gap-4 p-5 bg-surface-white border border-outline-variant/30 rounded-2xl custom-shadow hover:-translate-y-0.5 transition-all">
+                        <img src="${m.avatar}" alt="${m.name}" class="w-14 h-14 rounded-full object-cover border-2 border-primary/20"/>
+                        <div class="flex-1">
+                            <p class="font-headline-sm font-bold text-primary">${m.name}</p>
+                            <p class="font-label-sm text-on-surface-variant mt-0.5">${m.regNo}</p>
+                        </div>
+                        <div class="w-3 h-3 rounded-full bg-success-emerald" title="Active"></div>
+                    </div>`).join('');
+            }
+        } catch(e) {
+            document.getElementById('group-info').innerHTML = `<div class="bg-error-container text-on-error-container rounded-xl p-4">${e.message}</div>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>

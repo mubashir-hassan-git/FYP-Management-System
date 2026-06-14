@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My Results | Namal FYP Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="../assets/tailwind-config.js"></script>
+    <link href="../assets/styles.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-on-surface">
+<div id="app-sidebar"></div>
+<main class="ml-sidebar-width min-h-screen">
+    <div id="app-topnav"></div>
+    <div class="pt-24 px-margin-desktop pb-margin-desktop max-w-container-max-width mx-auto space-y-gutter">
+
+        <header>
+            <h1 class="font-headline-lg text-headline-lg text-primary">My Evaluation Results</h1>
+            <p class="font-body-md text-text-muted">Your obtained marks and overall performance.</p>
+        </header>
+
+        <!-- Score summary -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow text-center">
+                <p class="font-label-md text-on-surface-variant mb-1">Total Obtained</p>
+                <p class="text-3xl font-bold text-primary" id="total-obtained">—</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow text-center">
+                <p class="font-label-md text-on-surface-variant mb-1">Total Maximum</p>
+                <p class="text-3xl font-bold text-on-surface-variant" id="total-max">—</p>
+            </div>
+            <div class="bg-surface-white border border-outline-variant/30 rounded-xl p-5 custom-shadow text-center">
+                <p class="font-label-md text-on-surface-variant mb-1">Percentage</p>
+                <p class="text-3xl font-bold text-success-emerald" id="percentage">—</p>
+            </div>
+        </div>
+
+        <!-- Results table -->
+        <div class="bento-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Criterion</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Milestone</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Max Marks</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Obtained</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Score %</th>
+                            <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody" class="divide-y divide-outline-variant">
+                        <tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl block text-outline mb-2">hourglass_empty</span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../assets/auth.js"></script>
+<script src="../assets/layout.js"></script>
+<script>
+    initPage('student', 'evaluations'); // keep evaluations as active since results removed from nav
+
+    const token = getToken();
+    const base  = '../';
+
+    const fetchAPI = async (url, opts = {}) => {
+        const r = await fetch(base + 'api' + url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...(opts.headers||{}) } });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.message || r.statusText);
+        return d;
+    };
+
+    async function load() {
+        const tbody = document.getElementById('results-tbody');
+        try {
+            const data = await fetchAPI('/students/results');
+
+            document.getElementById('total-obtained').textContent = data.totalObtained;
+            document.getElementById('total-max').textContent      = data.totalMax;
+            document.getElementById('percentage').textContent     = data.percentage ? `${data.percentage}%` : '—';
+
+            if (!data.results.length) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                    <span class="material-symbols-outlined text-4xl block text-outline mb-2">analytics</span>
+                    No evaluation results available yet.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = data.results.map(r => {
+                const pct = r.maxMarks > 0 ? ((r.obtainedMarks / r.maxMarks) * 100).toFixed(0) : 0;
+                const col = pct >= 70 ? 'text-success-emerald' : pct >= 50 ? 'text-warning-amber' : 'text-error';
+                return `
+                <tr class="hover:bg-surface-container-low transition-colors">
+                    <td class="px-6 py-4 font-semibold text-primary">${r.criteria}</td>
+                    <td class="px-6 py-4 text-sm text-on-surface-variant">${r.milestone}</td>
+                    <td class="px-6 py-4 text-on-surface-variant">${r.maxMarks}</td>
+                    <td class="px-6 py-4 font-bold text-primary">${r.obtainedMarks}</td>
+                    <td class="px-6 py-4 font-bold ${col}">${pct}%</td>
+                    <td class="px-6 py-4 text-sm text-on-surface-variant">${r.remarks || '—'}</td>
+                </tr>`;
+            }).join('');
+
+            // Total row
+            const tfoot = document.createElement('tfoot');
+            tfoot.className = 'bg-surface-container-low border-t-2 border-outline-variant font-bold';
+            tfoot.innerHTML = `<tr>
+                <td class="px-6 py-4 font-bold" colspan="2">Total</td>
+                <td class="px-6 py-4 font-bold">${data.totalMax}</td>
+                <td class="px-6 py-4 font-bold text-primary">${data.totalObtained}</td>
+                <td class="px-6 py-4 font-bold text-success-emerald">${data.percentage}%</td>
+                <td class="px-6 py-4"></td>
+            </tr>`;
+            document.querySelector('table').appendChild(tfoot);
+        } catch(e) {
+            tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-error">${e.message}</td></tr>`;
+        }
+    }
+    load();
+</script>
+</body>
+</html>
